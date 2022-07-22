@@ -8,7 +8,7 @@ void NonOwnable::doOperation(){
         game->currPlayer->setPosition(10);
         game->currPlayer->goToTims(true);
     }
-   if(pos == 20){} //Goose Nesting
+   if(pos == 20 || pos == 0 || pos == 10){} //Goose Nesting OSAP DC
    if(pos == 4){ //Tuition
     cout << "Press 1 to pay $300 or Press 2 to pay 10%% of your total worth" << endl;
     int i;
