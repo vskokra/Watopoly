@@ -37,10 +37,12 @@ public:
     void trade(Player player1, Ownable prop1, int money1, Player player2, Ownable prop2, int money2);
     void auction(Ownable prop);
     bool bankrupt(); // autoChecker
+    virtual void doOperation();
     std::vector<int> getPlayerPos(); 
     std::vector<int> getImprovs();
 
     Player *currPlayer;
     bool rollComplete;
+    int rimCupCount;
 };
 #endif
