@@ -129,7 +129,7 @@ void GameBoard::roll(){
         if(currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2){
             if(currPlayer->getRimCups() == 0){
                  while (currPlayer->getMoney() < 50){
-                    if (currPlayer->isBankrupt()){
+                    if (currPlayer->isBankrupt(50)){
                          currPlayer->declareBankrupt();
                     }
                     else{
@@ -147,7 +147,7 @@ void GameBoard::roll(){
                     if (cin) {
                         if(i == 1){
                             while (currPlayer->getMoney() < 50){
-                                if (currPlayer->isBankrupt()){
+                                if (currPlayer->isBankrupt(50)){
                                     currPlayer->declareBankrupt();
                                 }
                                 else{
