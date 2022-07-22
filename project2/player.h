@@ -1,27 +1,33 @@
 #include <string>
-#include <vector>
-#include <map>
 
-
-class Player
-{
+class Player{
     std::string playerName;
     char playerChar;
     int position;
     int money;
+    int propVal;
     bool Tims;
     int rollsTims;
-    map<string, int> propsOwned; //keeps track of the properties owned by player in each department 
+    int rimCups;
 
 public:
-    int getPosition();         // gives players position
-    void setPosition(int pos); // sets new position
-    int getMoney();            // gives info of money
+
+    int getPosition(); // gives players position
+    void setPosition(int pos); //sets new position
+    int getMoney(); // gives info of money
     void money_add(unsigned int val);
     void money_sub(unsigned int val);
-    void goToTims();
-    void updateRollsTims(int n);
-    bool isBankrupt();
-    void updateWorth();
+    void goToTims(bool x);
+    int getRimCups();
+    void setRimCups(int n);
+    bool isTims();
+    void addRollsTims();
+    void resetRollsTims();
+    int getRollsTims();
+    bool isBankrupt(int amount);
+    int getWorth();
+    void updateWorth(int amount);
     void declareBankrupt();
+    void declareBankrupt(Player *p);
+
 };
