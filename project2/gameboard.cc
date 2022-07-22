@@ -62,7 +62,7 @@ GameBoard::GameBoard(){
     // game.emplace_back(new {"Needles Hall"});
     game.emplace_back(new Improvable{"MC", 350, "Math", 200});
     //game.emplace_back(new {"COOP FEE"});
-    game.emplace_back(new Improvable{"DC", 400, "Math", 200}); 
+    game.emplace_back(new Improvable{"DC", 400, "Math", 200});
 
     //make the Monopoly dictionary 
     //unordered_map<string, vector<int>> tuitionChart;
@@ -97,21 +97,12 @@ GameBoard::GameBoard(){
 vector<int> GameBoard::getPlayerPos(){
     vector<int> playerCurPos;
     for(int i = 0; i < 8; ++i){
-        playerCurPos.emplace_back(player[i]->position); 
+        playerCurPos.emplace_back(player[i]->getPosition()); 
         //make get position in player class 
     }
 
     return playerCurPos;
 
-}
-
-vector<int> GameBoard::getImprovs(){
-    vector<int> propImprovs;
-    for (int i = 0; i < 28; ++i)
-    {
-        propImprovs.emplace_back(prop[i]->improvs);
-    }
-    return propImprovs; 
 }
 
 #include "gameBoard.h"
@@ -177,7 +168,7 @@ void GameBoard::roll(){
         ++roll_count;
         if(roll_count == 3 && dice->isDouble()){
             currPlayer->setPosition(10);
-            currPlayer->goToTims;
+            currPlayer->goToTims(true);
             break;
         }
         int oldPosition = currPlayer->getPosition();
