@@ -81,7 +81,7 @@ GameBoard::GameBoard(){
     tuitionChart["MC"] = vector<int>{0, 0, 0, 0, 0, 0};
     tuitionChart["DC"] = vector<int>{0, 0, 0, 0, 0, 0};
     dice = new Dice();
-    rollCupCount = 4;
+    rimCupCount = 4;
 }
 
 vector<int> GameBoard::getPlayerPos(){
