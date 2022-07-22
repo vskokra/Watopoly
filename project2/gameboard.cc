@@ -10,10 +10,21 @@ using namespace std;
 
 GameBoard::GameBoard(){
  
-    /*
-    //game.emplace_back(new {"OSAP"}); 
+    
+    game.emplace_back(new NonOwnable{2, this}); //SLC
+    game.emplace_back(new NonOwnable{4, this}); // TUITION
+    game.emplace_back(new NonOwnable{7, this}); // NEEDLES
+    game.emplace_back(new NonOwnable{10, this}); // DC
+    game.emplace_back(new NonOwnable{17, this}); // SLC
+    game.emplace_back(new NonOwnable{20, this}); // Goose
+    game.emplace_back(new NonOwnable{22, this}); // NEEDLES
+    game.emplace_back(new NonOwnable{30, this}); // GOTOTIMS
+    game.emplace_back(new NonOwnable{33, this}); // SLC
+    game.emplace_back(new NonOwnable{36, this}); // NEEDLES
+    game.emplace_back(new NonOwnable{38, this}); // COOP
+    game.emplace_back(new NonOwnable{40, this}); // OSAP
     game.empalce_back(new Improvable{"AL",40, "Arts1", 50});
-    //game.emplace_back(new {"SLC"});
+    game.emplace_back(new {"SLC"});
     game.emplace_back(new Improvable{"ML", 60, "Arts1", 50});
     //game.emplace_back(new {"tuition"});
     game.emplace_back(new Res{"MKV", 200});
@@ -51,8 +62,7 @@ GameBoard::GameBoard(){
     // game.emplace_back(new {"Needles Hall"});
     game.emplace_back(new Improvable{"MC", 350, "Math", 200});
     //game.emplace_back(new {"COOP FEE"});
-    game.emplace_back(new Improvable{"DC", 400, "Math", 200}); */
-
+    game.emplace_back(new Improvable{"DC", 400, "Math", 200}); 
 
     //make the Monopoly dictionary 
     //unordered_map<string, vector<int>> tuitionChart;
