@@ -55,9 +55,9 @@ void Player::updateWorth(int amount){
 }
 
 void Player::declareBankrupt(){
-    //BANK
+    cout << "BANKRUPT" << endl;
 }
 
 void Player::declareBankrupt(){
-    //Player Owner
+    cout << "BANKRUPT" << endl;
 }
