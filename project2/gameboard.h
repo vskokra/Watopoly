@@ -15,7 +15,6 @@
 class GameBoard
 {
     std::vector <BoardCell*> game; // Store in order of occurence on board with CollectOSAP as 0;
-    Ownable *prop[28];     // In order - why is this there? 
     Player *player[8];     // Store player in order of turn
     Dice *dice;
     std::unordered_map <std::string, std::vector<int>> tuitionChart; 
