@@ -42,6 +42,6 @@ public:
 
     Player *currPlayer;
     bool rollComplete;
-    int rimCupCount;
+    int rimCupCount = 4;
 };
 #endif
