@@ -16,7 +16,6 @@ class GameBoard
 {
     std::vector <BoardCell*> game; // Store in order of occurence on board with CollectOSAP as 0;
     Player *player[8];     // Store player in order of turn
-    Dice *dice;
     std::unordered_map <std::string, std::vector<int>> tuitionChart; 
     // char *playerChar[6]; // Store in order of turn/player
 
@@ -40,6 +39,7 @@ public:
     std::vector<int> getImprovs();
 
     Player *currPlayer;
+    Dice *dice;
     bool rollComplete;
     int rimCupCount;
 };
