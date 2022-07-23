@@ -1,5 +1,5 @@
-#ifndef NONOWNABLE_H
-#define NONOWNABLE_h
+#ifndef __NONOWNABLE_H_
+#define __NONOWNABLE_H_
 
 #include <iostream>
 #include "boardcell.h"
