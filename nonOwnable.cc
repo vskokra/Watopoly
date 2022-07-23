@@ -3,7 +3,7 @@ using namespace std;
 
 NonOwnable::NonOwnable(int position, GameBoard *g): pos{position}, game{g}{} 
 
-void NonOwnable::doOperation(){
+void NonOwnable::doOperation(Player *curr){
     if(pos == 30){//GO TO TIMS
         game->currPlayer->setPosition(10);
         game->currPlayer->goToTims(true);
