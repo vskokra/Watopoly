@@ -11,6 +11,11 @@ using namespace std;
 
 GameBoard::GameBoard(){   
 
+    //in MIl ask for player array
+    dice = new Dice();
+    rimCupCount = 4;
+    isTrade = false;
+    //board created
     game.emplace_back(new NonOwnable{0, this}); // OSAP
     game.empalce_back(new Improvable{"AL",40, nullptr, "Arts1", 50, this});
     game.emplace_back(new NonOwnable{2, this}); //SLC
@@ -78,8 +83,33 @@ GameBoard::GameBoard(){
     tuitionChart["MC"] = vector<int>{35, 175, 500, 1100, 1300, 1500};
     tuitionChart["DC"] = vector<int>{50, 200, 600, 1400, 1700, 2000};
 
-    dice = new Dice();
-    rimCupCount = 4;
+    //gives the pos 
+    propDictionary["ML"] = 3;
+    propDictionary["AL"] = 1;
+    propDictionary["HH"] = 9;
+    propDictionary["ECH"] = 6;
+    propDictionary["PAS"] = 8;
+    propDictionary["RCH"] = 11;
+    propDictionary["DWE"] = 13;
+    propDictionary["CPH"] = 14;
+    propDictionary["LHI"] = 16;
+    propDictionary["BMH"] = 18;
+    propDictionary["OPT"] = 19;
+    propDictionary["EV1"] = 21;
+    propDictionary["EV2"] = 23;
+    propDictionary["EV3"] = 24;
+    propDictionary["PHYS"] = 26;
+    propDictionary["B1"] = 27;
+    propDictionary["B2"] = 29;
+    propDictionary["EIT"] = 31;
+    propDictionary["ESC"] = 32;
+    propDictionary["C2"] = 34;
+    propDictionary["MC"] = 37;
+    propDictionary["DC"] = 39;
+    propDictionary["PAC"] = 12;
+    propDictionary["CIF"] = 28;
+    propDictionary["MKV"] = 5;
+
 }
 
 void GameBoard::roll(){
@@ -149,4 +179,111 @@ void GameBoard::roll(){
         }
         game[currPlayer->getPosition()]->doOperation();
     }
+}
+
+
+void GameBoard::basicFive() {
+    // trade
+    // mortgage
+    // unmortgage
+    // improve
+    // next
+    int n;
+    cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: improve\n5: next\n";
+    while (cin >> n) {
+        cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: improve\n5: next\n";
+        if (n == 1) {
+            cout << "THIS IS EMPTY\n";
+            continue;
+        } else if (n == 2) {
+            string propName;
+            cout << "Enter property that you want to mortgage\n";
+            cin >> propName;
+            int index = propDictionary[propName];
+            Ownable *ownable = dynamic_cast<Ownable *>(game[index]);
+            Improvable *improvable = dynamic_cast<Improvable *>(game[index]);
+            if (improvable -> improvs != 0) {
+                cout << "You cannot mortgage due to existing improvements\n";
+                continue;
+            }
+            if (prop -> owner != currPlayer) {
+                cout << "You cannot mortgage this property since you are not the owner\n";
+                continue;
+            }
+            mortgage(currPlayer, ownable);
+            continue;
+        } else if (n == 3) {
+            string propName;
+            cout << "Enter property that you want to unmortgage\n";
+            cin >> propName;
+            int index = propDictionary[propName];
+            Ownable *ownable = dynamic_cast<Ownable *>(game[index]);
+            Improvable *improvable = dynamic_cast<Improvable *>(game[index]);
+            if (!(ownable -> isMortgage)) {
+                cout << "Property is already unmortgaged\n";
+                continue;
+            }
+            if (ownable -> owner != currPlayer) {
+                cout << "You cannot unmortgage this property since you are not the owner\n";
+                continue;
+            }
+            unmortgage(currPlayer, ownable);
+            continue;
+        } else if (n == 4) {
+            string propName;
+            cout << "Enter property that you want to improve\n";
+            cin >> propName;
+            Ownable *ownable = game[index];
+            Improvable *improvable = game[index];
+            if (ownable -> owner != currPlayer) {
+                cout << "You cannot improve, since you are not the owner\n";
+                continue;
+            }
+            int x;
+            cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
+            cin >> x;
+            string deptName = improvable -> dept;
+            int ownedCount = currPlayer -> ownedProps[deptName];
+            if (x == 1) {
+                if (((deptName == "Math" || deptName == "Arts1") && ownedCount == 2) || ownedCount == 3)
+                {
+                    improv_buy(currPlayer, improvable);
+                } else {
+                    cout << "You cannot buy improvements because it is not part of a monopoly\n";
+                    continue;
+                }
+            } else if (x == 2) {
+                if (improvable -> improvs == 0) {
+                    cout << "This building does not have any improvements to sell\n";
+                    continue;
+                } else {
+                    improve_sell(currPlayer, improvable);
+                }
+            } else {
+                cout << "Incorrect option entered\n"
+                continue;
+            }
+            continue;
+        } else if (n == 5) {
+            next();
+            break;
+        } else {
+            cout << "Invalid option entered\n";
+            continue;
+        }
+    }
+}
+
+
+void GameBoard::next() {
+    int index = 0;
+    int flag = false;
+    for (int x = 0; x < player.size() - 1; ++x) {
+        if (player[x] == currPlayer) {
+            flag = true;
+            currPlayer = player[x+1];
+            break;
+        } 
+    }
+    if (!flag) currPlayer = player[0];
 }
