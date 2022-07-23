@@ -1,6 +1,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <iostream>
 #include "improvable.h"
 #include "res.h"
 #include "gameboard.h"
@@ -8,9 +9,7 @@
 using namespace std; 
 
 
-GameBoard::GameBoard(){
- 
-    
+GameBoard::GameBoard(){   
     game.emplace_back(new NonOwnable{2, this}); //SLC
     game.emplace_back(new NonOwnable{4, this}); // TUITION
     game.emplace_back(new NonOwnable{7, this}); // NEEDLES
@@ -90,27 +89,9 @@ GameBoard::GameBoard(){
     tuitionChart["C2"] = vector<int>{0, 0, 0, 0, 0, 0};
     tuitionChart["MC"] = vector<int>{0, 0, 0, 0, 0, 0};
     tuitionChart["DC"] = vector<int>{0, 0, 0, 0, 0, 0};
+    
     dice = new Dice();
     rimCupCount = 4;
-}
-
-vector<int> GameBoard::getPlayerPos(){
-    vector<int> playerCurPos;
-    for(int i = 0; i < 8; ++i){
-        playerCurPos.emplace_back(player[i]->getPosition()); 
-        //make get position in player class 
-    }
-
-    return playerCurPos;
-
-}
-
-#include "gameBoard.h"
-#include <iostream>
-using namespace std;
-
-GameBoard::GameBoard(){
-    dice = new Dice();
 }
 
 void GameBoard::roll(){
