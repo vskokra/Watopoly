@@ -17,7 +17,7 @@ GameBoard::GameBoard(){
     isTrade = false;
     //board created
     game.emplace_back(new NonOwnable{0, this}); // OSAP
-    game.empalce_back(new Improvable{"AL",40, nullptr, "Arts1", 50, this});
+    game.emplace_back(new Improvable{"AL",40, nullptr, "Arts1", 50, this});
     game.emplace_back(new NonOwnable{2, this}); //SLC
     game.emplace_back(new Improvable{"ML", 60, nullptr, "Arts1", 50, this});
     game.emplace_back(new NonOwnable{4, this}); // TUITION
