@@ -177,7 +177,7 @@ void GameBoard::roll(){
         if (newPosition < oldPosition) { // Implementation for crossing OSAP
             currPlayer->money_add(200);
         }
-        game[currPlayer->getPosition()]->doOperation();
+        game[currPlayer->getPosition()]->doOperation(currPlayer);
     }
 }
 
