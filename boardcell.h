@@ -7,7 +7,7 @@ class Player;
 class BoardCell{
     
     public: 
-        virtual void doOperation(Player *curr) = 0;
+        virtual void doOperation() = 0;
         virtual int getImprovs(); // return 0 by default   
 };
 #endif 
