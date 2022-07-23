@@ -8,7 +8,6 @@
 #include "player.h"
 #include "ownable.h"
 #include "improvable.h"
-#include "nonimprovable.h"
 #include "nonOwnable.h"
 #include "dice.h"
 //why can't we include std namespace in .h files 
