@@ -10,7 +10,7 @@ class NonOwnable: public BoardCell {
     GameBoard *game;
 public:
     NonOwnable(int pos, GameBoard *game);
-    doOperations(Player *curr);
+    void doOperation(Player *curr) override;
 };
 /*
 void function(Player *curr);

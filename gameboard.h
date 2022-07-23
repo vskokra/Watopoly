@@ -12,14 +12,16 @@
 #include "dice.h"
 //why can't we include std namespace in .h files 
 
+using namespace std;
+
 class GameBoard
 {
     std::vector <BoardCell*> game; // Store in order of occurence on board with CollectOSAP as 0;
-    vector<Player *> player;     // Store player in order of turn
-    std::unordered_map <std::string, std::vector<int>> tuitionChart; 
+    vector<Player *> player;     // Store player in order of turn 
     // char *playerChar[6]; // Store in order of turn/player
-
+    std::unordered_map<std::string, int> propDictionary;
 public:
+    std::unordered_map <std::string, std::vector<int>> tuitionChart;
     GameBoard();
     ~GameBoard();
     void roll();

@@ -14,8 +14,8 @@ class Player{
     bool Tims;
     int rollsTims;
     int rimCups;
-    std::unordered_map <std::string, int> ownedProps;
 public:
+    std::unordered_map <std::string, int> ownedProps;
     Player(std::string playerName, char playerChar);
     int getPosition(); // gives players position
     void setPosition(int pos); //sets new position
