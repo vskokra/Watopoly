@@ -50,7 +50,7 @@ GameBoard::GameBoard(){
     game.emplace_back(new Improvable{"PHYS", 260, "Sci1", 150});
     // game.emplace_back(new {"Needles Hall"});
     game.emplace_back(new Improvable{"B1", 260, "Sci1", 150});
-    game.emplace_back(new Gyms{"PAC", 150, nullptr});
+    game.emplace_back(new Gyms{"CIF", 150, nullptr});
     game.emplace_back(new Improvable{"B2", 280, "Sci1", 150});
     // game.emplace_back(new {"Go to Tims"})
     game.emplace_back(new Improvable{"EIT", 300, "Sci2", 200});
