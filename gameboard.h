@@ -15,7 +15,7 @@
 class GameBoard
 {
     std::vector <BoardCell*> game; // Store in order of occurence on board with CollectOSAP as 0;
-    Player *player[8];     // Store player in order of turn
+    vector<Player *> player;     // Store player in order of turn
     std::unordered_map <std::string, std::vector<int>> tuitionChart; 
     // char *playerChar[6]; // Store in order of turn/player
 
@@ -24,20 +24,17 @@ public:
     ~GameBoard();
     void roll();
     void next();
-    void move(Player *player); // Gets player's current position and changes it to new position after roll;
-    void buyProperty(Player *player, Ownable *prop);
-    void sellProperty(Player *player, Ownable *prop);
-    void mortgage(Player *player, Ownable *prop);
-    void unmortgage(Player *player, Ownable *prop);
-    void improve_buy(Player *player, Improvable *prop);
-    void improve_sell(Player *player, Improvable *prop);
-    void trade(Player *player1, Ownable *prop1, int *money1, Player *player2, Ownable *prop2, int *money2);
-    void auction(Ownable *prop);
-    bool bankrupt(); // autoChecker
-    virtual void doOperation();
-    std::vector<int> getPlayerPos(); 
-    std::vector<int> getImprovs();
-
+//    void buyProperty(Player *player, Ownable *prop);
+//    void sellProperty(Player *player, Ownable *prop);
+//    void mortgage(Player *player, Ownable *prop);
+//    void unmortgage(Player *player, Ownable *prop);
+//    void improve_buy(Player *player, Improvable *prop);
+//    void improve_sell(Player *player, Improvable *prop);
+//    void trade(Player *player1, Ownable *prop1, int *money1, Player *player2, Ownable *prop2, int *money2);
+//    void auction(Ownable *prop);
+//    bool bankrupt(); // autoChecker
+    virtual void doOperation(Player *curr);
+    void basicFive();
     Player *currPlayer;
     Dice *dice;
     bool rollComplete;
