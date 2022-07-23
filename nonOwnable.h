@@ -2,11 +2,16 @@
 #define NONOWNABLE_h
 
 #include <iostream>
-#include "cell.h"
+#include "boardcell.h"
 #include "gameBoard.h"
 
 class NonOwnable: public BoardCell {
-
+    int pos;
+    GameBoard *game;
+public:
+    NonOwnable(int pos, GameBoard *game);
+};
+/*
 void function(Player *curr);
 };
 
@@ -49,5 +54,5 @@ class CollectOSAP: public NonOwnable {
     public:
         void function(Player *curr) override;
 };
-
+*/
 #endif
