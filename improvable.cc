@@ -10,28 +10,42 @@ Improvable::Improvable(string name, int cost, Player *Owner, string dept, int im
 
 
 int Improvable::calcTuition(){
-    //step 1: check if prop is in monopoly 
-    Player * curOwner = this->owner;
-    string deptOfProp = this->dept; 
-    int numProps = curOwner->propsOwned.at(deptOfProp);
 
-    //in monopoly 
-    //step2: 
-    if (numProps == 3){
-        // find no. of improvs
+    // step 1: check if prop is in monopoly
+    Player *curOwner = this->owner;
+    string deptOfProp = this->dept;
+    int numProps = curOwner->ownedProps.at(deptOfProp);
 
-        if (this->improvs == 0){
-            return 2 * game->tuitionChart.at(this->propName)[0]; 
-        } 
+    // in monopoly
+    // step2:
+    if (((deptOfProp == "Math" || deptOfProp == "Arts1") && numProps == 2) || numProps == 3)
+        {
+            
+            if (this->improvs == 0)
+            {
+                return 2 * game->tuitionChart.at(this->propName)[0];
+            }
 
-        return game->tuitionChart.at(this->propName)[this->improvs]; 
-
-    }
+            return game->tuitionChart.at(this->propName)[this->improvs];
+        }
 }
 
 
 void Improvable::doOperation(Player *curr){
 
+    //check 1 - if property has no owner
+    if (this->owner == nullptr){
+        //buy property or auction
+        cout << "No property Owner" << endl;
+    // check 2 - if the owner of the property is current player
+    } else if (this->owner == curr){
+        //do nothing , just the 5 basic cmds 
+        cout << "choose one out of the 5 options - trade, improv "<<endl;
+        return;
+
+    }
+
+    
     //step1- get the amount 
     int amt = (*this).calcRent();
 
