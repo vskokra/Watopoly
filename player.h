@@ -1,5 +1,7 @@
 #include <string>
-
+#include <vector>
+#include <unordered_map>
+#include <iostream>
 class Player{
     std::string playerName;
     char playerChar;
@@ -9,9 +11,9 @@ class Player{
     bool Tims;
     int rollsTims;
     int rimCups;
-
+    std::unordered_map <std::string, int> ownedProps;
 public:
-
+    Player(std::string playerName, char playerChar);
     int getPosition(); // gives players position
     void setPosition(int pos); //sets new position
     int getMoney(); // gives info of money
