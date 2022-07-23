@@ -21,7 +21,7 @@ GameBoard::GameBoard(){
     game.emplace_back(new NonOwnable{2, this}); //SLC
     game.emplace_back(new Improvable{"ML", 60, nullptr, "Arts1", 50, this});
     game.emplace_back(new NonOwnable{4, this}); // TUITION
-    game.emplace_back(new Res{"MKV", 200});
+    game.emplace_back(new Res{"MKV", 200, this});
     game.emplace_back(new Improvable{"ECH", 100, nullptr, "Arts2", 50, this});
     game.emplace_back(new NonOwnable{7, this}); // NEEDLES
     game.emplace_back(new Improvable{"PAS", 100, nullptr, "Arts2", 50, this});
@@ -31,7 +31,7 @@ GameBoard::GameBoard(){
     game.emplace_back(new Gyms{"PAC", 150});
     game.emplace_back(new Improvable{"DWE", 140, nullptr, "Eng", 100, this});
     game.emplace_back(new Improvable{"CPH", 160, nullptr, "Eng", 100, this});
-    game.emplace_back(new Res{"UWP", 200});
+    game.emplace_back(new Res{"UWP", 200, this});
     game.emplace_back(new Improvable{"LHI", 180, nullptr, "Health", 100, this});
     game.emplace_back(new NonOwnable{17, this}); // SLC
     game.emplace_back(new Improvable{"BMH", 180, nullptr, "Health", 100, this});
@@ -41,7 +41,7 @@ GameBoard::GameBoard(){
     game.emplace_back(new NonOwnable{22, this}); // NEEDLES
     game.emplace_back(new Improvable{"EV2", 220, nullptr, "Env", 150, this});
     game.emplace_back(new Improvable{"EV3", 240, nullptr, "Env", 150, this});
-    game.emplace_back(new Res{"V1", 200});
+    game.emplace_back(new Res{"V1", 200, this});
     game.emplace_back(new Improvable{"PHYS", 260, nullptr, "Sci1", 150, this});
     game.emplace_back(new Improvable{"B1", 260, nullptr, "Sci1", 150, this});
     game.emplace_back(new Gyms{"CIF", 150, nullptr});
@@ -51,7 +51,7 @@ GameBoard::GameBoard(){
     game.emplace_back(new Improvable{"ESC", 300, nullptr, "Sci2", 200, this});
     game.emplace_back(new NonOwnable{33, this}); // SLC
     game.emplace_back(new Improvable{"C2", 320, nullptr, "Sci2", 200, this});
-    game.emplace_back(new Res{"Rev", 200});
+    game.emplace_back(new Res{"Rev", 200, this});
     game.emplace_back(new NonOwnable{36, this}); // NEEDLES
     game.emplace_back(new Improvable{"MC", 350, nullptr, "Math", 200, this});
     game.emplace_back(new NonOwnable{38, this}); // COOP
