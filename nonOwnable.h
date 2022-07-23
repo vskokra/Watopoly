@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "boardcell.h"
-#include "gameBoard.h"
+#include "gameboard.h"
 
 class NonOwnable: public BoardCell {
     int pos;
