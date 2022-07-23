@@ -1,5 +1,15 @@
-#include "player.h"
-
+=#include "player.h"
+Player::Player(std::string playerName, char playerChar): playerName{playerName}, playerChar{playerChar}, position{0}, money{1500}, propVal{0}, Tims{false}, rollsTims{0}, rimCups{0}{
+    ownedProps["Arts1"] = 0;
+    ownedProps["Arts2"] = 0;
+    ownedProps["Eng"] = 0;
+    ownedProps["Health"] = 0;
+    ownedProps["Env"] = 0;
+    ownedProps["Sci1"] = 0;
+    ownedProps["Sci2"] = 0;
+    ownedProps["Math"] = 0;
+    
+}
 int Player::getPosition(){
     return position;
 }
@@ -55,9 +65,9 @@ void Player::updateWorth(int amount){
 }
 
 void Player::declareBankrupt(){
-    cout << "BANKRUPT" << endl;
+    std::cout << "BANKRUPT" << std::endl;
 }
 
 void Player::declareBankrupt(){
-    cout << "BANKRUPT" << endl;
+    std::cout << "BANKRUPT" << std::endl;
 }
