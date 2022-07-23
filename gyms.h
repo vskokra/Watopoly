@@ -3,6 +3,7 @@
 
 #include "ownable.h"
 #include "gameboard.h"
+#include "dice.h"
 
 class Gym : public Ownable{
     int calcRent(); 
