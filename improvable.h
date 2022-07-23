@@ -7,18 +7,20 @@
 
 class Player; //is forward decl enough ? 
 
+class Ownable;
+
+
 class Improvable: public Ownable {
     int improvs = 0; //by default each property has 0 improvs 
     int improvCost; 
-    std::string dept;
     int calcTuition();
-    GameBoard *game;
 
 public:
     void doOperation(Player *cur) override;
-    int getImprovs() override; 
+    int getImprovs(); 
     Improvable(std::string name, int cost, Player *owner, std::string dept, int improvCost, GameBoard *game);
     int calcRent(); 
+    std::string dept;
         
 };
 #endif

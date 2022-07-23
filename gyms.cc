@@ -11,7 +11,7 @@ int Gym::calcRent(){
     int sum = game->dice->getVal();
     //step2: access all properties ownd by Cur Owner to check for monopoly 
     Player * curOwner = this->owner;
-    int num = curOwner->propsOwned.at("Gyms"); // gives the number of properties owned by the curOwner in the same dept 
+    int num = curOwner->ownedProps.at("Gyms"); // gives the number of properties owned by the curOwner in the same dept 
     if (num == 2){
         return sum * 10;
     }
@@ -32,9 +32,9 @@ void Gym:: doOperation(Player* curr){
     } else {
         //add money to owner 
         Player * own = this->owner;
-        own->moneyAdd(amt);
+        own->money_add(amt);
         //sub money from curr 
-        curr->moneySub(amt);
+        curr->money_sub(amt);
     }
 
 }

@@ -61,9 +61,9 @@ void Improvable::doOperation(Player *curr){
     {
         // add money to owner
         Player *own = this->owner;
-        own->moneyAdd(amt);
+        own->money_add(amt);
         // sub money from curr
-        curr->moneySub(amt);
+        curr->money_sub(amt);
     }
 }
 

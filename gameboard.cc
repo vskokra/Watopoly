@@ -13,25 +13,24 @@ GameBoard::GameBoard(){
 
     //in MIl ask for player array
     dice = new Dice();
-    rimCupCount = 4;
-    isTrade = false;
+    rimCupCount = 0;
     //board created
     game.emplace_back(new NonOwnable{0, this}); // OSAP
     game.emplace_back(new Improvable{"AL",40, nullptr, "Arts1", 50, this});
     game.emplace_back(new NonOwnable{2, this}); //SLC
     game.emplace_back(new Improvable{"ML", 60, nullptr, "Arts1", 50, this});
     game.emplace_back(new NonOwnable{4, this}); // TUITION
-    game.emplace_back(new Res{"MKV", 200, this});
+    game.emplace_back(new Res{"MKV", 200, nullptr, this});
     game.emplace_back(new Improvable{"ECH", 100, nullptr, "Arts2", 50, this});
     game.emplace_back(new NonOwnable{7, this}); // NEEDLES
     game.emplace_back(new Improvable{"PAS", 100, nullptr, "Arts2", 50, this});
     game.emplace_back(new Improvable{"HH", 120, nullptr, "Arts2", 50, this});
     game.emplace_back(new NonOwnable{10, this}); // DC
     game.emplace_back(new Improvable{"RCH", 140, nullptr, "Eng", 100, this});
-    game.emplace_back(new Gyms{"PAC", 150});
+    game.emplace_back(new Gym{"PAC", 150, nullptr, this});
     game.emplace_back(new Improvable{"DWE", 140, nullptr, "Eng", 100, this});
     game.emplace_back(new Improvable{"CPH", 160, nullptr, "Eng", 100, this});
-    game.emplace_back(new Res{"UWP", 200, this});
+    game.emplace_back(new Res{"UWP", 200, nullptr, this});
     game.emplace_back(new Improvable{"LHI", 180, nullptr, "Health", 100, this});
     game.emplace_back(new NonOwnable{17, this}); // SLC
     game.emplace_back(new Improvable{"BMH", 180, nullptr, "Health", 100, this});
@@ -41,17 +40,17 @@ GameBoard::GameBoard(){
     game.emplace_back(new NonOwnable{22, this}); // NEEDLES
     game.emplace_back(new Improvable{"EV2", 220, nullptr, "Env", 150, this});
     game.emplace_back(new Improvable{"EV3", 240, nullptr, "Env", 150, this});
-    game.emplace_back(new Res{"V1", 200, this});
+    game.emplace_back(new Res{"V1", 200, nullptr, this});
     game.emplace_back(new Improvable{"PHYS", 260, nullptr, "Sci1", 150, this});
     game.emplace_back(new Improvable{"B1", 260, nullptr, "Sci1", 150, this});
-    game.emplace_back(new Gyms{"CIF", 150, nullptr});
+    game.emplace_back(new Gym{"CIF", 150, nullptr, this});
     game.emplace_back(new Improvable{"B2", 280, nullptr, "Sci1", 150, this});
     game.emplace_back(new NonOwnable{30, this}); // GOTOTIMS
     game.emplace_back(new Improvable{"EIT", 300, nullptr, "Sci2", 200, this});
     game.emplace_back(new Improvable{"ESC", 300, nullptr, "Sci2", 200, this});
     game.emplace_back(new NonOwnable{33, this}); // SLC
     game.emplace_back(new Improvable{"C2", 320, nullptr, "Sci2", 200, this});
-    game.emplace_back(new Res{"Rev", 200, this});
+    game.emplace_back(new Res{"Rev", 200, nullptr, this});
     game.emplace_back(new NonOwnable{36, this}); // NEEDLES
     game.emplace_back(new Improvable{"MC", 350, nullptr, "Math", 200, this});
     game.emplace_back(new NonOwnable{38, this}); // COOP
@@ -188,7 +187,7 @@ void GameBoard::basicFive() {
     // unmortgage
     // improve
     // next
-    int n;
+ /*   int n;
     cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: improve\n5: next\n";
     while (cin >> n) {
         cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: improve\n5: next\n";
@@ -202,15 +201,15 @@ void GameBoard::basicFive() {
             int index = propDictionary[propName];
             Ownable *ownable = dynamic_cast<Ownable *>(game[index]);
             Improvable *improvable = dynamic_cast<Improvable *>(game[index]);
-            if (improvable -> improvs != 0) {
+            if (improvable -> getImprovs() != 0) {
                 cout << "You cannot mortgage due to existing improvements\n";
                 continue;
             }
-            if (prop -> owner != currPlayer) {
+            if (ownable -> owner != currPlayer) {
                 cout << "You cannot mortgage this property since you are not the owner\n";
                 continue;
             }
-            mortgage(currPlayer, ownable);
+            //mortgage(currPlayer, ownable);
             continue;
         } else if (n == 3) {
             string propName;
@@ -233,7 +232,7 @@ void GameBoard::basicFive() {
             string propName;
             cout << "Enter property that you want to improve\n";
             cin >> propName;
-            Ownable *ownable = game[index];
+            Ownable *ownable = dynamic_cast<Ownable *>(game[index]);
             Improvable *improvable = game[index];
             if (ownable -> owner != currPlayer) {
                 cout << "You cannot improve, since you are not the owner\n";
@@ -253,14 +252,14 @@ void GameBoard::basicFive() {
                     continue;
                 }
             } else if (x == 2) {
-                if (improvable -> improvs == 0) {
+                if (improvable -> getImprovs() == 0) {
                     cout << "This building does not have any improvements to sell\n";
                     continue;
                 } else {
                     improve_sell(currPlayer, improvable);
                 }
             } else {
-                cout << "Incorrect option entered\n"
+                cout << "Incorrect option entered\n";
                 continue;
             }
             continue;
@@ -272,11 +271,11 @@ void GameBoard::basicFive() {
             continue;
         }
     }
+*/
 }
 
 
 void GameBoard::next() {
-    int index = 0;
     int flag = false;
     for (int x = 0; x < player.size() - 1; ++x) {
         if (player[x] == currPlayer) {

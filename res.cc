@@ -5,10 +5,12 @@
 using namespace std;
 
 
+Res::Res(string name, int cost, Player *owner, GameBoard *game) : Ownable{name, cost, owner, game} {}
+
 int Res::calcRent(){
 
     Player *curOwner = this->owner;
-    int numOwned = curOwner->propsOwned.at("Res"); // gives the number of properties owned by the curOwner in the same dept
+    int numOwned = curOwner->ownedProps.at("Res"); // gives the number of properties owned by the curOwner in the same dept
     return 25 * numOwned; 
     
 }
@@ -28,9 +30,9 @@ void Res::doOperation(Player * curr){
     } else {
         //add money to owner 
         Player * own = this->owner;
-        own->moneyAdd(amt);
+        own->money_add(amt);
         //sub money from curr 
-        curr->moneySub(amt);
+        curr->money_sub(amt);
     }
 
 }
