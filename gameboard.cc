@@ -63,7 +63,7 @@ GameBoard::GameBoard(){
     //game.emplace_back(new {"COOP FEE"});
     game.emplace_back(new Improvable{"DC", 400, "Math", 200});
 
-    //make the Monopoly dictionary 
+    // Initialize the Monopoly dictionary
     //unordered_map<string, vector<int>> tuitionChart;
     //each index consists price of the buildings
     tuitionChart["ML"] = vector<int>{4, 20, 60, 180, 320, 450};
