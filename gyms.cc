@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Gym::Gym(string name, int cost, Player *owner, GameBoard *game) : Ownable{name, cost, owner}, game{game} {}
+Gym::Gym(string name, int cost, Player *owner, GameBoard *game) : Ownable{name, cost, owner, game} {}
 
 int Gym::calcRent(){ 
     //step1: player has to roll die
