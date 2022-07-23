@@ -26,7 +26,6 @@ public:
     ~GameBoard();
     void roll();
     void next();
-    // int getPosition(Player player); // Gets player's current position
     void move(Player *player); // Gets player's current position and changes it to new position after roll;
     void buyProperty(Player *player, Ownable *prop);
     void sellProperty(Player *player, Ownable *prop);
