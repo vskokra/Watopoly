@@ -1,3 +1,6 @@
+#ifndef __PLAYER_H_
+#define __PLAYER_H_
+
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -33,3 +36,5 @@ public:
     void declareBankrupt(Player *p);
 
 };
+
+#endif
