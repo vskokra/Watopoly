@@ -10,58 +10,47 @@ using namespace std;
 
 
 GameBoard::GameBoard(){   
+
+    game.emplace_back(new NonOwnable{0, this}); // OSAP
+    game.empalce_back(new Improvable{"AL",40, nullptr, "Arts1", 50, this});
     game.emplace_back(new NonOwnable{2, this}); //SLC
+    game.emplace_back(new Improvable{"ML", 60, nullptr, "Arts1", 50, this});
     game.emplace_back(new NonOwnable{4, this}); // TUITION
-    game.emplace_back(new NonOwnable{7, this}); // NEEDLES
-    game.emplace_back(new NonOwnable{10, this}); // DC
-    game.emplace_back(new NonOwnable{17, this}); // SLC
-    game.emplace_back(new NonOwnable{20, this}); // Goose
-    game.emplace_back(new NonOwnable{22, this}); // NEEDLES
-    game.emplace_back(new NonOwnable{30, this}); // GOTOTIMS
-    game.emplace_back(new NonOwnable{33, this}); // SLC
-    game.emplace_back(new NonOwnable{36, this}); // NEEDLES
-    game.emplace_back(new NonOwnable{38, this}); // COOP
-    game.emplace_back(new NonOwnable{40, this}); // OSAP
-    game.empalce_back(new Improvable{"AL",40, "Arts1", 50});
-    game.emplace_back(new {"SLC"});
-    game.emplace_back(new Improvable{"ML", 60, "Arts1", 50});
-    //game.emplace_back(new {"tuition"});
     game.emplace_back(new Res{"MKV", 200});
-    game.emplace_back(new Improvable{"ECH", 100, "Arts2", 50});
-    //game.emplace_back(new {"Needles Hall"});
-    game.emplace_back(new Improvable{"PAS", 100, "Arts2", 50});
-    game.emplace_back(new Improvable{"HH", 120, "Arts2", 50});
-    //game.emplace_back(new {"DC Tims Line"});
-    game.emplace_back(new Improvable{"RCH", 140, "Eng", 100});
+    game.emplace_back(new Improvable{"ECH", 100, nullptr, "Arts2", 50, this});
+    game.emplace_back(new NonOwnable{7, this}); // NEEDLES
+    game.emplace_back(new Improvable{"PAS", 100, nullptr, "Arts2", 50, this});
+    game.emplace_back(new Improvable{"HH", 120, nullptr, "Arts2", 50, this});
+    game.emplace_back(new NonOwnable{10, this}); // DC
+    game.emplace_back(new Improvable{"RCH", 140, nullptr, "Eng", 100, this});
     game.emplace_back(new Gyms{"PAC", 150});
-    game.emplace_back(new Improvable{"DWE", 140, "Eng", 100});
-    game.emplace_back(new Improvable{"CPH", 160, "Eng", 100});
+    game.emplace_back(new Improvable{"DWE", 140, nullptr, "Eng", 100, this});
+    game.emplace_back(new Improvable{"CPH", 160, nullptr, "Eng", 100, this});
     game.emplace_back(new Res{"UWP", 200});
-    game.emplace_back(new Improvable{"LHI", 180, "Health", 100});
-    //game.emplace_back(new {"SLC"});
-    game.emplace_back(new Improvable{"BMH", 180, "Health", 100});
-    game.emplace_back(new Improvable{"OPT", 200, "Health", 100});
-    //game.emplace_back(new {"Goose Nesting"});
-    game.emplace_back(new Improvable{"EV1", 220, "Env", 150});
-    //game.emplace_back(new {"Needles Hall"});
-    game.emplace_back(new Improvable{"EV2", 220, "Env", 150});
-    game.emplace_back(new Improvable{"EV3", 240, "Env", 150});
+    game.emplace_back(new Improvable{"LHI", 180, nullptr, "Health", 100, this});
+    game.emplace_back(new NonOwnable{17, this}); // SLC
+    game.emplace_back(new Improvable{"BMH", 180, nullptr, "Health", 100, this});
+    game.emplace_back(new Improvable{"OPT", 200, nullptr, "Health", 100, this});
+    game.emplace_back(new NonOwnable{20, this}); // Goose
+    game.emplace_back(new Improvable{"EV1", 220, nullptr, "Env", 150, this});
+    game.emplace_back(new NonOwnable{22, this}); // NEEDLES
+    game.emplace_back(new Improvable{"EV2", 220, nullptr, "Env", 150, this});
+    game.emplace_back(new Improvable{"EV3", 240, nullptr, "Env", 150, this});
     game.emplace_back(new Res{"V1", 200});
-    game.emplace_back(new Improvable{"PHYS", 260, "Sci1", 150});
-    // game.emplace_back(new {"Needles Hall"});
-    game.emplace_back(new Improvable{"B1", 260, "Sci1", 150});
+    game.emplace_back(new Improvable{"PHYS", 260, nullptr, "Sci1", 150, this});
+    game.emplace_back(new Improvable{"B1", 260, nullptr, "Sci1", 150, this});
     game.emplace_back(new Gyms{"CIF", 150, nullptr});
-    game.emplace_back(new Improvable{"B2", 280, "Sci1", 150});
-    // game.emplace_back(new {"Go to Tims"})
-    game.emplace_back(new Improvable{"EIT", 300, "Sci2", 200});
-    game.emplace_back(new Improvable{"ESC", 300, "Sci2", 200});
-    // game.emplace_back(new {"SLC"});
-    game.emplace_back(new Improvable{"C2", 320, "Sci2", 200});
+    game.emplace_back(new Improvable{"B2", 280, nullptr, "Sci1", 150, this});
+    game.emplace_back(new NonOwnable{30, this}); // GOTOTIMS
+    game.emplace_back(new Improvable{"EIT", 300, nullptr, "Sci2", 200, this});
+    game.emplace_back(new Improvable{"ESC", 300, nullptr, "Sci2", 200, this});
+    game.emplace_back(new NonOwnable{33, this}); // SLC
+    game.emplace_back(new Improvable{"C2", 320, nullptr, "Sci2", 200, this});
     game.emplace_back(new Res{"Rev", 200});
-    // game.emplace_back(new {"Needles Hall"});
-    game.emplace_back(new Improvable{"MC", 350, "Math", 200});
-    //game.emplace_back(new {"COOP FEE"});
-    game.emplace_back(new Improvable{"DC", 400, "Math", 200});
+    game.emplace_back(new NonOwnable{36, this}); // NEEDLES
+    game.emplace_back(new Improvable{"MC", 350, nullptr, "Math", 200, this});
+    game.emplace_back(new NonOwnable{38, this}); // COOP
+    game.emplace_back(new Improvable{"DC", 400, nullptr, "Math", 200, this});
 
     // Initialize the Monopoly dictionary
     //unordered_map<string, vector<int>> tuitionChart;
@@ -77,19 +66,18 @@ GameBoard::GameBoard(){
     tuitionChart["LHI"] = vector<int>{14, 70, 200, 550, 750, 950};
     tuitionChart["BMH"] = vector<int>{14, 70, 200, 550, 750, 950};
     tuitionChart["OPT"] = vector<int>{16, 80, 220, 600, 800, 950};
-    tuitionChart["AL"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["EV1"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["EV2"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["EV3"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["PHYS"] =vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["B1"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["B2"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["EIT"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["ESC"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["C2"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["MC"] = vector<int>{0, 0, 0, 0, 0, 0};
-    tuitionChart["DC"] = vector<int>{0, 0, 0, 0, 0, 0};
-    
+    tuitionChart["EV1"] = vector<int>{18, 90, 250, 700, 875, 1050};
+    tuitionChart["EV2"] = vector<int>{18, 90, 250, 700, 875, 1050};
+    tuitionChart["EV3"] = vector<int>{20, 100, 300, 750, 925, 1100};
+    tuitionChart["PHYS"] =vector<int>{22, 110, 330, 800, 975, 1150};
+    tuitionChart["B1"] =vector<int>{22, 110, 330, 800, 975, 1150};
+    tuitionChart["B2"] = vector<int>{24, 120, 360, 850, 1025, 1200};
+    tuitionChart["EIT"] = vector<int>{26, 130, 390, 900, 1100, 1275};
+    tuitionChart["ESC"] = vector<int>{26, 130, 390, 900, 1100, 1275};
+    tuitionChart["C2"] = vector<int>{28, 150, 450, 1000, 1200, 1400};
+    tuitionChart["MC"] = vector<int>{35, 175, 500, 1100, 1300, 1500};
+    tuitionChart["DC"] = vector<int>{50, 200, 600, 1400, 1700, 2000};
+
     dice = new Dice();
     rimCupCount = 4;
 }
@@ -159,6 +147,6 @@ void GameBoard::roll(){
         if (newPosition < oldPosition) { // Implementation for crossing OSAP
             currPlayer->money_add(200);
         }
-        doOperation();
+        game[currPlayer->getPosition()]->doOperation();
     }
 }
