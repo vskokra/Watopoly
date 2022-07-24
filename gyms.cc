@@ -1,25 +1,23 @@
+#include "res.h"
 #include "player.h"
-#include "gyms.h"
 #include <iostream>
-
+#include <string> 
 using namespace std;
 
-Gym::Gym(string name, int cost, Player *owner, GameBoard *game) : Ownable{name, cost, owner, game} {}
 
-int Gym::calcRent(){ 
-    //step1: player has to roll die
-    int sum = game->dice->getVal();
-    //step2: access all properties ownd by Cur Owner to check for monopoly 
-    Player * curOwner = this->owner;
-    int num = curOwner->ownedProps.at("Gyms"); // gives the number of properties owned by the curOwner in the same dept 
-    if (num == 2){
-        return sum * 10;
-    }
-    return sum * 4; 
+Res::Res(string name, int cost,shared_ptr<Player>owner, GameBoard *game) : Ownable{name, cost, owner, "Res", game} {}
+
+int Res::calcRent(){
+
+    shared_ptr<Player> curOwner = this->owner;
+    int numOwned = curOwner->ownedProps.at("Res"); // gives the number of properties owned by the curOwner in the same dept
+    return 25 * numOwned; 
+    
 }
 
-void Gym:: doOperation(Player* curr){
-    //step1: Calculate the rent
+void Res::doOperation(shared_ptr<Player>curr){
+
+    //step 1 : calculate the rent 
     int amt = (*this).calcRent(); 
 
     //step 2:
@@ -31,7 +29,7 @@ void Gym:: doOperation(Player* curr){
         
     } else {
         //add money to owner 
-        Player * own = this->owner;
+       shared_ptr<Player>own = this->owner;
         own->money_add(amt);
         //sub money from curr 
         curr->money_sub(amt);
