@@ -16,8 +16,8 @@ class Ownable: public BoardCell{
         virtual void doOperation(shared_ptr<Player> curr) override = 0;
         virtual int getImprovs() override = 0;
         virtual void resetImprovs() override = 0;
-        virtual void getImprovCost() override = 0;
-        virtual void setImprovs() override = 0;
+        virtual int getImprovCost() override = 0;
+        virtual void setImprovs(int amt) override = 0;
         std::string propName;
         shared_ptr<Player>owner; // set up owner field
         bool isMortgage = false; //default val
