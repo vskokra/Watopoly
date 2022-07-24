@@ -7,7 +7,10 @@ class Player;
 class BoardCell{
     
     public: 
-        virtual void doOperation(Player *curr) = 0;
-        virtual int getImprovs(); // return 0 by default   
-};
+        virtual void doOperation(shared_ptr<Player>curr) = 0;
+        virtual int getImprovs(); // return 0 by default
+        virtual void resetImprovs();
+        virtual void setImprovs();
+        virtual void getImprovCost();
+    };
 #endif 
