@@ -182,6 +182,17 @@ void GameBoard::roll(){
     }
 }
 
+bool isNumber(const string &str)
+{
+    for (char &c : str)
+    {
+        if (isdigit(c) == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
 
 /*void GameBoard::basicFive() {
     // trade
