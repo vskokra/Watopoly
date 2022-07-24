@@ -5,6 +5,8 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
+#include "ownable.h"
+
 class Player{
     std::string playerName;
     char playerChar;
@@ -14,6 +16,7 @@ class Player{
     bool Tims;
     int rollsTims;
     int rimCups;
+    std::vector <Ownable *> playerProps;
 public:
     std::unordered_map <std::string, int> ownedProps;
     Player(std::string playerName, char playerChar);
@@ -34,6 +37,7 @@ public:
     void updateWorth(int amount);
     void declareBankrupt();
     void declareBankrupt(Player *p);
+    void addProps(Ownable *prop);
 
 };
 
