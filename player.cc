@@ -1,5 +1,9 @@
 #include "player.h"
-Player::Player(std::string playerName, char playerChar): playerName{playerName}, playerChar{playerChar}, position{0}, money{1500}, propVal{0}, Tims{false}, rollsTims{0}, rimCups{0}{
+#include <memory>
+#include <vector>
+using namespace std; 
+
+Player::Player(string playerName, char playerChar): playerName{playerName}, playerChar{playerChar}, position{0}, money{1500}, propVal{0}, Tims{false}, rollsTims{0}, rimCups{0}{
     ownedProps["Arts1"] = 0;
     ownedProps["Arts2"] = 0;
     ownedProps["Eng"] = 0;
@@ -10,6 +14,18 @@ Player::Player(std::string playerName, char playerChar): playerName{playerName},
     ownedProps["Math"] = 0;
     
 }
+
+void addProp(shared_ptr<Ownable> newProp){
+    playerProps.emplace_back(newProp);
+}
+
+void subProp(shared_ptr<Ownable> remProp){
+    //pointer to property that needs to be removed 
+    //erase and remove idiom 
+    playerProps.erase(remove(playerProps.begin(), playerProps.end(), remProp),playerProps.end());
+}
+
+
 int Player::getPosition(){
     return position;
 }
