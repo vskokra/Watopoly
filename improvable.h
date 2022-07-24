@@ -16,11 +16,15 @@ class Improvable: public Ownable {
     int calcTuition();
 
 public:
-    void doOperation(Player *cur) override;
-    int getImprovs(); 
-    Improvable(std::string name, int cost, Player *owner, std::string dept, int improvCost, GameBoard *game);
+    void doOperation(shared_ptr<Player>curr) override;
+    int getImprovs() override; 
+    Improvable(std::string name, int cost, shared_ptr<Player>owner, std::string dept, int improvCost, GameBoard *game);
     int calcRent(); 
     std::string dept;
+    void resetImprovs() override;
+    int getImprovCost() override;
+    void setImprovs() override;
+    void resetImprovs() override;
         
 };
 #endif
