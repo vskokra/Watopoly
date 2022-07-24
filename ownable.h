@@ -10,11 +10,16 @@ class Ownable: public BoardCell{
     public:
         int cost;
         GameBoard *game;
+        Ownable(std::string name, int cost,  shared_ptr<Player>owner , GameBoard *game);
         void buyProperty();
-        virtual void doOperation(Player * curr) override = 0;  
-        Ownable(std::string name, int cost, Player *owner, GameBoard *game);
+        void auction();
+        virtual void doOperation(shared_ptr<Player> curr) override = 0;
+        virtual int getImprovs() override = 0;
+        virtual void resetImprovs() override = 0;
+        virtual void getImprovCost() override = 0;
+        virtual void setImprovs() override = 0;
         std::string propName;
-        Player *owner; // set up owner field
+        shared_ptr<Player>owner; // set up owner field
         bool isMortgage = false; //default val
 }; 
 #endif
