@@ -10,6 +10,26 @@ Player::Player(std::string playerName, char playerChar): playerName{playerName},
     ownedProps["Math"] = 0;
     
 }
+
+void addProp(shared_ptr<Ownable> newProp){
+    playerProps.emplace_back(newProp);
+
+    //update the propsOwned count for that dept by 1
+    string deptName = newProp->dept;
+    ownedProps[deptName] += 1;
+
+}
+
+void subProp(shared_ptr<Ownable> remProp){
+    //pointer to property that needs to be removed 
+    //erase and remove idiom 
+    playerProps.erase(remove(playerProps.begin(), playerProps.end(), remProp),playerProps.end());
+
+    // update the propsOwned count for that dept by 1
+    string deptName = newProp->dept;
+    ownedProps[deptName] -= 1;
+}
+
 int Player::getPosition(){
     return position;
 }
