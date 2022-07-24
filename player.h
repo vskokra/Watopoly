@@ -32,12 +32,8 @@ public:
     void addRollsTims();
     void resetRollsTims();
     int getRollsTims();
-    bool isBankrupt(int amount);
     int getWorth();
     void updateWorth(int amount);
-    void declareBankrupt();
-    void declareBankrupt(shared_ptr<Player> p);
-    void addProps(shared_ptr<Ownable> prop);
 
 };
 
