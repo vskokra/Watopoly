@@ -20,6 +20,8 @@ public:
     std::unordered_map <std::string, int> ownedProps;
     std::vector <shared_ptr<Ownable>> playerProps;
     Player(std::string playerName, char playerChar);
+    void addProp(shared_ptr<Ownable> );
+    void subProp(shared_ptr<Ownable>);
     int getPosition(); // gives players position
     void setPosition(int pos); //sets new position
     int getMoney(); // gives info of money
