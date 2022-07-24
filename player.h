@@ -16,9 +16,9 @@ class Player{
     bool Tims;
     int rollsTims;
     int rimCups;
-    std::vector <Ownable *> playerProps;
 public:
     std::unordered_map <std::string, int> ownedProps;
+    std::vector <shared_ptr<Ownable>> playerProps;
     Player(std::string playerName, char playerChar);
     int getPosition(); // gives players position
     void setPosition(int pos); //sets new position
@@ -36,8 +36,8 @@ public:
     int getWorth();
     void updateWorth(int amount);
     void declareBankrupt();
-    void declareBankrupt(Player *p);
-    void addProps(Ownable *prop);
+    void declareBankrupt(shared_ptr<Player> p);
+    void addProps(shared_ptr<Ownable> prop);
 
 };
 
