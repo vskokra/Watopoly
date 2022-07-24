@@ -16,8 +16,8 @@ using namespace std;
 
 class GameBoard
 {
-    std::vector <BoardCell*> game; // Store in order of occurence on board with CollectOSAP as 0;
-    vector<Player *> player;     // Store player in order of turn 
+    std::vector <shared_ptr<BoardCell>> gb; // Store in order of occurence on board with CollectOSAP as 0;
+    vector <shared_ptr<Player>> player;     // Store player in order of turn 
     // char *playerChar[6]; // Store in order of turn/player
     std::unordered_map<std::string, int> propDictionary;
 public:
@@ -34,12 +34,17 @@ public:
 //    void improve_sell(Player *player, Improvable *prop);
 //    void trade(Player *player1, Ownable *prop1, int *money1, Player *player2, Ownable *prop2, int *money2);
 //    void auction(Ownable *prop);
-//    bool bankrupt(); // autoChecker
-    virtual void doOperation(Player *curr);
+    bool bankrupt(shared_ptr<Player>p, int amount); // autoChecker
+    void declareBankrupt(shared_ptr<Player> p);
+    virtual void doOperation(shared_ptr<Player> currPlayer);
     void basicFive();
-    Player *currPlayer;
+    shared_ptr <Player> currPlayer;
     Dice *dice;
     bool rollComplete;
     int rimCupCount;
+    shared_ptr<Ownable> getOwnable();
+    void declareBankrupt(shared_ptr<Player> pay, shared_ptr<Player> collect);
+    void improveBuy(shared_ptr <Player> p);
+    void improveSell(shared_ptr <Player> p);
 };
 #endif
