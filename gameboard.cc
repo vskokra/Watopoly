@@ -120,8 +120,8 @@ void GameBoard::roll(){
         if(currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2){
             if(currPlayer->getRimCups() == 0){
                  while (currPlayer->getMoney() < 50){
-                    if (currPlayer->isBankrupt(50)){
-                         currPlayer->declareBankrupt();
+                    if (bankrupt(currPlayer, 50)){
+                         declareBankrupt(currPlayer);
                     }
                     else{
                         cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
@@ -138,8 +138,8 @@ void GameBoard::roll(){
                     if (cin) {
                         if(i == 1){
                             while (currPlayer->getMoney() < 50){
-                                if (currPlayer->isBankrupt(50)){
-                                    currPlayer->declareBankrupt();
+                                if (bankrupt(currPlayer, 50)){
+                                    declareBankrupt(currPlayer);
                                 }
                                 else{
                                     cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;
@@ -370,7 +370,15 @@ void GameBoard::improveBuy(shared_ptr <Player> p){
     int ownedCount= p-> ownedProps[deptName];
           //  if (x == 1) {
     if (((deptName == "Math" || deptName == "Arts1") && ownedCount == 2) || ownedCount == 3)
-        {
+        {       for(int i = 0; i<gb.size(); i++){
+                shared_ptr <Ownable> prop = dynamic_pointer_cast<Ownable>(gb[index]);
+                if(prop->dept == improvable->dept){
+                    if(prop->isMortgage == true){
+                        cout<<"There are mortgaged properties in the monopoly"<< endl;
+                        return;
+                    }
+                }
+            }
             if(improvable->getImprovs() < 5 && p->getMoney() > improvable->getImprovCost()){
                 setImprove(improvable->getImprovs() + 1);
                 p->money_sub(improvable->getImprovCost());
@@ -414,18 +422,54 @@ void GameBoard::improveSell(shared_ptr <Player> p){
 
 }
 
-// check this func online
-bool isNumber(const string &str)
-{
-    for (char &c : str)
-    {
-        if (isdigit(c) == 0)
-        {
-            return false;
-        }
-    }
-    return true;
+void GameBoard::mortgage(shared_ptr <Player> p){
+    string propName;
+            cout << "Enter property that you want to mortgage\n";
+            cin >> propName;
+            int index = propDictionary[propName];
+            shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+            //Improvable *improvable = dynamic_cast<Improvable *>(gb[index]);
+            if (ownable -> getImprovs() != 0) {
+                cout << "You cannot mortgage due to existing improvements\n";
+                return;
+            }
+            //check neighbours still have improvs
+            for(int i = 0; i<gb.size(); i++){
+                shared_ptr <Ownable> prop = dynamic_pointer_cast<Ownable>(gb[index]);
+                if(prop->dept == ownable->dept){
+                    if(prop->getImprovs() > 0){
+                        cout<<"There are improvements in the monopoly"<< endl;
+                        return;
+                    }
+                }
+            }
+
+            if (ownable -> owner != currPlayer) {
+                cout << "You cannot mortgage this property since you are not the owner\n";
+                return;
+            }
+            ownable->setMortgage(true);
 }
+
+void GameBoard::unmortgage(shared_ptr <Player> p){
+    string propName;
+            cout << "Enter property that you want to unmortgage\n";
+            cin >> propName;
+            int index = propDictionary[propName];
+            shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+            //Improvable *improvable = dynamic_cast<Improvable *>(gb[index]);
+            if (p->getMoney() < (ownable->cost)*0.6) {
+                cout << "You cannot unmortgage due to less money\n";
+                return;
+            }
+            if (ownable -> owner != currPlayer) {
+                cout << "You cannot unmortgage this property since you are not the owner\n";
+                return;
+            }
+            ownable->setMortgage(false);
+}
+
+
 
 void trade()
 {
