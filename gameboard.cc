@@ -413,3 +413,231 @@ void GameBoard::improveSell(shared_ptr <Player> p){
                 }
 
 }
+
+// check this func online
+bool isNumber(const string &str)
+{
+    for (char &c : str)
+    {
+        if (isdigit(c) == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void trade()
+{
+
+    cout << "Enter the name of the person you want to trade with, what you want to give and what you want to recieve\n";
+
+    string nameOther, give, receive;
+    cin >> nameOther;
+    cin >> give;
+    cin >> receive;
+
+    // check if give and receive are properites or money
+    bool giveMoney;
+    bool receiveMoney;
+    giveMoney = isNumber(give);
+    receiveMoney = isNumber(receive)
+
+    //check if the prop names entered are valid 
+
+    if (!giveMoney){
+        if (propDictionary.count(give) == 0){
+            cout << "Inavlid property name" << endl;
+            return;
+        }
+    }
+
+    if(!receiveMoney){
+        if (propDictionary.count(receive) == 0)
+        {
+            cout << "Inavlid property name" << endl;
+            return;
+        }
+    }
+
+        // reject money for money trade
+        if (giveMoney && receiveMoney)
+    {
+        cout << "Invalid trade. You can't exchange money for money." << endl;
+        // not sure if this is right to do;
+        return;
+    }
+
+    // convert the give and receive into ints if they represent money
+    int amtGive, amtReceive;
+    if (giveMoney)
+    {
+        amtGive = atoi(give);
+    }
+    if (receiveMoney)
+    {
+        amtReceive = atoi(receive)
+    }
+
+    // cur wants to give prop for prop
+    if (!giveMoney && !receiveMoney)
+    {
+        // check property names are valid
+        trade(give, receive, nameOther);
+    }
+    else if ((giveMoney && !receiveMoney))
+    {
+        trade(amtGive, receive, nameOther);
+    }
+    else
+    {
+        trade(give, amtReceive, nameOther);
+    }
+}
+
+void trade(string give, string receive)
+{
+
+    int idx1 = 0; // index of prop cur player wants to give
+    int idx2 = 0; // index of prop cur players wants to receive
+
+    idx1 = propDictionary[give];
+    idx2 = propDictionary[receive];
+
+    shared_ptr<Ownable> propGive = dynamic_pointer_cast<Ownable>(game[idx1]);
+    shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(game[idx2]);
+
+    // check if properties involved in the trade are improv free
+    // reject if not
+
+    int num1 = propGive->getImprovs();    // improvs on Propgive
+    int num2 = propReceive->getImprovs(); // improvs on propReceive
+
+    if (num1 != 0 || num2 != 0)
+    {
+        cout << "Invalid trade. You can't give properties with improvements" << endl;
+        return;
+    }
+
+    // valid trade - transaction occurs
+    Player p1 = currPlayer // how to access cur players name ??
+        Player p2;
+    for (int i = 0; i < player.size; i++)
+    {
+        if (nameOther == player[i]->getName())
+        {
+            p2 = player[i] break;
+        }
+    }
+
+    // step1: add the propGive to other player
+    p2->addProp(propGive);
+
+    // step2: sub propGive from cur
+    p1->subProp(propGive);
+
+    // step3: add the propReceive to cur
+    p1->addProp(propReceive);
+
+    // step4: sub the propReceive from other
+    p2->subProp(propReceive);
+}
+
+void trade(int amtGive, string receive, string nameOther)
+{
+
+    // cur wants to give money for prop
+
+    idx2 = propDictionary[receive];
+
+    shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(game[idx2]);
+
+    // check if properties involved in the trade are improv free
+    // reject if not
+
+    int num2 = propReceive->getImprovs(); // improvs on propReceive
+
+    if (num2 != 0)
+    {
+        cout << "Invalid trade. You can't give properties with improvements" << endl;
+        continue;
+    }
+
+    // check if cur has enough money to make the trade,
+    // reject if not
+    if (currPlayer->getMoney() < amt)
+    {
+        cout << "Invalid trade. You don't have sufficient funds" << endl;
+    }
+
+    // valid trade - transaction occurs
+    Player p1 = currPlayer // how to access cur players name ??
+        Player p2;
+    for (int i = 0; i < player.size; i++)
+    {
+        if (nameOther == player[i]->getName())
+        {
+            p2 = player[i] break;
+        }
+    }
+    // step1: add the propReceive to cur player
+
+    p1->addProp(propReceive);
+
+    // step2: sub propReceive from other
+    p2->subProp(propReceive);
+
+    // step3: add amt to other
+    p2->money_add(amt);
+
+    // step4: sub amt from cur
+    p1->money_sub(amt);
+}
+
+void trade(string give, int amtReceive, string nameOther)
+{
+    // cur wants to give prop for money
+    idx1 = propDictionary[give];
+    shared_ptr<Ownable> propGive = dynamic_pointer_cast<Ownable>(game[idx1]);
+
+    // check if properties involved in the trade are improv free
+    // reject if not
+
+    int num1 = propGive->getImprovs(); // improvs on propReceive
+
+    if (num1 != 0)
+    {
+        cout << "Invalid trade. You can't give properties with improvements" << endl;
+        continue;
+    }
+    Player p1 = currPlayer // how to access cur players name ??
+        Player p2;
+    for (int i = 0; i < player.size; i++)
+    {
+        if (nameOther == player[i]->getName())
+        {
+            p2 = player[i] break;
+        }
+    }
+    // check if cur has enough money to make the trade,
+    // reject if not
+    if (p2->getMoney() < amtReceive)
+    {
+        cout << "Invalid trade. You don't have sufficient funds" << endl;
+    }
+
+    // valid trade - transaction occurs
+
+    // step1: add the propGive to other player
+
+    p2->addProp(propReceive);
+
+    // step2: sub propGive from other
+    p1->subProp(propReceive);
+
+    // step3: add amt to Cur
+    p1->money_add(amtReceive);
+
+    // step4: sub amt from other
+    p2->money_sub(amtReceive);
+}
