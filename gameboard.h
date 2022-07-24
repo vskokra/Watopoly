@@ -46,5 +46,9 @@ public:
     void declareBankrupt(shared_ptr<Player> pay, shared_ptr<Player> collect);
     void improveBuy(shared_ptr <Player> p);
     void improveSell(shared_ptr <Player> p);
+    void trade();
+    void trade(string prop1, string prop2, string name);
+    void trade(int amt, string prop, string name);
+    void trade(string prop, int amt,  string name);
 };
 #endif
