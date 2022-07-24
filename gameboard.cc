@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <iostream>
+#include <memory>
 #include "improvable.h"
 #include "res.h"
 #include "gameboard.h"
@@ -14,47 +15,48 @@ GameBoard::GameBoard(){
     //in MIl ask for player array
     dice = new Dice();
     rimCupCount = 0;
+    currPlayer = player[0];
     //board created
-    game.emplace_back(new NonOwnable{0, this}); // OSAP
-    game.emplace_back(new Improvable{"AL",40, nullptr, "Arts1", 50, this});
-    game.emplace_back(new NonOwnable{2, this}); //SLC
-    game.emplace_back(new Improvable{"ML", 60, nullptr, "Arts1", 50, this});
-    game.emplace_back(new NonOwnable{4, this}); // TUITION
-    game.emplace_back(new Res{"MKV", 200, nullptr, this});
-    game.emplace_back(new Improvable{"ECH", 100, nullptr, "Arts2", 50, this});
-    game.emplace_back(new NonOwnable{7, this}); // NEEDLES
-    game.emplace_back(new Improvable{"PAS", 100, nullptr, "Arts2", 50, this});
-    game.emplace_back(new Improvable{"HH", 120, nullptr, "Arts2", 50, this});
-    game.emplace_back(new NonOwnable{10, this}); // DC
-    game.emplace_back(new Improvable{"RCH", 140, nullptr, "Eng", 100, this});
-    game.emplace_back(new Gym{"PAC", 150, nullptr, this});
-    game.emplace_back(new Improvable{"DWE", 140, nullptr, "Eng", 100, this});
-    game.emplace_back(new Improvable{"CPH", 160, nullptr, "Eng", 100, this});
-    game.emplace_back(new Res{"UWP", 200, nullptr, this});
-    game.emplace_back(new Improvable{"LHI", 180, nullptr, "Health", 100, this});
-    game.emplace_back(new NonOwnable{17, this}); // SLC
-    game.emplace_back(new Improvable{"BMH", 180, nullptr, "Health", 100, this});
-    game.emplace_back(new Improvable{"OPT", 200, nullptr, "Health", 100, this});
-    game.emplace_back(new NonOwnable{20, this}); // Goose
-    game.emplace_back(new Improvable{"EV1", 220, nullptr, "Env", 150, this});
-    game.emplace_back(new NonOwnable{22, this}); // NEEDLES
-    game.emplace_back(new Improvable{"EV2", 220, nullptr, "Env", 150, this});
-    game.emplace_back(new Improvable{"EV3", 240, nullptr, "Env", 150, this});
-    game.emplace_back(new Res{"V1", 200, nullptr, this});
-    game.emplace_back(new Improvable{"PHYS", 260, nullptr, "Sci1", 150, this});
-    game.emplace_back(new Improvable{"B1", 260, nullptr, "Sci1", 150, this});
-    game.emplace_back(new Gym{"CIF", 150, nullptr, this});
-    game.emplace_back(new Improvable{"B2", 280, nullptr, "Sci1", 150, this});
-    game.emplace_back(new NonOwnable{30, this}); // GOTOTIMS
-    game.emplace_back(new Improvable{"EIT", 300, nullptr, "Sci2", 200, this});
-    game.emplace_back(new Improvable{"ESC", 300, nullptr, "Sci2", 200, this});
-    game.emplace_back(new NonOwnable{33, this}); // SLC
-    game.emplace_back(new Improvable{"C2", 320, nullptr, "Sci2", 200, this});
-    game.emplace_back(new Res{"Rev", 200, nullptr, this});
-    game.emplace_back(new NonOwnable{36, this}); // NEEDLES
-    game.emplace_back(new Improvable{"MC", 350, nullptr, "Math", 200, this});
-    game.emplace_back(new NonOwnable{38, this}); // COOP
-    game.emplace_back(new Improvable{"DC", 400, nullptr, "Math", 200, this});
+    gb.emplace_back(make_shared<NonOwnable>(0, this)); // OSAP
+    gb.emplace_back(make_shared<Improvable>("AL",40, nullptr, "Arts1", 50, this));
+    gb.emplace_back(make_shared<NonOwnable>(2, this)); //SLC
+    gb.emplace_back(make_shared<Improvable>("ML", 60, nullptr, "Arts1", 50, this));
+    gb.emplace_back(make_shared<NonOwnable>(4, this)); // TUITION
+    gb.emplace_back(make_shared<Res>("MKV", 200, nullptr, this));
+    gb.emplace_back(make_shared<Improvable>("ECH", 100, nullptr, "Arts2", 50, this));
+    gb.emplace_back(make_shared<NonOwnable>(7, this)); // NEEDLES
+    gb.emplace_back(make_shared<Improvable>("PAS", 100, nullptr, "Arts2", 50, this));
+    gb.emplace_back(make_shared<Improvable>("HH", 120, nullptr, "Arts2", 50, this));
+    gb.emplace_back(make_shared<NonOwnable>(10, this)); // DC
+    gb.emplace_back(make_shared<Improvable>("RCH", 140, nullptr, "Eng", 100, this));
+    gb.emplace_back(make_shared<Gym>("PAC", 150, nullptr, this));
+    gb.emplace_back(make_shared<Improvable>("DWE", 140, nullptr, "Eng", 100, this));
+    gb.emplace_back(make_shared<Improvable>("CPH", 160, nullptr, "Eng", 100, this));
+    gb.emplace_back(make_shared<Res>("UWP", 200, nullptr, this));
+    gb.emplace_back(make_shared<Improvable>("LHI", 180, nullptr, "Health", 100, this));
+    gb.emplace_back(make_shared<NonOwnable>(17, this)); // SLC
+    gb.emplace_back(make_shared<Improvable>("BMH", 180, nullptr, "Health", 100, this));
+    gb.emplace_back(make_shared<Improvable>("OPT", 200, nullptr, "Health", 100, this));
+    gb.emplace_back(make_shared<NonOwnable>(20, this)); // Goose
+    gb.emplace_back(make_shared<Improvable>("EV1", 220, nullptr, "Env", 150, this));
+    gb.emplace_back(make_shared<NonOwnable>(22, this)); // NEEDLES
+    gb.emplace_back(make_shared<Improvable>("EV2", 220, nullptr, "Env", 150, this));
+    gb.emplace_back(make_shared<Improvable>("EV3", 240, nullptr, "Env", 150, this));
+    gb.emplace_back(make_shared<Res>("V1", 200, nullptr, this));
+    gb.emplace_back(make_shared<Improvable>("PHYS", 260, nullptr, "Sci1", 150, this));
+    gb.emplace_back(make_shared<Improvable>("B1", 260, nullptr, "Sci1", 150, this));
+    gb.emplace_back(make_shared<Gym>("CIF", 150, nullptr, this));
+    gb.emplace_back(make_shared<Improvable>("B2", 280, nullptr, "Sci1", 150, this));
+    gb.emplace_back(make_shared<NonOwnable>(30, this)); // GOTOTIMS
+    gb.emplace_back(make_shared<Improvable>("EIT", 300, nullptr, "Sci2", 200, this));
+    gb.emplace_back(make_shared<Improvable>("ESC", 300, nullptr, "Sci2", 200, this));
+    gb.emplace_back(make_shared<NonOwnable>(33, this)); // SLC
+    gb.emplace_back(make_shared<Improvable>("C2", 320, nullptr, "Sci2", 200, this));
+    gb.emplace_back(make_shared<Res>("Rev", 200, nullptr, this));
+    gb.emplace_back(make_shared<NonOwnable>(36, this)); // NEEDLES
+    gb.emplace_back(make_shared<Improvable>("MC", 350, nullptr, "Math", 200, this));
+    gb.emplace_back(make_shared<NonOwnable>(38, this)); // COOP
+    gb.emplace_back(make_shared<Improvable>("DC", 400, nullptr, "Math", 200, this));
 
     // Initialize the Monopoly dictionary
     //unordered_map<string, vector<int>> tuitionChart;
@@ -176,18 +178,18 @@ void GameBoard::roll(){
         if (newPosition < oldPosition) { // Implementation for crossing OSAP
             currPlayer->money_add(200);
         }
-        game[currPlayer->getPosition()]->doOperation(currPlayer);
+        gb[currPlayer->getPosition()]->doOperation(currPlayer);
     }
 }
 
 
-void GameBoard::basicFive() {
+/*void GameBoard::basicFive() {
     // trade
     // mortgage
     // unmortgage
     // improve
     // next
- /*   int n;
+    int n;
     cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: improve\n5: next\n";
     while (cin >> n) {
         cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: improve\n5: next\n";
@@ -232,18 +234,19 @@ void GameBoard::basicFive() {
             string propName;
             cout << "Enter property that you want to improve\n";
             cin >> propName;
-            Ownable *ownable = dynamic_cast<Ownable *>(game[index]);
-            Improvable *improvable = game[index];
-            if (ownable -> owner != currPlayer) {
+            int index = propDictionary[propName];
+            // shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+            shared_ptr <Improvable> improvable = dynamic_pointer_cast<Improvable>(gb[index]);
+            if (improvable -> owner != currPlayer) {
                 cout << "You cannot improve, since you are not the owner\n";
                 continue;
             }
             int x;
-            cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
+            /*cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
             cin >> x;
             string deptName = improvable -> dept;
             int ownedCount = currPlayer -> ownedProps[deptName];
-            if (x == 1) {
+          //  if (x == 1) {
                 if (((deptName == "Math" || deptName == "Arts1") && ownedCount == 2) || ownedCount == 3)
                 {
                     improv_buy(currPlayer, improvable);
@@ -271,8 +274,8 @@ void GameBoard::basicFive() {
             continue;
         }
     }
-*/
-}
+
+}*/
 
 
 void GameBoard::next() {
@@ -285,4 +288,128 @@ void GameBoard::next() {
         } 
     }
     if (!flag) currPlayer = player[0];
+}
+
+bool GameBoard::bankrupt(shared_ptr<Player>p, int amount){
+    if(p->getMoney() + p->getWorth()/2 < amount){
+        return true;
+    }
+    return false;
+}
+
+void GameBoard::declareBankrupt(shared_ptr<Player> p){
+    p->money_sub(p->getMoney());
+    for (int i = 0; i < p->playerProps.size(); i++){
+        p->playerProps[i]->owner = nullptr;
+        p->playerProps[i]->resetImprovs();
+       // p->playerProps[i]->unmortgage() 
+    }
+    remove(player.begin(), player.end(), p);
+}
+
+void GameBoard::declareBankrupt(shared_ptr<Player> pay, shared_ptr<Player> collect){
+    pay->money_sub(pay->getMoney());
+    collect->money_add(pay->getMoney());
+    for (int i = 0; i < pay->playerProps.size(); i++){
+        pay->playerProps[i]->owner = collect;
+        pay->playerProps[i]->resetImprovs();
+        collect->playerProps.emplace_back(pay->playerProps[i]);
+        if (pay->playerProps[i]->isMortgage){
+            int tax = 0.1 * pay->playerProps[i]->cost;
+             while (collect->getMoney() < tax){
+        if (bankrupt(collect, tax)){
+            declareBankrupt(collect);
+            }
+        else{
+            cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
+            }
+    }
+    collect->money_sub(tax);
+    cout<< "Press 1 if you would like to unmortgage " << pay->playerProps[i]->propName << endl;
+    int i;
+    if(cin >> i){
+        if(i == 1){
+            tax = 0.5 * pay->playerProps[i]->cost;
+             while (collect->getMoney() < tax){
+                if (bankrupt(collect, tax)){
+                    declareBankrupt(collect);
+                    }
+                    else{
+                        cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
+            }
+    }
+    collect->money_sub(tax);
+    // pay->playerProps[i]->unmortgage()
+        }
+    } 
+
+    }
+    }
+    remove(player.begin(), player.end(), pay);
+}
+
+shared_ptr<Ownable> GameBoard::getOwnable(){
+    return dynamic_pointer_cast  <Ownable> (gb[currPlayer->getPosition()]);
+}
+
+void GameBoard::improveBuy(shared_ptr <Player> p){
+    string propName;
+    cout << "Enter property that you want to improve\n";
+    cin >> propName;
+    int index = propDictionary[propName];
+            // shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+    shared_ptr <Improvable> improvable = dynamic_pointer_cast<Improvable>(gb[index]);
+    if (improvable -> owner != p) {
+        cout << "You cannot improve, since you are not the owner\n";
+        return;   
+    }
+    //int x;
+            /*cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
+            cin >> x;*/
+    string deptName = improvable -> dept;
+    int ownedCount= p-> ownedProps[deptName];
+          //  if (x == 1) {
+    if (((deptName == "Math" || deptName == "Arts1") && ownedCount == 2) || ownedCount == 3)
+        {
+            if(improvable->getImprovs() < 5 && p->getMoney() > improvable->getImprovCost()){
+                setImprove(improvable->getImprovs() + 1);
+                p->money_sub(improvable->getImprovCost());
+                p->updateWorth(improvable->getImprovCost());
+            }
+            else{
+                cout<< "CANNOT BUY IMPROVEMENTS RIGHT NOW" << endl;
+            }
+            //improv_buy(currPlayer, improvable);
+                } else {
+                    cout << "You cannot buy improvements because it is not part of a monopoly\n";
+                    
+                }
+}
+
+void GameBoard::improveSell(shared_ptr <Player> p){
+    string propName;
+    cout << "Enter property that you want to improve\n";
+    cin >> propName;
+    int index = propDictionary[propName];
+            // shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+    shared_ptr <Improvable> improvable = dynamic_pointer_cast<Improvable>(gb[index]);
+    if (improvable -> owner != p) {
+        cout << "You cannot improve, since you are not the owner\n";
+        return;   
+    }
+    //int x;
+            /*cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
+            cin >> x;*/
+    string deptName = improvable -> dept;
+    int ownedCount= p-> ownedProps[deptName];
+
+    if (improvable -> getImprovs() == 0) {
+                    cout << "This building does not have any improvements to sell\n";
+                    return;
+                } else {
+                setImprove(improvable->getImprovs() - 1);
+                p->money_add(improvable->getImprovCost()/2);
+                p->updateWorth(-(improvable->getImprovCost())); 
+                }
+
 }
