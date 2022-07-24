@@ -6,13 +6,13 @@
 using namespace std;
 
 //ctor for improvable
-Improvable::Improvable(string name, int cost, Player *Owner, string dept, int improvCost, GameBoard *game): Ownable{name, cost,owner, game}, improvCost{improvCost}, dept{dept}{}
+Improvable::Improvable(string name, int cost, shared_ptr<Player>owner, string dept, int improvCost, GameBoard *game): Ownable{name, cost,owner, game}, improvCost{improvCost}, dept{dept}{}
 
 
 int Improvable::calcTuition(){
 
     // step 1: check if prop is in monopoly
-    Player *curOwner = this->owner;
+    shared_ptr<Player>curOwner = this->owner;
     string deptOfProp = this->dept;
     int numProps = curOwner->ownedProps.at(deptOfProp);
 
@@ -31,11 +31,10 @@ int Improvable::calcTuition(){
 }
 
 
-void Improvable::doOperation(Player *curr){
-
+void Improvable::doOperation(shared_ptr<Player>curr){
     //check 1 - if property has no owner
     if (this->owner == nullptr){
-        //buy property or auction
+        buyProperty();
         cout << "No property Owner" << endl;
     // check 2 - if the owner of the property is current player
     } else if (this->owner == curr){
@@ -60,7 +59,7 @@ void Improvable::doOperation(Player *curr){
     else
     {
         // add money to owner
-        Player *own = this->owner;
+        shared_ptr<Player>own = this->owner;
         own->money_add(amt);
         // sub money from curr
         curr->money_sub(amt);
@@ -69,4 +68,16 @@ void Improvable::doOperation(Player *curr){
 
 int Improvable::getImprovs(){
     return improvs; 
+}
+
+void Improvable::resetImprovs(){
+    improvs = 0;
+}
+
+int Improvable::getImprovCost(){
+    return improvCost;
+}
+
+void Improvable::setImprovs(int amt){
+    improvs = amt;
 }
