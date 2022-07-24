@@ -71,3 +71,7 @@ void Player::declareBankrupt(Player *p){
 void Player::declareBankrupt(){
     std::cout << "BANKRUPT" << std::endl;
 }
+
+void Player::addProps(Ownable *prop){
+    playerProps.emplace_back(prop);
+}
