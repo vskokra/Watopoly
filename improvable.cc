@@ -6,7 +6,7 @@
 using namespace std;
 
 //ctor for improvable
-Improvable::Improvable(string name, int cost, shared_ptr<Player>owner, string dept, int improvCost, GameBoard *game): Ownable{name, cost,owner, game}, improvCost{improvCost}, dept{dept}{}
+Improvable::Improvable(string name, int cost, shared_ptr<Player>owner, string dept, int improvCost, GameBoard *game): Ownable{name, cost,owner, dept,  game}, improvCost{improvCost}{}
 
 
 int Improvable::calcTuition(){
