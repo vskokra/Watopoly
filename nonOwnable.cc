@@ -158,9 +158,3 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
     game->currPlayer->money_sub(150);
 }
 }
-
-
-int NonOwnable::getImprovs() { return 0; }
-void NonOwnable::resetImprovs() {}
-int NonOwnable::getImprovCost() {return 0;}
-void NonOwnable::setImprovs(int amt) {}

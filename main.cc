@@ -2,8 +2,6 @@
 using namespace std;
 
 int main(){
- /*   Controller c;
-    c.play(false);  
-*/
- 
+    Controller c;
+    c.play(false);   
 }

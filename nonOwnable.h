@@ -11,10 +11,6 @@ class NonOwnable: public BoardCell {
 public:
     NonOwnable(int pos, GameBoard *game);
     void doOperation(shared_ptr <Player> curr) override;
-    void resetImprovs() override;
-    int getImprovCost() override;
-    void setImprovs(int amt) override;
-    int getImprovs() override;
 };
 /*
 void function(Player *curr);
