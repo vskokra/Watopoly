@@ -82,7 +82,7 @@ void printBar(string name, bool flag = false) {
 /////////////////////////////////////////////////////////////////////////////
 
 // partially done
-void Display::printRowOne(const unordered_map<int, char> &players) {
+void Display::printRowOne(const unordered_map<char, int> &players) {
     vector<string> names1{"Goose", "          ", "NEEDLES", "          ",
                         "          ", "V1", "          ", "          ", "CIF",
                         "          ", "GO TO"};
@@ -166,28 +166,28 @@ void Display::printRowOne(const unordered_map<int, char> &players) {
     vector<char> p11;
     vector<vector<char>> pp;
     for (auto &x : players) {
-        if (x.first == 20) {
-            p1.push_back(x.second);
-        } else if (x.first == 21) {
-            p2.push_back(x.second);
-        } else if (x.first == 22) {
-            p3.push_back(x.second);
-        } else if (x.first == 23) {
-            p4.push_back(x.second);
-        } else if (x.first == 24) {
-            p5.push_back(x.second);
-        } else if (x.first == 25) {
-            p6.push_back(x.second);
-        } else if (x.first == 26) {
-            p7.push_back(x.second);
-        } else if (x.first == 27) {
-            p8.push_back(x.second);
-        } else if (x.first == 28) {
-            p9.push_back(x.second);
-        } else if (x.first == 29) {
-            p10.push_back(x.second);
-        } else if (x.first == 30) {
-            p11.push_back(x.second);
+        if (x.second == 20) {
+            p1.push_back(x.first);
+        } else if (x.second == 21) {
+            p2.push_back(x.first);
+        } else if (x.second == 22) {
+            p3.push_back(x.first);
+        } else if (x.second == 23) {
+            p4.push_back(x.first);
+        } else if (x.second == 24) {
+            p5.push_back(x.first);
+        } else if (x.second == 25) {
+            p6.push_back(x.first);
+        } else if (x.second == 26) {
+            p7.push_back(x.first);
+        } else if (x.second == 27) {
+            p8.push_back(x.first);
+        } else if (x.second == 28) {
+            p9.push_back(x.first);
+        } else if (x.second == 29) {
+            p10.push_back(x.first);
+        } else if (x.second == 30) {
+            p11.push_back(x.first);
         }
     }
     pp.push_back(p1);
@@ -214,7 +214,7 @@ void Display::printRowOne(const unordered_map<int, char> &players) {
 }
 
 // partially done
-void Display::printRowTwo(const unordered_map<int, char> &players) {
+void Display::printRowTwo(const unordered_map<char, int> &players) {
     int index = game -> propDictionary["OPT"];
     shared_ptr <Improvable> OPT = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int optCount = OPT -> getImprovs();
@@ -245,10 +245,10 @@ void Display::printRowTwo(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == index) {
-            p1.push_back(x.second);
-        } else if (x.first == index2) {
-            p2.push_back(x.second);
+        if (x.second == index) {
+            p1.push_back(x.first);
+        } else if (x.second == index2) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -262,7 +262,7 @@ void Display::printRowTwo(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void Display::printRowThree(const unordered_map<int, char> &players) {
+void Display::printRowThree(const unordered_map<char, int> &players) {
     int index = game -> propDictionary["BMH"];
     shared_ptr <Improvable> BMH = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int bmhCount = BMH -> getImprovs();
@@ -293,10 +293,10 @@ void Display::printRowThree(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == index) {
-            p1.push_back(x.second);
-        } else if (x.first == index2) {
-            p2.push_back(x.second);
+        if (x.second == index) {
+            p1.push_back(x.first);
+        } else if (x.second == index2) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -310,7 +310,7 @@ void Display::printRowThree(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void Display::printRowFour(const unordered_map<int, char> &players) {
+void Display::printRowFour(const unordered_map<char, int> &players) {
     printBar("SLC");
     for (int x = 0; x < 98; ++x) cout << " ";
     printBar("SLC");
@@ -334,10 +334,10 @@ void Display::printRowFour(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == 17) {
-            p1.push_back(x.second);
-        } else if (x.first == 33) {
-            p2.push_back(x.second);
+        if (x.second == 17) {
+            p1.push_back(x.first);
+        } else if (x.second == 33) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -352,7 +352,7 @@ void Display::printRowFour(const unordered_map<int, char> &players) {
 }
 
 
-void Display::printRowFive(const unordered_map<int, char> &players) {
+void Display::printRowFive(const unordered_map<char, int> &players) {
     int index = game -> propDictionary["LHI"];
     shared_ptr <Improvable> LHI = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int lhiCount = LHI -> getImprovs();
@@ -383,10 +383,10 @@ void Display::printRowFive(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == index) {
-            p1.push_back(x.second);
-        } else if (x.first == index2) {
-            p2.push_back(x.second);
+        if (x.second == index) {
+            p1.push_back(x.first);
+        } else if (x.second == index2) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -406,7 +406,7 @@ void Display::printRowFive(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void Display::printRowSix(const unordered_map<int, char> &players) {
+void Display::printRowSix(const unordered_map<char, int> &players) {
     printBar("UWP");
     for (int x = 0; x < 98; ++x) {
         if (x == 11 || x == 87) cout << "|";
@@ -467,10 +467,10 @@ void Display::printRowSix(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == 15) {
-            p1.push_back(x.second);
-        } else if (x.first == 35) {
-            p2.push_back(x.second);
+        if (x.second == 15) {
+            p1.push_back(x.first);
+        } else if (x.second == 35) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -500,7 +500,7 @@ void Display::printRowSix(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void Display::printRowSeven(const unordered_map<int, char> &players) {
+void Display::printRowSeven(const unordered_map<char, int> &players) {
     int index = game -> propDictionary["CPH"];
     shared_ptr <Improvable> CPH = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int cphCount = CPH -> getImprovs();
@@ -538,10 +538,10 @@ void Display::printRowSeven(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == index) {
-            p1.push_back(x.second);
-        } else if (x.first == 36) {
-            p2.push_back(x.second);
+        if (x.second == index) {
+            p1.push_back(x.first);
+        } else if (x.second == 36) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -556,7 +556,7 @@ void Display::printRowSeven(const unordered_map<int, char> &players) {
 }
 
 
-void Display::printRowEight(const unordered_map<int, char> &players) {
+void Display::printRowEight(const unordered_map<char, int> &players) {
     int index = game -> propDictionary["DWE"];
     shared_ptr <Improvable> DWE = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int dweCount = DWE -> getImprovs();
@@ -587,10 +587,10 @@ void Display::printRowEight(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == index) {
-            p1.push_back(x.second);
-        } else if (x.first == index2) {
-            p2.push_back(x.second);
+        if (x.second == index) {
+            p1.push_back(x.first);
+        } else if (x.second == index2) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -604,7 +604,7 @@ void Display::printRowEight(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void Display::printRowNine(const unordered_map<int, char> &players) {
+void Display::printRowNine(const unordered_map<char, int> &players) {
     printBar("PAC");
     for (int x = 0; x < 98; ++x) cout << " ";
     printBar("COOP");
@@ -628,10 +628,10 @@ void Display::printRowNine(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == 12) {
-            p1.push_back(x.second);
-        } else if (x.first == 38) {
-            p2.push_back(x.second);
+        if (x.second == 12) {
+            p1.push_back(x.first);
+        } else if (x.second == 38) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -645,7 +645,7 @@ void Display::printRowNine(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void Display::printRowTen(const unordered_map<int, char> &players) {
+void Display::printRowTen(const unordered_map<char, int> &players) {
     int index = game -> propDictionary["RCH"];
     shared_ptr <Improvable> RCH = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int rchCount = RCH -> getImprovs();
@@ -676,10 +676,10 @@ void Display::printRowTen(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x.first == index) {
-            p1.push_back(x.second);
-        } else if (x.first == index2) {
-            p2.push_back(x.second);
+        if (x.second == index) {
+            p1.push_back(x.first);
+        } else if (x.second == index2) {
+            p2.push_back(x.first);
         }
     }
     printPlayersOne(p1);
@@ -693,7 +693,7 @@ void Display::printRowTen(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void Display::printRowEleven(const unordered_map<int, char> &players) {
+void Display::printRowEleven(const unordered_map<char, int> &players) {
     vector<string> names1{"DC Tims", "          ", "          ", "NEEDLES",
                         "          ", "MKV", "TUITION", "          ", "SLC",
                         "          ", "COLLECT"};
@@ -767,28 +767,28 @@ void Display::printRowEleven(const unordered_map<int, char> &players) {
     vector<char> p11;
     vector<vector<char>> pp;
     for (auto &x : players) {
-        if (x.first == 0) {
-            p1.push_back(x.second);
-        } else if (x.first == 1) {
-            p2.push_back(x.second);
-        } else if (x.first == 2) {
-            p3.push_back(x.second);
-        } else if (x.first == 3) {
-            p4.push_back(x.second);
-        } else if (x.first == 4) {
-            p5.push_back(x.second);
-        } else if (x.first == 5) {
-            p6.push_back(x.second);
-        } else if (x.first == 6) {
-            p7.push_back(x.second);
-        } else if (x.first == 7) {
-            p8.push_back(x.second);
-        } else if (x.first == 8) {
-            p9.push_back(x.second);
-        } else if (x.first == 9) {
-            p10.push_back(x.second);
-        } else if (x.first == 10) {
-            p11.push_back(x.second);
+        if (x.second == 0) {
+            p1.push_back(x.first);
+        } else if (x.second == 1) {
+            p2.push_back(x.first);
+        } else if (x.second == 2) {
+            p3.push_back(x.first);
+        } else if (x.second == 3) {
+            p4.push_back(x.first);
+        } else if (x.second == 4) {
+            p5.push_back(x.first);
+        } else if (x.second == 5) {
+            p6.push_back(x.first);
+        } else if (x.second == 6) {
+            p7.push_back(x.first);
+        } else if (x.second == 7) {
+            p8.push_back(x.first);
+        } else if (x.second == 8) {
+            p9.push_back(x.first);
+        } else if (x.second == 9) {
+            p10.push_back(x.first);
+        } else if (x.second == 10) {
+            p11.push_back(x.first);
         }
     }
     pp.push_back(p1);
@@ -802,7 +802,7 @@ void Display::printRowEleven(const unordered_map<int, char> &players) {
     pp.push_back(p9);
     pp.push_back(p10);
     pp.push_back(p11);
-   for (int x = 0; x < 11; ++x) { // PLAYERS
+   for (int x = 10; x >= 0; --x) { // PLAYERS
         vector<char> p = pp[x];
         printPlayersTwo(p);
     }
@@ -817,12 +817,12 @@ void Display::printRowEleven(const unordered_map<int, char> &players) {
 Display::Display(GameBoard *game) : game{game} {}
 
 void Display::printDisplay() {
-    unordered_map<int, char> players;
+    unordered_map<char, int> players;
     vector<shared_ptr<Player>> player = game -> player;
     for (int x = 0; x < player.size(); ++x) {
         int pos = player[x] -> getPosition();
         char c = player[x] -> playerChar;
-        players[pos] = c;
+        players[c] = pos;
     }
     printRowOne(players);
     printRowTwo(players);
