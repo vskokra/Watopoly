@@ -184,7 +184,7 @@ void GameBoard::roll(){
 
 bool isNumber(const string &str)
 {
-    for (char &c : str)
+    for (char const &c : str)
     {
         if (isdigit(c) == 0)
         {
@@ -194,99 +194,35 @@ bool isNumber(const string &str)
     return true;
 }
 
-/*void GameBoard::basicFive() {
+void GameBoard::basicFive(shared_ptr <Player> p) {
     // trade
     // mortgage
     // unmortgage
     // improve
     // next
     int n;
-    cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: improve\n5: next\n";
+    cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: buy improvement\n5: sell improvement\n6: next\n";
     while (cin >> n) {
-        cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: improve\n5: next\n";
         if (n == 1) {
-            cout << "THIS IS EMPTY\n";
-            continue;
+            this->trade();
         } else if (n == 2) {
-            string propName;
-            cout << "Enter property that you want to mortgage\n";
-            cin >> propName;
-            int index = propDictionary[propName];
-            Ownable *ownable = dynamic_cast<Ownable *>(game[index]);
-            Improvable *improvable = dynamic_cast<Improvable *>(game[index]);
-            if (improvable -> getImprovs() != 0) {
-                cout << "You cannot mortgage due to existing improvements\n";
-                continue;
-            }
-            if (ownable -> owner != currPlayer) {
-                cout << "You cannot mortgage this property since you are not the owner\n";
-                continue;
-            }
-            //mortgage(currPlayer, ownable);
-            continue;
+            this->mortgage(p);
         } else if (n == 3) {
-            string propName;
-            cout << "Enter property that you want to unmortgage\n";
-            cin >> propName;
-            int index = propDictionary[propName];
-            Ownable *ownable = dynamic_cast<Ownable *>(game[index]);
-            Improvable *improvable = dynamic_cast<Improvable *>(game[index]);
-            if (!(ownable -> isMortgage)) {
-                cout << "Property is already unmortgaged\n";
-                continue;
-            }
-            if (ownable -> owner != currPlayer) {
-                cout << "You cannot unmortgage this property since you are not the owner\n";
-                continue;
-            }
-            unmortgage(currPlayer, ownable);
-            continue;
+            this->unmortgage(p);
         } else if (n == 4) {
-            string propName;
-            cout << "Enter property that you want to improve\n";
-            cin >> propName;
-            int index = propDictionary[propName];
-            // shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
-            shared_ptr <Improvable> improvable = dynamic_pointer_cast<Improvable>(gb[index]);
-            if (improvable -> owner != currPlayer) {
-                cout << "You cannot improve, since you are not the owner\n";
-                continue;
-            }
-            int x;
-            /*cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
-            cin >> x;
-            string deptName = improvable -> dept;
-            int ownedCount = currPlayer -> ownedProps[deptName];
-          //  if (x == 1) {
-                if (((deptName == "Math" || deptName == "Arts1") && ownedCount == 2) || ownedCount == 3)
-                {
-                    improv_buy(currPlayer, improvable);
-                } else {
-                    cout << "You cannot buy improvements because it is not part of a monopoly\n";
-                    continue;
-                }
-            } else if (x == 2) {
-                if (improvable -> getImprovs() == 0) {
-                    cout << "This building does not have any improvements to sell\n";
-                    continue;
-                } else {
-                    improve_sell(currPlayer, improvable);
-                }
-            } else {
-                cout << "Incorrect option entered\n";
-                continue;
-            }
-            continue;
+            this->improveBuy(p);
         } else if (n == 5) {
+            this->improveSell(p);
+        } else if (n == 6) {
             next();
             break;
         } else {
             cout << "Invalid option entered\n";
-            continue;
         }
+        cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: buy improvement\n5: sell improvement\n6: next\n";
     }
 
-}*/
+}
 
 
 void GameBoard::next() {
@@ -313,7 +249,7 @@ void GameBoard::declareBankrupt(shared_ptr<Player> p){
     for (int i = 0; i < p->playerProps.size(); i++){
         p->playerProps[i]->owner = nullptr;
         p->playerProps[i]->resetImprovs();
-       // p->playerProps[i]->unmortgage() 
+       p->playerProps[i]->setMortgage(false);
     }
     remove(player.begin(), player.end(), p);
 }
@@ -350,7 +286,7 @@ void GameBoard::declareBankrupt(shared_ptr<Player> pay, shared_ptr<Player> colle
             }
     }
     collect->money_sub(tax);
-    // pay->playerProps[i]->unmortgage()
+       pay->playerProps[i]->setMortgage(false);
         }
     } 
 
@@ -391,7 +327,7 @@ void GameBoard::improveBuy(shared_ptr <Player> p){
                 }
             }
             if(improvable->getImprovs() < 5 && p->getMoney() > improvable->getImprovCost()){
-                setImprove(improvable->getImprovs() + 1);
+                improvable->setImprovs((improvable->getImprovs()) + 1);
                 p->money_sub(improvable->getImprovCost());
                 p->updateWorth(improvable->getImprovCost());
             }
@@ -426,7 +362,7 @@ void GameBoard::improveSell(shared_ptr <Player> p){
                     cout << "This building does not have any improvements to sell\n";
                     return;
                 } else {
-                setImprove(improvable->getImprovs() - 1);
+                improvable->setImprovs(improvable->getImprovs() - 1);
                 p->money_add(improvable->getImprovCost()/2);
                 p->updateWorth(-(improvable->getImprovCost())); 
                 }
@@ -480,8 +416,6 @@ void GameBoard::unmortgage(shared_ptr <Player> p){
             ownable->setMortgage(false);
 }
 
-
-
 void trade()
 {
 
@@ -496,7 +430,7 @@ void trade()
     bool giveMoney;
     bool receiveMoney;
     giveMoney = isNumber(give);
-    receiveMoney = isNumber(receive)
+    receiveMoney = isNumber(receive);
 
     //check if the prop names entered are valid 
 
@@ -527,17 +461,17 @@ void trade()
     int amtGive, amtReceive;
     if (giveMoney)
     {
-        amtGive = atoi(give);
+        amtGive = stoi(give);
     }
     if (receiveMoney)
     {
-        amtReceive = atoi(receive)
+        amtReceive = stoi(receive);
     }
 
     // cur wants to give prop for prop
     if (!giveMoney && !receiveMoney)
     {
-        // check property names are valid
+        
         trade(give, receive, nameOther);
     }
     else if ((giveMoney && !receiveMoney))
@@ -559,8 +493,8 @@ void trade(string give, string receive)
     idx1 = propDictionary[give];
     idx2 = propDictionary[receive];
 
-    shared_ptr<Ownable> propGive = dynamic_pointer_cast<Ownable>(game[idx1]);
-    shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(game[idx2]);
+    shared_ptr<Ownable> propGive = dynamic_pointer_cast<Ownable>(gb[idx1]);
+    shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(gb[idx2]);
 
     // check if properties involved in the trade are improv free
     // reject if not
@@ -575,13 +509,14 @@ void trade(string give, string receive)
     }
 
     // valid trade - transaction occurs
-    Player p1 = currPlayer // how to access cur players name ??
-        Player p2;
+    shared_ptr <Player> p1 = currPlayer; // how to access cur players name ??
+    shared_ptr <Player> p2;
     for (int i = 0; i < player.size; i++)
     {
         if (nameOther == player[i]->getName())
         {
-            p2 = player[i] break;
+            p2 = player[i];
+            break;
         }
     }
 
@@ -605,7 +540,7 @@ void trade(int amtGive, string receive, string nameOther)
 
     idx2 = propDictionary[receive];
 
-    shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(game[idx2]);
+    shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(gb[idx2]);
 
     // check if properties involved in the trade are improv free
     // reject if not
@@ -671,7 +606,8 @@ void trade(string give, int amtReceive, string nameOther)
     {
         if (nameOther == player[i]->getName())
         {
-            p2 = player[i] break;
+            p2 = player[i];
+            break;
         }
     }
     // check if cur has enough money to make the trade,
