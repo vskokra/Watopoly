@@ -32,6 +32,7 @@ void Controller::init(vector<shared_ptr<Player>> players) {
 // COMPLETE
 void Controller::roll() {
     game -> roll();
+    d->printDisplay(); 
 }
 
 // COMPLETED
@@ -137,10 +138,10 @@ void Controller::play(bool alreadyInit) {
             } else {
                 saveGame();
             }
-        } else if (command == "trade" || command == "mortgage" ||  command == "unmortgage"
+        } /*else if (command == "trade" || command == "mortgage" ||  command == "unmortgage"
                     || command == "improve" ||  command == "bankruptcy") {
                 bigFive();
-        } else if (command == "quit") {
+        } */else if (command == "quit") {
             cout << "Thank you for playing Watopoly!\n";
             cout << "Quiting the game now!\n";
             return;
