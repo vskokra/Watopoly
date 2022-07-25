@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <algorithm>
 #include "improvable.h"
 #include "res.h"
 #include "gameboard.h"

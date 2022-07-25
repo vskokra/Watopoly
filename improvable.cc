@@ -61,7 +61,7 @@ void Improvable::doOperation(shared_ptr<Player> curr)
     }
 
     // step1- get the amount
-    int amt = (*this).calcRent();
+    int amt = (*this).calcTuition();
 
     // step 2:
 

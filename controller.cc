@@ -11,8 +11,6 @@
 
 using namespace std;
 
-
-
 // COMPLETE
 Controller::Controller(bool testingMode) :  testingMode{testingMode}, d{nullptr}{
     game = nullptr;
@@ -174,7 +172,8 @@ void Controller::setTesting(bool mode) {
 }
 
 // TO BE COMPLETED
-/*void Controller::loadGame(string filename) {
+void Controller::loadGame(string filename) {
+    /*
         ifstream infile{filename};
         while (!infile.eof()) { 
             stringstream line;
@@ -198,9 +197,9 @@ void Controller::setTesting(bool mode) {
             }
         }
     return;
+    */
 }
 
 // TO BE COMPLETED
 void Controller::saveGame() {
-}*/
-
+}

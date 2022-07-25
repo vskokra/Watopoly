@@ -1,5 +1,6 @@
 #include "player.h"
 #include <memory>
+#include <algorithm>
 Player::Player(std::string playerName, char playerChar): playerName{playerName}, playerChar{playerChar}, position{0}, money{1500}, propVal{0}, Tims{false}, rollsTims{0}, rimCups{0}{
     ownedProps["Arts1"] = 0;
     ownedProps["Arts2"] = 0;

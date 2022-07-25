@@ -160,3 +160,7 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
 }
 
 
+int NonOwnable::getImprovs() { return 0; }
+void NonOwnable::resetImprovs() {}
+int NonOwnable::getImprovCost() {return 0;}
+void NonOwnable::setImprovs(int amt) {}

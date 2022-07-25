@@ -24,7 +24,6 @@ public:
     vector <shared_ptr<Player>> player; 
     std::unordered_map <std::string, std::vector<int>> tuitionChart;
     GameBoard();
-    ~GameBoard();
     void roll();
     void next();
 //    void buyProperty(Player *player, Ownable *prop);
@@ -37,7 +36,6 @@ public:
 //    void auction(Ownable *prop);
     bool bankrupt(shared_ptr<Player>p, int amount); // autoChecker
     void declareBankrupt(shared_ptr<Player> p);
-    virtual void doOperation(shared_ptr<Player> currPlayer);
     void basicFive(shared_ptr <Player> p);
     shared_ptr <Player> currPlayer;
     Dice *dice;
