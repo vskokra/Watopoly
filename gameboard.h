@@ -23,7 +23,7 @@ public:
     std::vector <shared_ptr<BoardCell>> gb; // Store in order of occurence on board with CollectOSAP as 0;
     vector <shared_ptr<Player>> player; 
     std::unordered_map <std::string, std::vector<int>> tuitionChart;
-    GameBoard();
+    GameBoard(vector<shared_ptr <Player>> plr);
     void roll();
     void next();
 //    void buyProperty(Player *player, Ownable *prop);

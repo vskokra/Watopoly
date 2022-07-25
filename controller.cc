@@ -8,6 +8,7 @@
 #include "display.h"
 #include <vector>
 #include <memory>
+#include <unordered_map>
 
 using namespace std;
 
@@ -25,7 +26,7 @@ Controller::~Controller() {
 
 // COMPLETE
 void Controller::init(vector<shared_ptr<Player>> players) {
-    game = new GameBoard();
+    game = new GameBoard(players);
     d = new Display(game);
 }
 // COMPLETE
@@ -44,7 +45,7 @@ void Controller::assets(shared_ptr<Player> player) {
     cout << "Player Character: " << player -> playerChar << endl;
     cout << "The Player has: " << player -> getMoney() << "$" << endl;
     cout << "The Player's networth - money is: " << player -> getWorth() << endl;
-    cout << "The Player owns: " << player -> ownedProps.size() << " number of properties\n";
+    cout << "The Player owns: " << player -> playerProps.size() << " number of properties\n";
     cout << "Now displaying Player's properties:\n";
     for (int x = 0; x < player -> playerProps.size(); ++x) {
         shared_ptr <Ownable> property = player -> playerProps[x];
@@ -91,26 +92,25 @@ void Controller::play(bool alreadyInit) {
         cout << "Welcome to Watopoly!\n";
         cout << "Please Enter the Number of Players playing today: ";
         cin >> numberofPlayers;
-        if (numberofPlayers < 6 || numberofPlayers > 8) {
+        if (numberofPlayers < 2 || numberofPlayers > 8) {
             cout << "Invalid number of players entered! Exiting!";
             return;
         }
-        for (int x = 1; x <= 8; ++x) {
+        for (int x = 1; x <= numberofPlayers; ++x) {
             cout << "You will now be entering player details.\n";
             cout << "If there are no more players, please enter done\n";
             cout << "Please enter player " << x << " name: ";
             cin >> playerName;
-            if (playerName == "done") break;
             cout << "Please enter player " << x << " character: ";
             cin >> playerChar;
             shared_ptr <Player> vectorPlayer = make_shared <Player> (playerName, playerChar);
-            playerVector.push_back(vectorPlayer);
+            playerVector.emplace_back(vectorPlayer);
             playerDetails[playerChar] = playerName;
         }
         cout << "Thank you for entering player details!\n";
         cout << "The game is now ready to be played!! Yay!!\n";
         init(playerVector);
-    }
+        }
         d->printDisplay();
         string command;
         while (true) {

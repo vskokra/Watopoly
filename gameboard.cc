@@ -11,11 +11,14 @@
 using namespace std; 
 
 
-GameBoard::GameBoard(){   
+GameBoard::GameBoard(vector<shared_ptr <Player>> plr){   
 
     //in MIl ask for player array
     dice = new Dice();
     rimCupCount = 0;
+    for(int i = 0; i < plr.size(); ++ i){
+        player.emplace_back(plr[i]);
+    }
     currPlayer = player[0];
     //board created
     gb.emplace_back(make_shared<NonOwnable>(0, this)); // OSAP
