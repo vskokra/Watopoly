@@ -2,6 +2,7 @@
 #include "player.h"
 #include "ownable.h"
 #include "gameboard.h"
+#include <algorithm>
 using namespace std; 
 
 

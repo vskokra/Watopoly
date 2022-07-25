@@ -14,7 +14,8 @@ int Improvable::calcTuition(){
     // step 1: check if prop is in monopoly
     shared_ptr<Player>curOwner = this->owner;
     string deptOfProp = this->dept;
-    int numProps = curOwner->ownedProps.at(deptOfProp);
+    cout << deptOfProp << endl;
+    int numProps = curOwner->ownedProps[deptOfProp];
 
     // in monopoly
     // step2:
