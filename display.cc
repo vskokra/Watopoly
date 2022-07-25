@@ -201,7 +201,7 @@ void Display::printRowOne(const unordered_map<char, int> &players) {
     pp.push_back(p9);
     pp.push_back(p10);
     pp.push_back(p11);
-   for (int x = 0; x < 11; ++x) { // PLAYERS
+   for (int x = 10; x >= 0; --x) { // PLAYERS
         vector<char> p = pp[x];
         printPlayersTwo(p);
     }

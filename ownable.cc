@@ -18,8 +18,6 @@ void Ownable::buyProperty(shared_ptr <Player> p)
     p->updateWorth(cost);
 }
 
-void Ownable::auction(){
-}
 
 void Ownable::setMortgage(bool x){
     isMortgage = x;

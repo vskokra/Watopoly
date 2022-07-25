@@ -14,7 +14,7 @@ class Ownable: public BoardCell{
         int cost;
         GameBoard *game;
         Ownable(std::string name, int cost,  std::shared_ptr<Player>owner , std::string dept, GameBoard *game);
-        void buyProperty(shared_ptr <Player> p);
+        void buyProperty(std::shared_ptr <Player> p);
         void auction();
         virtual void doOperation(std::shared_ptr<Player> curr) override = 0;
         virtual int getImprovs() override = 0;
