@@ -82,7 +82,7 @@ void printBar(string name, bool flag = false) {
 /////////////////////////////////////////////////////////////////////////////
 
 // partially done
-void printRowOne(const unordered_map<int, char> &players) {
+void Display::printRowOne(const unordered_map<int, char> &players) {
     vector<string> names1{"Goose", "          ", "NEEDLES", "          ",
                         "          ", "V1", "          ", "          ", "CIF",
                         "          ", "GO TO"};
@@ -104,32 +104,32 @@ void printRowOne(const unordered_map<int, char> &players) {
         string name = names1[x];
         if (x == 1) {
             int index = game -> propDictionary["EV1"];
-            Improvable *EV1 = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> EV1 = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int ev1Count = EV1 -> getImprovs();
             printImprovementsTwo(ev1Count);
         } else if (x == 3) {
             int index = game -> propDictionary["EV2"];
-            Improvable *EV2 = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> EV2 = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int ev2Count = EV2 -> getImprovs();
             printImprovementsTwo(ev2Count);
         } else if (x == 4) {
             int index = game -> propDictionary["EV3"];
-            Improvable *EV3 = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> EV3 = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int ev3Count = EV3 -> getImprovs();
             printImprovementsTwo(ev3Count);
         } else if (x == 6) {
             int index = game -> propDictionary["PHYS"];
-            Improvable *PHYS = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> PHYS = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int physCount = PHYS -> getImprovs();
             printImprovementsTwo(physCount);
         } else if (x == 7) {
             int index = game -> propDictionary["B1"];
-            Improvable *B1 = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> B1 = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int b1Count = B1 -> getImprovs();
             printImprovementsTwo(b1Count);
         } else if (x == 9) {
             int index = game -> propDictionary["B2"];
-            Improvable *B2 = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> B2 = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int b2Count = B2 -> getImprovs();
             printImprovementsTwo(b2Count);
         } else {
@@ -166,28 +166,28 @@ void printRowOne(const unordered_map<int, char> &players) {
     vector<char> p11;
     vector<vector<char>> pp;
     for (auto &x : players) {
-        if (x -> first == 20) {
-            p1.push_back(x -> second);
-        } else if (x -> first == 21) {
-            p2.push_back(x -> second);
-        } else if (x -> first == 22) {
-            p3.push_back(x -> second);
-        } else if (x -> first == 23) {
-            p4.push_back(x -> second);
-        } else if (x -> first == 24) {
-            p5.push_back(x -> second);
-        } else if (x -> first == 25) {
-            p6.push_back(x -> second);
-        } else if (x -> first == 26) {
-            p7.push_back(x -> second);
-        } else if (x -> first == 27) {
-            p8.push_back(x -> second);
-        } else if (x -> first == 28) {
-            p9.push_back(x -> second);
-        } else if (x -> first == 29) {
-            p10.push_back(x -> second);
-        } else if (x -> first == 30) {
-            p11.push_back(x -> second);
+        if (x.first == 20) {
+            p1.push_back(x.second);
+        } else if (x.first == 21) {
+            p2.push_back(x.second);
+        } else if (x.first == 22) {
+            p3.push_back(x.second);
+        } else if (x.first == 23) {
+            p4.push_back(x.second);
+        } else if (x.first == 24) {
+            p5.push_back(x.second);
+        } else if (x.first == 25) {
+            p6.push_back(x.second);
+        } else if (x.first == 26) {
+            p7.push_back(x.second);
+        } else if (x.first == 27) {
+            p8.push_back(x.second);
+        } else if (x.first == 28) {
+            p9.push_back(x.second);
+        } else if (x.first == 29) {
+            p10.push_back(x.second);
+        } else if (x.first == 30) {
+            p11.push_back(x.second);
         }
     }
     pp.push_back(p1);
@@ -214,12 +214,12 @@ void printRowOne(const unordered_map<int, char> &players) {
 }
 
 // partially done
-void printRowTwo(const unordered_map<int, char> &players) {
+void Display::printRowTwo(const unordered_map<int, char> &players) {
     int index = game -> propDictionary["OPT"];
-    Improvable *OPT = dynamic_cast<Improvable *>(game -> gb[index]);
+    shared_ptr <Improvable> OPT = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int optCount = OPT -> getImprovs();
     int index2 = game -> propDictionary["EIT"];
-    Improvable *EIT = dynamic_cast<Improvable *>(game -> gb[index2]);
+    shared_ptr <Improvable> EIT = dynamic_pointer_cast <Improvable> (game -> gb[index2]);
     int eitCount = EIT -> getImprovs();
 ////////////////////////////////////////
     printImprovementsOne(optCount);
@@ -245,10 +245,10 @@ void printRowTwo(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == index) {
-            p1.push_back(x -> second);
-        } else if (x -> first == index2) {
-            p2.push_back(x -> second);
+        if (x.first == index) {
+            p1.push_back(x.second);
+        } else if (x.first == index2) {
+            p2.push_back(x.second);
         }
     }
     printPlayersOne(p1);
@@ -262,12 +262,12 @@ void printRowTwo(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void printRowThree(const unordered_map<int, char> &players) {
+void Display::printRowThree(const unordered_map<int, char> &players) {
     int index = game -> propDictionary["BMH"];
-    Improvable *BMH = dynamic_cast<Improvable *>(game -> gb[index]);
+    shared_ptr <Improvable> BMH = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int bmhCount = BMH -> getImprovs();
     int index2 = game -> propDictionary["ESC"];
-    Improvable *ESC = dynamic_cast<Improvable *>(game -> gb[index2]);
+    shared_ptr <Improvable> ESC = dynamic_pointer_cast <Improvable> (game -> gb[index2]);
     int escCount = ESC -> getImprovs();
 ///////////////////////////////////////
     printImprovementsOne(bmhCount);
@@ -293,10 +293,10 @@ void printRowThree(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == index) {
-            p1.push_back(x -> second);
-        } else if (x -> first == index2) {
-            p2.push_back(x -> second);
+        if (x.first == index) {
+            p1.push_back(x.second);
+        } else if (x.first == index2) {
+            p2.push_back(x.second);
         }
     }
     printPlayersOne(p1);
@@ -310,7 +310,7 @@ void printRowThree(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void printRowFour(const unordered_map<int, char> &players) {
+void Display::printRowFour(const unordered_map<int, char> &players) {
     printBar("SLC");
     for (int x = 0; x < 98; ++x) cout << " ";
     printBar("SLC");
@@ -334,10 +334,10 @@ void printRowFour(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == 17) {
-            p1.push_back(x -> second);
-        } else if (x -> first == 33) {
-            p2.push_back(x -> second);
+        if (x.first == 17) {
+            p1.push_back(x.second);
+        } else if (x.first == 33) {
+            p2.push_back(x.second);
         }
     }
     printPlayersOne(p1);
@@ -352,12 +352,12 @@ void printRowFour(const unordered_map<int, char> &players) {
 }
 
 
-void printRowFive(const unordered_map<int, char> &players) {
+void Display::printRowFive(const unordered_map<int, char> &players) {
     int index = game -> propDictionary["LHI"];
-    Improvable *LHI = dynamic_cast<Improvable *>(game -> gb[index]);
+    shared_ptr <Improvable> LHI = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int lhiCount = LHI -> getImprovs();
     int index2 = game -> propDictionary["C2"];
-    Improvable *C2 = dynamic_cast<Improvable *>(game -> gb[index2]);
+    shared_ptr <Improvable> C2 = dynamic_pointer_cast <Improvable> (game -> gb[index2]);
     int c2Count = C2 -> getImprovs();
 //////////////////////////////////////////////
     printImprovementsOne(lhiCount);
@@ -383,10 +383,10 @@ void printRowFive(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == index) {
-            p1.push_back(x -> second);
-        } else if (x -> first == index2) {
-            p2.push_back(x -> second);
+        if (x.first == index) {
+            p1.push_back(x.second);
+        } else if (x.first == index2) {
+            p2.push_back(x.second);
         }
     }
     printPlayersOne(p1);
@@ -406,7 +406,7 @@ void printRowFive(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void printRowSix(const unordered_map<int, char> &players) {
+void Display::printRowSix(const unordered_map<int, char> &players) {
     printBar("UWP");
     for (int x = 0; x < 98; ++x) {
         if (x == 11 || x == 87) cout << "|";
@@ -467,10 +467,10 @@ void printRowSix(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == 15) {
-            p1.push_back(x -> second);
-        } else if (x -> first == 35) {
-            p2.push_back(x -> second);
+        if (x.first == 15) {
+            p1.push_back(x.second);
+        } else if (x.first == 35) {
+            p2.push_back(x.second);
         }
     }
     printPlayersOne(p1);
@@ -500,9 +500,9 @@ void printRowSix(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void printRowSeven(const unordered_map<int, char> &players) {
+void Display::printRowSeven(const unordered_map<int, char> &players) {
     int index = game -> propDictionary["CPH"];
-    Improvable *CPH = dynamic_cast<Improvable *>(game -> gb[index]);
+    shared_ptr <Improvable> CPH = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int cphCount = CPH -> getImprovs();
 ////////////////////////////////////////
     printImprovementsOne(cphCount); /// IMPROVEMENTS
@@ -538,13 +538,13 @@ void printRowSeven(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == index) {
-            p1.push_back(x -> second);
-        } else if (x -> first == 36) {
-            p2.push_back(x -> second);
+        if (x.first == index) {
+            p1.push_back(x.second);
+        } else if (x.first == 36) {
+            p2.push_back(x.second);
         }
     }
-    printPlayersOne(p1)
+    printPlayersOne(p1);
     for (int x = 0; x < 98; ++x) cout << " ";
     printPlayersTwo(p2);
     cout << endl;
@@ -556,12 +556,12 @@ void printRowSeven(const unordered_map<int, char> &players) {
 }
 
 
-void printRowEight(const unordered_map<int, char> &players) {
+void Display::printRowEight(const unordered_map<int, char> &players) {
     int index = game -> propDictionary["DWE"];
-    Improvable *DWE = dynamic_cast<Improvable *>(game -> gb[index]);
+    shared_ptr <Improvable> DWE = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int dweCount = DWE -> getImprovs();
     int index2 = game -> propDictionary["MC"];
-    Improvable *MC = dynamic_cast<Improvable *>(game -> gb[index2]);
+    shared_ptr <Improvable> MC = dynamic_pointer_cast <Improvable> (game -> gb[index2]);
     int mcCount = MC -> getImprovs();
 ////////////////////////////////////////
     printImprovementsOne(dweCount);
@@ -587,10 +587,10 @@ void printRowEight(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == index) {
-            p1.push_back(x -> second);
-        } else if (x -> first == index2) {
-            p2.push_back(x -> second);
+        if (x.first == index) {
+            p1.push_back(x.second);
+        } else if (x.first == index2) {
+            p2.push_back(x.second);
         }
     }
     printPlayersOne(p1);
@@ -604,7 +604,7 @@ void printRowEight(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void printRowNine(const unordered_map<int, char> &players) {
+void Display::printRowNine(const unordered_map<int, char> &players) {
     printBar("PAC");
     for (int x = 0; x < 98; ++x) cout << " ";
     printBar("COOP");
@@ -628,10 +628,10 @@ void printRowNine(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == 12) {
-            p1.push_back(x -> second);
-        } else if (x -> first == 38) {
-            p2.push_back(x -> second);
+        if (x.first == 12) {
+            p1.push_back(x.second);
+        } else if (x.first == 38) {
+            p2.push_back(x.second);
         }
     }
     printPlayersOne(p1);
@@ -645,12 +645,12 @@ void printRowNine(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void printRowTen(const unordered_map<int, char> &players) {
+void Display::printRowTen(const unordered_map<int, char> &players) {
     int index = game -> propDictionary["RCH"];
-    Improvable *RCH = dynamic_cast<Improvable *>(game -> gb[index]);
+    shared_ptr <Improvable> RCH = dynamic_pointer_cast <Improvable> (game -> gb[index]);
     int rchCount = RCH -> getImprovs();
     int index2 = game -> propDictionary["DC"];
-    Improvable *DC = dynamic_cast<Improvable *>(game -> gb[index2]);
+    shared_ptr <Improvable> DC = dynamic_pointer_cast <Improvable> (game -> gb[index2]);
     int dcCount = DC -> getImprovs();
 ////////////////////////////////////////
     printImprovementsOne(rchCount);
@@ -676,10 +676,10 @@ void printRowTen(const unordered_map<int, char> &players) {
     vector<char> p1;
     vector<char> p2;
     for (auto &x : players) {
-        if (x -> first == index) {
-            p1.push_back(x -> second);
-        } else if (x -> first == index2) {
-            p2.push_back(x -> second);
+        if (x.first == index) {
+            p1.push_back(x.second);
+        } else if (x.first == index2) {
+            p2.push_back(x.second);
         }
     }
     printPlayersOne(p1);
@@ -693,7 +693,7 @@ void printRowTen(const unordered_map<int, char> &players) {
     cout << endl;
 }
 
-void printRowEleven(const unordered_map<int, char> &players) {
+void Display::printRowEleven(const unordered_map<int, char> &players) {
     vector<string> names1{"DC Tims", "          ", "          ", "NEEDLES",
                         "          ", "MKV", "TUITION", "          ", "SLC",
                         "          ", "COLLECT"};
@@ -710,27 +710,27 @@ void printRowEleven(const unordered_map<int, char> &players) {
         string name = names1[x];
         if (x == 1) {
             int index = game -> propDictionary["HH"];
-            Improvable *HH = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> HH = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int hhCount = HH -> getImprovs();
             printImprovementsTwo(hhCount);
         } else if (x == 2) {
             int index = game -> propDictionary["PAS"];
-            Improvable *PAS = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> PAS = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int pasCount = PAS -> getImprovs();
             printImprovementsTwo(pasCount);
         } else if (x == 4) {
             int index = game -> propDictionary["ECH"];
-            Improvable *ECH = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> ECH = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int echCount = ECH -> getImprovs();
             printImprovementsTwo(echCount);
         } else if (x == 7) {
             int index = game -> propDictionary["ML"];
-            Improvable *ML = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> ML = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int mlCount = ML -> getImprovs();
             printImprovementsTwo(mlCount);
         } else if (x == 9) {
             int index = game -> propDictionary["AL"];
-            Improvable *AL = dynamic_cast<Improvable *>(game -> gb[index]);
+            shared_ptr <Improvable> AL = dynamic_pointer_cast <Improvable> (game -> gb[index]);
             int alCount = AL -> getImprovs();
             printImprovementsTwo(alCount);
         } else {
@@ -767,28 +767,28 @@ void printRowEleven(const unordered_map<int, char> &players) {
     vector<char> p11;
     vector<vector<char>> pp;
     for (auto &x : players) {
-        if (x -> first == 0) {
-            p1.push_back(x -> second);
-        } else if (x -> first == 1) {
-            p2.push_back(x -> second);
-        } else if (x -> first == 2) {
-            p3.push_back(x -> second);
-        } else if (x -> first == 3) {
-            p4.push_back(x -> second);
-        } else if (x -> first == 4) {
-            p5.push_back(x -> second);
-        } else if (x -> first == 5) {
-            p6.push_back(x -> second);
-        } else if (x -> first == 6) {
-            p7.push_back(x -> second);
-        } else if (x -> first == 7) {
-            p8.push_back(x -> second);
-        } else if (x -> first == 8) {
-            p9.push_back(x -> second);
-        } else if (x -> first == 9) {
-            p10.push_back(x -> second);
-        } else if (x -> first == 10) {
-            p11.push_back(x -> second);
+        if (x.first == 0) {
+            p1.push_back(x.second);
+        } else if (x.first == 1) {
+            p2.push_back(x.second);
+        } else if (x.first == 2) {
+            p3.push_back(x.second);
+        } else if (x.first == 3) {
+            p4.push_back(x.second);
+        } else if (x.first == 4) {
+            p5.push_back(x.second);
+        } else if (x.first == 5) {
+            p6.push_back(x.second);
+        } else if (x.first == 6) {
+            p7.push_back(x.second);
+        } else if (x.first == 7) {
+            p8.push_back(x.second);
+        } else if (x.first == 8) {
+            p9.push_back(x.second);
+        } else if (x.first == 9) {
+            p10.push_back(x.second);
+        } else if (x.first == 10) {
+            p11.push_back(x.second);
         }
     }
     pp.push_back(p1);
@@ -818,7 +818,7 @@ Display::Display(GameBoard *game) : game{game} {}
 
 void Display::printDisplay() {
     unordered_map<int, char> players;
-    vector<Player *> player = game -> player;
+    vector<shared_ptr<Player>> player = game -> player;
     for (int x = 0; x < player.size(); ++x) {
         int pos = player[x] -> getPosition();
         char c = player[x] -> playerChar;

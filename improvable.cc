@@ -28,6 +28,7 @@ int Improvable::calcTuition(){
 
             return game->tuitionChart.at(this->propName)[this->improvs];
         }
+    return game->tuitionChart.at(this->propName)[0];
 }
 
 

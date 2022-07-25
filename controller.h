@@ -2,19 +2,32 @@
 #define __CONTROLLER_H
 #include <string>
 #include <fstream>
-#include "gameBoard.h"
+#include <memory>
+#include <vector>
+
+using namespace std;
+
+class GameBoard;
+class Player;
+class Display;
 
 class Controller{
-    gameBoard *board;
-    
+    GameBoard *game;
+    vector<string> validCommands;
+    bool testingMode;
+    bool isValidCommand(string command);
+    Display *d;
 public:
-    Controller();
+    Controller(bool testingMode = false);
     ~Controller();
-    void init();
-    void play();
-    void loadGame();
+    void init(vector<shared_ptr<Player>> players);
+    void loadGame(string filename);
     void saveGame();
-    void showAssets();
-    void showAll();
+    void roll();
+    void bigFive();
+    void assets(shared_ptr <Player> player);
+    void all();
+    void play(bool alreadyInit);
+    void setTesting(bool mode);
 };
  #endif

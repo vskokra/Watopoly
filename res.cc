@@ -5,7 +5,7 @@
 using namespace std;
 
 
-Res::Res(string name, int cost,shared_ptr<Player>owner, GameBoard *game) : Ownable{name, cost, owner, "Res", game} {}
+Res::Res(string name, int cost, shared_ptr<Player>owner, GameBoard *game) : Ownable{name, cost, owner, "Res", game} {}
 
 int Res::calcRent(){
 
@@ -36,3 +36,8 @@ void Res::doOperation(shared_ptr<Player>curr){
     }
 
 }
+
+int Res::getImprovs() { return 0; }
+void Res::resetImprovs() {}
+int Res::getImprovCost() {return 0;}
+void Res::setImprovs(int amt) {}

@@ -38,3 +38,8 @@ void Gym:: doOperation(shared_ptr<Player>curr){
     }
 
 }
+
+int Gym::getImprovs() { return 0; }
+void Gym::resetImprovs() {}
+int Gym::getImprovCost() {return 0;}
+void Gym::setImprovs(int amt) {}

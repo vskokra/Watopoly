@@ -80,7 +80,7 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
         int oldPosition = game->currPlayer->getPosition();
         int sum = oldPosition + 3;
         game->currPlayer->setPosition(sum);
-	} else if (shuffle = 23){
+	} else if (shuffle == 23){
         int oldPosition = game->currPlayer->getPosition();
         int sum = 10;
         game->currPlayer->setPosition(sum);
@@ -104,7 +104,7 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
     else{
 	int shuffle = rand()%18 + 1;
 
-	if(shuffle = 1){
+	if(shuffle == 1){
         while (game->currPlayer->getMoney() < 200){
             if (game->bankrupt(curr, 200)){
                 game->declareBankrupt(curr);
@@ -140,7 +140,7 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
         game->currPlayer->money_add(50);
 	} else if (shuffle >= 16 && shuffle <= 17){
         game->currPlayer->money_add(100);
-	} else if (shuffle = 18){
+	} else if (shuffle == 18){
         game->currPlayer->money_add(200);
 	}
 }

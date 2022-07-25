@@ -10,7 +10,6 @@
 using namespace std;
 class Player{
     std::string playerName;
-    char playerChar;
     int position;
     int money;
     int propVal;
@@ -18,6 +17,7 @@ class Player{
     int rollsTims;
     int rimCups;
 public:
+    char playerChar;
     std::unordered_map <string, int> ownedProps;
     std::vector <shared_ptr<Ownable>> playerProps;
     Player(std::string playerName, char playerChar);

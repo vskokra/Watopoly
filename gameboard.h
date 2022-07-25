@@ -17,10 +17,11 @@ using namespace std;
 
 class GameBoard
 {
-    std::vector <shared_ptr<BoardCell>> gb; // Store in order of occurence on board with CollectOSAP as 0;
-    vector <shared_ptr<Player>> player;     // Store player in order of turn 
+    // Store player in order of turn 
     // char *playerChar[6]; // Store in order of turn/player
 public:
+    std::vector <shared_ptr<BoardCell>> gb; // Store in order of occurence on board with CollectOSAP as 0;
+    vector <shared_ptr<Player>> player; 
     std::unordered_map <std::string, std::vector<int>> tuitionChart;
     GameBoard();
     ~GameBoard();

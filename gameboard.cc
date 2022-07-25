@@ -251,7 +251,7 @@ void GameBoard::declareBankrupt(shared_ptr<Player> p){
         p->playerProps[i]->resetImprovs();
        p->playerProps[i]->setMortgage(false);
     }
-    remove(player.begin(), player.end(), p);
+    player.erase(remove(player.begin(), player.end(), p),player.end());
 }
 
 void GameBoard::declareBankrupt(shared_ptr<Player> pay, shared_ptr<Player> collect){
@@ -292,7 +292,7 @@ void GameBoard::declareBankrupt(shared_ptr<Player> pay, shared_ptr<Player> colle
 
     }
     }
-    remove(player.begin(), player.end(), pay);
+    //player.erase(remove(player.begin(), player.end(), pay),player.end());
 }
 
 shared_ptr<Ownable> GameBoard::getOwnable(){

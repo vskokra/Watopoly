@@ -3,31 +3,33 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include "gameboard.h"
 #include "player.h"
+#include "display.h"
 #include <vector>
+#include <memory>
 
 using namespace std;
 
+
+
 // COMPLETE
-Controller::Controller(bool testingMode) : testingMode{testingMode} {
+Controller::Controller(bool testingMode) :  testingMode{testingMode}, d{nullptr}{
     game = nullptr;
     validCommands = {"roll", "assets", "all", "save"};
 }
 
 // COMPLETE
-~Controller::Controller() {
+Controller::~Controller() {
     delete game;
-    delete display;
+    delete d;
 }
 
 // COMPLETE
-void Controller::init(Vector<Player *> players) {
-    if (game == nullptr) {
-        game = new GameBoard(players);
-    }
+void Controller::init(vector<shared_ptr<Player>> players) {
+    game = new GameBoard();
     d = new Display(game);
 }
-
 // COMPLETE
 void Controller::roll() {
     game -> roll();
@@ -39,21 +41,21 @@ void Controller::bigFive() {
 }
 
 // COMPLETED
-void Controller::assets(Player *player) {
-    cout <<< "Player Name: " << player -> playerName << endl;
+void Controller::assets(shared_ptr<Player> player) {
+    cout << "Player Name: " << player -> getName() << endl;
     cout << "Player Character: " << player -> playerChar << endl;
-    cout << "The Player has: " << player -> money << "$" << endl;
-    cout << "The Player's networth - money is: " << player -> propVal << endl;
+    cout << "The Player has: " << player -> getMoney() << "$" << endl;
+    cout << "The Player's networth - money is: " << player -> getWorth() << endl;
     cout << "The Player owns: " << player -> ownedProps.size() << " number of properties\n";
     cout << "Now displaying Player's properties:\n";
     for (int x = 0; x < player -> playerProps.size(); ++x) {
-        Ownable *property = player -> playerProps[x];
+        shared_ptr <Ownable> property = player -> playerProps[x];
         cout << "Property Name: " << property -> propName << endl;
         cout << "Property Base Cost: " << property -> cost << endl;
         if (property -> isMortgage) {
             cout << "Is Mortgaged\n";
         } else {
-            cout << "Is not Mortgaged\n"
+            cout << "Is not Mortgaged\n";
         }
         cout << "Number of Improvements: " << property -> getImprovs() << endl;
         cout << "Improvement Cost: " << property -> getImprovCost() << endl;
@@ -87,7 +89,7 @@ void Controller::play(bool alreadyInit) {
         string playerName;
         char playerChar;
         unordered_map<char, string> playerDetails;
-        vector<Player *player> playerVector;
+        vector<shared_ptr<Player>> playerVector;
         cout << "Welcome to Watopoly!\n";
         cout << "Please Enter the Number of Players playing today: ";
         cin >> numberofPlayers;
@@ -97,23 +99,23 @@ void Controller::play(bool alreadyInit) {
         }
         for (int x = 1; x <= 8; ++x) {
             cout << "You will now be entering player details.\n";
-            cout << "If there are no more players, please enter "done"\n"
+            cout << "If there are no more players, please enter done\n";
             cout << "Please enter player " << x << " name: ";
             cin >> playerName;
             if (playerName == "done") break;
-            cout << "Please enter player " << x < " character: ";
+            cout << "Please enter player " << x << " character: ";
             cin >> playerChar;
-            Player *vectorPlayer = new Player(playerName, playerChar);
+            shared_ptr <Player> vectorPlayer = make_shared <Player> (playerName, playerChar);
             playerVector.push_back(vectorPlayer);
             playerDetails[playerChar] = playerName;
         }
-        cout << "Thank you for entering player details!\n"
+        cout << "Thank you for entering player details!\n";
         cout << "The game is now ready to be played!! Yay!!\n";
         init(playerVector);
     }
-    d.printDisplay();
-    string command;
-    while (true) {
+        d->printDisplay();
+        string command;
+        while (true) {
         cout << "You can enter the following commands: \n";  
         cout << "roll: to start the game\n";
         cout << "assets: to display your assets\n";
@@ -172,7 +174,7 @@ void Controller::setTesting(bool mode) {
 }
 
 // TO BE COMPLETED
-void Controller::loadGame(string filename) {
+/*void Controller::loadGame(string filename) {
         ifstream infile{filename};
         while (!infile.eof()) { 
             stringstream line;
@@ -200,5 +202,5 @@ void Controller::loadGame(string filename) {
 
 // TO BE COMPLETED
 void Controller::saveGame() {
-}
+}*/
 

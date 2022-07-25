@@ -24,7 +24,6 @@ public:
     void resetImprovs() override;
     int getImprovCost() override;
     void setImprovs(int amt) override;
-    void resetImprovs() override;
         
 };
 #endif
