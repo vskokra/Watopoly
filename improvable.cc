@@ -39,26 +39,23 @@ void Improvable::doOperation(shared_ptr<Player> curr)
     {
         cout << "No property Owner" << endl;
         if(curr->getMoney() < this->cost){
-            //call auction
-            //exit from this function 
+            auction();
+            return;
         }
         cout << "Options\n1: buy\n2: auction\n";
         int n;
         cin >> n; 
         if (n == 1){
-            buyProperty();
+            buyProperty(game->currPlayer);
         } else if (n == 2){
-            //call auction 
+            auction();
         }
         
         
     }
     else if (this->owner == curr)
-    {
-        // do nothing , just the 5 basic cmds
-        cout << "choose one out of the 5 options - trade, improv " << endl;
-        return;
-    }
+    {};
+
 
     // step1- get the amount
     int amt = (*this).calcTuition();

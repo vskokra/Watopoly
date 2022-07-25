@@ -183,6 +183,7 @@ void GameBoard::roll(){
             currPlayer->money_add(200);
         }
         gb[currPlayer->getPosition()]->doOperation(currPlayer);
+        basicFive(currPlayer);
     }
 }
 
