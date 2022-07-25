@@ -416,7 +416,7 @@ void GameBoard::unmortgage(shared_ptr <Player> p){
             ownable->setMortgage(false);
 }
 
-void trade()
+void GameBoard::trade()
 {
 
     cout << "Enter the name of the person you want to trade with, what you want to give and what you want to recieve\n";
@@ -484,7 +484,7 @@ void trade()
     }
 }
 
-void trade(string give, string receive)
+void GameBoard::trade(string give, string receive, string nameOther)
 {
 
     int idx1 = 0; // index of prop cur player wants to give
@@ -511,7 +511,7 @@ void trade(string give, string receive)
     // valid trade - transaction occurs
     shared_ptr <Player> p1 = currPlayer; // how to access cur players name ??
     shared_ptr <Player> p2;
-    for (int i = 0; i < player.size; i++)
+    for (int i = 0; i < player.size(); i++)
     {
         if (nameOther == player[i]->getName())
         {
@@ -533,12 +533,12 @@ void trade(string give, string receive)
     p2->subProp(propReceive);
 }
 
-void trade(int amtGive, string receive, string nameOther)
+void GameBoard::trade(int amtGive, string receive, string nameOther)
 {
 
     // cur wants to give money for prop
 
-    idx2 = propDictionary[receive];
+    int idx2 = propDictionary[receive];
 
     shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(gb[idx2]);
 
@@ -550,24 +550,24 @@ void trade(int amtGive, string receive, string nameOther)
     if (num2 != 0)
     {
         cout << "Invalid trade. You can't give properties with improvements" << endl;
-        continue;
+        return;
     }
 
     // check if cur has enough money to make the trade,
     // reject if not
-    if (currPlayer->getMoney() < amt)
+    if (currPlayer->getMoney() < amtGive)
     {
         cout << "Invalid trade. You don't have sufficient funds" << endl;
     }
 
     // valid trade - transaction occurs
-    Player p1 = currPlayer // how to access cur players name ??
-        Player p2;
-    for (int i = 0; i < player.size; i++)
+    shared_ptr <Player> p1 = currPlayer; // how to access cur players name ??
+    shared_ptr <Player> p2;
+    for (int i = 0; i < player.size(); i++)
     {
         if (nameOther == player[i]->getName())
         {
-            p2 = player[i] break;
+            p2 = player[i]; break;
         }
     }
     // step1: add the propReceive to cur player
@@ -578,17 +578,17 @@ void trade(int amtGive, string receive, string nameOther)
     p2->subProp(propReceive);
 
     // step3: add amt to other
-    p2->money_add(amt);
+    p2->money_add(amtGive);
 
     // step4: sub amt from cur
-    p1->money_sub(amt);
+    p1->money_sub(amtGive);
 }
 
-void trade(string give, int amtReceive, string nameOther)
+void GameBoard::trade(string give, int amtReceive, string nameOther)
 {
     // cur wants to give prop for money
-    idx1 = propDictionary[give];
-    shared_ptr<Ownable> propGive = dynamic_pointer_cast<Ownable>(game[idx1]);
+    int idx1 = propDictionary[give];
+    shared_ptr<Ownable> propGive = dynamic_pointer_cast<Ownable>(gb[idx1]);
 
     // check if properties involved in the trade are improv free
     // reject if not
@@ -598,11 +598,11 @@ void trade(string give, int amtReceive, string nameOther)
     if (num1 != 0)
     {
         cout << "Invalid trade. You can't give properties with improvements" << endl;
-        continue;
+        return;
     }
-    Player p1 = currPlayer // how to access cur players name ??
-        Player p2;
-    for (int i = 0; i < player.size; i++)
+    shared_ptr <Player> p1 = currPlayer; // how to access cur players name ??
+    shared_ptr <Player> p2;
+    for (int i = 0; i < player.size(); i++)
     {
         if (nameOther == player[i]->getName())
         {
@@ -621,10 +621,10 @@ void trade(string give, int amtReceive, string nameOther)
 
     // step1: add the propGive to other player
 
-    p2->addProp(propReceive);
+    p2->addProp(propGive);
 
     // step2: sub propGive from other
-    p1->subProp(propReceive);
+    p1->subProp(propGive);
 
     // step3: add amt to Cur
     p1->money_add(amtReceive);

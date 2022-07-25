@@ -1,4 +1,5 @@
 #include "player.h"
+#include <memory>
 Player::Player(std::string playerName, char playerChar): playerName{playerName}, playerChar{playerChar}, position{0}, money{1500}, propVal{0}, Tims{false}, rollsTims{0}, rimCups{0}{
     ownedProps["Arts1"] = 0;
     ownedProps["Arts2"] = 0;
@@ -11,22 +12,22 @@ Player::Player(std::string playerName, char playerChar): playerName{playerName},
     
 }
 
-void addProp(shared_ptr<Ownable> newProp){
+void Player::addProp(std::shared_ptr <Ownable> newProp){
     playerProps.emplace_back(newProp);
 
     //update the propsOwned count for that dept by 1
-    string deptName = newProp->dept;
+    std::string deptName = newProp->dept;
     ownedProps[deptName] += 1;
 
 }
 
-void subProp(shared_ptr<Ownable> remProp){
+void Player::subProp(shared_ptr<Ownable> remProp){
     //pointer to property that needs to be removed 
     //erase and remove idiom 
     playerProps.erase(remove(playerProps.begin(), playerProps.end(), remProp),playerProps.end());
 
     // update the propsOwned count for that dept by 1
-    string deptName = newProp->dept;
+    string deptName = remProp->dept;
     ownedProps[deptName] -= 1;
 }
 
@@ -74,4 +75,8 @@ int Player::getWorth(){
 
 void Player::updateWorth(int amount){
     propVal += amount;
+}
+
+std::string Player::getName(){
+    return playerName;
 }

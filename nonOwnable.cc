@@ -3,7 +3,7 @@ using namespace std;
 
 NonOwnable::NonOwnable(int position, GameBoard *g): pos{position}, game{g}{} 
 
-void NonOwnable::doOperation(Player *curr){
+void NonOwnable::doOperation(shared_ptr<Player>curr){
     if(pos == 30){//GO TO TIMS
         game->currPlayer->setPosition(10);
         game->currPlayer->goToTims(true);
@@ -17,8 +17,8 @@ void NonOwnable::doOperation(Player *curr){
         if (cin) {
             if(i == 1){
                 while (game->currPlayer->getMoney() < 300){
-                    if (game->currPlayer->isBankrupt(300)){
-                    game->currPlayer->declareBankrupt();
+                    if (game->bankrupt(curr, 300)){
+                    game->declareBankrupt(curr);
                     }
                     else{
                         cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
@@ -30,8 +30,8 @@ void NonOwnable::doOperation(Player *curr){
             else if (i == 2){
                 int total = (game->currPlayer->getMoney() + game->currPlayer->getWorth())*0.1;
                  while (game->currPlayer->getMoney() < total){
-                    if (game->currPlayer->isBankrupt(total)){
-                    game->currPlayer->declareBankrupt();
+                    if (game->bankrupt(curr,total)){
+                    game->declareBankrupt(curr);
                     }
                     else{
                         cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
@@ -106,8 +106,8 @@ void NonOwnable::doOperation(Player *curr){
 
 	if(shuffle = 1){
         while (game->currPlayer->getMoney() < 200){
-            if (game->currPlayer->isBankrupt(200)){
-                game->currPlayer->declareBankrupt();
+            if (game->bankrupt(curr, 200)){
+                game->declareBankrupt(curr);
                 }
             else{
                 cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
@@ -116,8 +116,8 @@ void NonOwnable::doOperation(Player *curr){
             game->currPlayer->money_sub(200); 
 	} else if (shuffle >= 2 && shuffle <= 3){
         while (game->currPlayer->getMoney() < 100){
-            if (game->currPlayer->isBankrupt(100)){
-                game->currPlayer->declareBankrupt();
+            if (game->bankrupt(curr, 100)){
+                game->declareBankrupt(curr);
                 }
             else{
                 cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
@@ -126,8 +126,8 @@ void NonOwnable::doOperation(Player *curr){
             game->currPlayer->money_sub(100); 
 	} else if (shuffle >= 4 && shuffle <= 6){
         while (game->currPlayer->getMoney() < 50){
-            if (game->currPlayer->isBankrupt(50)){
-                game->currPlayer->declareBankrupt();
+            if (game->bankrupt(curr, 50)){
+                game->declareBankrupt(curr);
                 }
             else{
                 cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
@@ -148,8 +148,8 @@ void NonOwnable::doOperation(Player *curr){
 
     if(pos == 38){
     while (game->currPlayer->getMoney() < 150){
-        if (game->currPlayer->isBankrupt(150)){
-            game->currPlayer->declareBankrupt();
+        if (game->bankrupt(curr, 150)){
+            game->declareBankrupt(curr);
             }
         else{
             cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  

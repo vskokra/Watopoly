@@ -7,8 +7,8 @@
 class Res: public Ownable {
     int calcRent(); 
     public:
-        Res(std::string name, int cost, Player *owner, GameBoard *game);
-        void doOperation(Player * curr) override; 
+        Res(std::string name, int cost, shared_ptr<Player> owner, GameBoard *game);
+        void doOperation(shared_ptr <Player> curr) override; 
         
 } ;
 #endif

@@ -10,7 +10,7 @@ class Gym : public Ownable{
     GameBoard *game;
     public:
         Gym(std::string name, int cost, Player *owner, GameBoard *game);
-        void doOperation(Player * curr) override;
+        void doOperation(shared_ptr <Player> curr) override;
 
 };
 

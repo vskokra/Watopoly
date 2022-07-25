@@ -23,7 +23,7 @@ public:
     std::string dept;
     void resetImprovs() override;
     int getImprovCost() override;
-    void setImprovs() override;
+    void setImprovs(int amt) override;
     void resetImprovs() override;
         
 };

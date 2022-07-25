@@ -14,7 +14,7 @@ void Ownable::buyProperty()
     owner = game->currPlayer;
     // int idx = game->currPlayer->getPosition();
     // shared_ptr <Ownable> newProp = dynamic_pointer_cast <Ownable> (game->gb[idx]);
-    game->currPlayer->addProps(game->getOwnable());
+    game->currPlayer->addProp(game->getOwnable());
     game->currPlayer->updateWorth(cost);
 }
 

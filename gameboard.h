@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <memory>
 #include "boardcell.h"
 #include "player.h"
 #include "ownable.h"
@@ -19,7 +20,6 @@ class GameBoard
     std::vector <shared_ptr<BoardCell>> gb; // Store in order of occurence on board with CollectOSAP as 0;
     vector <shared_ptr<Player>> player;     // Store player in order of turn 
     // char *playerChar[6]; // Store in order of turn/player
-    std::unordered_map<std::string, int> propDictionary;
 public:
     std::unordered_map <std::string, std::vector<int>> tuitionChart;
     GameBoard();
@@ -37,7 +37,7 @@ public:
     bool bankrupt(shared_ptr<Player>p, int amount); // autoChecker
     void declareBankrupt(shared_ptr<Player> p);
     virtual void doOperation(shared_ptr<Player> currPlayer);
-    void basicFive();
+    void basicFive(shared_ptr <Player> p);
     shared_ptr <Player> currPlayer;
     Dice *dice;
     bool rollComplete;
@@ -50,5 +50,8 @@ public:
     void trade(string prop1, string prop2, string name);
     void trade(int amt, string prop, string name);
     void trade(string prop, int amt,  string name);
+    void unmortgage(shared_ptr <Player> p);
+    void mortgage(shared_ptr <Player> p);
+    std::unordered_map<std::string, int> propDictionary;
 };
 #endif

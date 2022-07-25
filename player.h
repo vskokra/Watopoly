@@ -3,10 +3,11 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include <unordered_map>
 #include <iostream>
 #include "ownable.h"
-
+using namespace std;
 class Player{
     std::string playerName;
     char playerChar;
@@ -17,11 +18,11 @@ class Player{
     int rollsTims;
     int rimCups;
 public:
-    std::unordered_map <std::string, int> ownedProps;
+    std::unordered_map <string, int> ownedProps;
     std::vector <shared_ptr<Ownable>> playerProps;
     Player(std::string playerName, char playerChar);
-    void addProp(shared_ptr<Ownable> );
-    void subProp(shared_ptr<Ownable>);
+    void addProp(shared_ptr<Ownable> newProp);
+    void subProp(shared_ptr<Ownable> newProp);
     int getPosition(); // gives players position
     void setPosition(int pos); //sets new position
     int getMoney(); // gives info of money
@@ -36,6 +37,7 @@ public:
     int getRollsTims();
     int getWorth();
     void updateWorth(int amount);
+    string getName();
 
 };
 
