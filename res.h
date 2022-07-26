@@ -2,6 +2,7 @@
 #define _RES_H_
 
 #include "ownable.h"
+#include "gameboard.h"
 #include <memory>
 
 //just pass in the ctor the cost as 200 ? 

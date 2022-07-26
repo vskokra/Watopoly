@@ -15,7 +15,38 @@ int Res::calcRent(){
     
 }
 
-void Res::doOperation(shared_ptr<Player>curr){
+void Res::doOperation(shared_ptr<Player>curr)
+
+{
+
+    cout << " You are on " << propName << endl;
+    // check 1 - if property has no owner
+    if (this->owner == nullptr)
+    {
+        cout << "No property Owner" << endl;
+        if (curr->getMoney() < this->cost)
+        {
+            auction();
+            return;
+        }
+        cout << "Options\n1: buy\n2: auction\n";
+        int n;
+        cin >> n;
+        if (n == 1)
+        {
+            buyProperty(curr);
+        }
+        else if (n == 2)
+        {
+            auction();
+        }
+    }
+    else if (this->owner == curr)
+    {
+        return;
+    }
+    else
+    {
 
     //step 1 : calculate the rent 
     int amt = (*this).calcRent(); 
@@ -34,7 +65,8 @@ void Res::doOperation(shared_ptr<Player>curr){
         //sub money from curr 
         curr->money_sub(amt);
     }
-
+    cout << "You paid " << amt << " as rent on" << propName;
+    }
 }
 
 int Res::getImprovs() { return 0; }

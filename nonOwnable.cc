@@ -1,15 +1,25 @@
 #include "nonOwnable.h"
+#include <iostream>
 using namespace std;
 
 NonOwnable::NonOwnable(int position, GameBoard *g): pos{position}, game{g}{} 
 
 void NonOwnable::doOperation(shared_ptr<Player>curr){
     if(pos == 30){//GO TO TIMS
+        cout << " Go To Tims "<<endl;
         game->currPlayer->setPosition(10);
         game->currPlayer->goToTims(true);
     }
-   if(pos == 20 || pos == 0 || pos == 10){} //Goose Nesting OSAP DC
-   if(pos == 4){ //Tuition
+   if(pos == 20){
+    cout << " You are on Goose Nesting"<<endl;
+   }
+   if (pos == 0){
+    cout << " You are on OSAP"<<endl;
+   } if (pos == 10){
+    cout << " You are visiting TIMS"<<endl;
+   } 
+   if(pos == 4){
+    cout << " You are on TUITION"<<endl; //Tuition
     cout << "Press 1 to pay $300 or Press 2 to pay 10%% of your total worth" << endl;
     int i;
     while (true) {
@@ -46,6 +56,7 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
 
    }
    if(pos == 2 || pos == 17 || pos == 33){//SLC
+   cout << " You are on SLC"<<endl;
     srand(time(NULL));
 	int rimProb = rand()%100;
 	if(rimProb == 0){
@@ -94,6 +105,7 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
    }
 
     if(pos == 7 || pos == 22 || pos == 36){
+    cout << " You are on Needles Hall"<<endl;
     srand(time(NULL));
 	int rimProb = rand()%100;
     if(rimProb == 0){
@@ -147,6 +159,7 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
     }
 
     if(pos == 38){
+        cout << " You are on COOP FEE"<<endl;
     while (game->currPlayer->getMoney() < 150){
         if (game->bankrupt(curr, 150)){
             game->declareBankrupt(curr);

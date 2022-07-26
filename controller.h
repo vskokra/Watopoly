@@ -28,6 +28,5 @@ public:
     void assets(shared_ptr <Player> player);
     void all();
     void play(bool alreadyInit);
-    void setTesting(bool mode);
 };
  #endif

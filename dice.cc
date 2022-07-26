@@ -30,3 +30,18 @@ bool Dice::isDouble()
 {
     return doubles;
 }
+
+void Dice::setVal(int a, int b)
+{
+    int dice1 = a;
+    int dice2 = b;
+    if (dice1 == dice2)
+    {
+        doubles = true;
+    }
+    else
+    {
+        doubles = false;
+    }
+    sum = dice1 + dice2;
+}

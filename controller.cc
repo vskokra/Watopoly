@@ -31,7 +31,11 @@ void Controller::init(vector<shared_ptr<Player>> players) {
 }
 // COMPLETE
 void Controller::roll() {
-    game -> roll();
+    if (testingMode) {
+        game -> rolltest();
+    } else {
+        game -> roll();
+    }
     d->printDisplay(); 
 }
 
@@ -117,20 +121,21 @@ void Controller::play(bool alreadyInit) {
         while (true) {
         cout << "You can enter the following commands: \n";  
         cout << "roll: to start the game\n";
-        cout << "assets: to display your assets\n";
+        /*cout << "assets: to display your assets\n";
         cout << "all: to display the assets of all the players\n";
         cout << "save: to save the current game\n";
         cout << "trade: to start trading\n";
         cout << "improve: to improve a property\n";
         cout << "mortgage: to mortgage a property\n";
         cout << "unmortgage: to unmortgage a property\n";
-        cout << "bankruptcy: to declare bankruptcy\n";
+        cout << "bankruptcy: to declare bankruptcy\n";*/
         cout << "quit: to exit the game\n";
         cin >> command;
 //      "roll", "assets", "all", "save"
         if (isValidCommand(command)) {
             if (command == "roll") {
                 roll();
+                bigFive();
             } else if (command == "assets") {
                 assets(game -> currPlayer);
             } else if (command == "all") {
@@ -165,11 +170,6 @@ bool isInt(string s) {
         if (!validChar(s[x])) return false;
     }
     return true;
-}
-
-
-void Controller::setTesting(bool mode) {
-    testingMode = mode;
 }
 
 // TO BE COMPLETED

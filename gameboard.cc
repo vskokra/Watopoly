@@ -119,10 +119,10 @@ GameBoard::GameBoard(vector<shared_ptr <Player>> plr){
 
 void GameBoard::roll(){
     int roll_count = 0;
-    while((roll_count < 3 && dice->isDouble()) || roll_count == 0){
+    while((roll_count < 3 && dice->isDouble()) || roll_count == 0){// checks if number of rolls exceed 3
         dice->setVal();
-        if(currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2){
-            if(currPlayer->getRimCups() == 0){
+        if(currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2){// checks if in jail and is 3rd turn
+            if(currPlayer->getRimCups() == 0){ // checks if has rimCups
                  while (currPlayer->getMoney() < 50){
                     if (bankrupt(currPlayer, 50)){
                          declareBankrupt(currPlayer);
@@ -133,6 +133,7 @@ void GameBoard::roll(){
                  }
                     currPlayer->money_sub(50);
                     currPlayer->goToTims(false);
+                     currPlayer->resetRollsTims();
             }
             else{
                 cout<< "Press 1 to pay $50 or Press 2 to use Roll Up the RIm Cup to get out of Tims Line"<<endl;
@@ -150,11 +151,13 @@ void GameBoard::roll(){
                                 }
                             }
                             currPlayer->money_sub(50);
+                             currPlayer->resetRollsTims();
                             break;
                         }
                         if(i == 2){
                             currPlayer->setRimCups(currPlayer->getRimCups() - 1); //Should update the card set (HOW)
                             currPlayer->goToTims(false);
+                             currPlayer->resetRollsTims();
                             break;
                         }
                     }
@@ -176,7 +179,7 @@ void GameBoard::roll(){
             break;
         }
         int oldPosition = currPlayer->getPosition();
-        int sum = dice->getVal() + oldPosition;
+        int sum = (dice->getVal() + oldPosition) % 40;
         currPlayer->setPosition(sum);
         int newPosition = currPlayer->getPosition();
         if (newPosition < oldPosition) { // Implementation for crossing OSAP
@@ -184,7 +187,6 @@ void GameBoard::roll(){
         }
         gb[currPlayer->getPosition()]->doOperation(currPlayer);
     }
-    basicFive(currPlayer);
 }
 
 bool isNumber(const string &str)
@@ -206,7 +208,7 @@ void GameBoard::basicFive(shared_ptr <Player> p) {
     // improve
     // next
     int n;
-    cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: buy improvement\n5: sell improvement\n6: next\n";
+    cout << "Enter the number based onOptions\n1: trade\n2: mortgage\n3: unmortgage\n4: buy improvement\n5: sell improvement\n6: next\n";
     while (cin >> n) {
         if (n == 1) {
             this->trade();
@@ -491,7 +493,7 @@ void GameBoard::trade()
 
 void GameBoard::trade(string give, string receive, string nameOther)
 {
-
+    
     int idx1 = 0; // index of prop cur player wants to give
     int idx2 = 0; // index of prop cur players wants to receive
 
@@ -500,6 +502,32 @@ void GameBoard::trade(string give, string receive, string nameOther)
 
     shared_ptr<Ownable> propGive = dynamic_pointer_cast<Ownable>(gb[idx1]);
     shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(gb[idx2]);
+
+    auto vec = currPlayer->playerProps;
+    if (find(vec.begin(), vec.end(),propGive) == vec.end()) {
+        cout << "You dont own " << give << endl;
+        return; 
+
+    }
+
+    shared_ptr <Player> p2;
+    for (int i = 0; i < player.size(); i++)
+    {
+        if (nameOther == player[i]->getName())
+        {
+            p2 = player[i];
+            break;
+        }
+    }
+
+    vec = p2->playerProps; 
+    //check if Im giving right prop
+    if (find(vec.begin(), vec.end(),propGive) == vec.end()) {
+        cout << nameOther << "doesn't own " << receive << endl;
+        return; 
+
+    }
+
 
     // check if properties involved in the trade are improv free
     // reject if not
@@ -515,15 +543,6 @@ void GameBoard::trade(string give, string receive, string nameOther)
 
     // valid trade - transaction occurs
     shared_ptr <Player> p1 = currPlayer; // how to access cur players name ??
-    shared_ptr <Player> p2;
-    for (int i = 0; i < player.size(); i++)
-    {
-        if (nameOther == player[i]->getName())
-        {
-            p2 = player[i];
-            break;
-        }
-    }
 
     // step1: add the propGive to other player
     p2->addProp(propGive);
@@ -636,4 +655,79 @@ void GameBoard::trade(string give, int amtReceive, string nameOther)
 
     // step4: sub amt from other
     p2->money_sub(amtReceive);
+}
+
+void GameBoard::rolltest(){
+    int roll_count = 0;
+    while((roll_count < 3 && dice->isDouble()) || roll_count == 0){
+        int d1;
+        int d2;
+        cout << "Enter dice 1 number: ";
+        cin >> d1;
+        cout << "Enter dice 2 number: ";
+        cin >> d2;
+        dice->setVal(d1, d2);
+        if(currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2){
+            if(currPlayer->getRimCups() == 0){
+                 while (currPlayer->getMoney() < 50){
+                    if (bankrupt(currPlayer, 50)){
+                         declareBankrupt(currPlayer);
+                    }
+                    else{
+                        cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
+                    }
+                 }
+                    currPlayer->money_sub(50);
+                    currPlayer->goToTims(false);
+            }
+            else{
+                cout<< "Press 1 to pay $50 or Press 2 to use Roll Up the RIm Cup to get out of Tims Line"<<endl;
+                int i;
+                while (true) {
+                cin >> i;
+                    if (cin) {
+                        if(i == 1){
+                            while (currPlayer->getMoney() < 50){
+                                if (bankrupt(currPlayer, 50)){
+                                    declareBankrupt(currPlayer);
+                                }
+                                else{
+                                    cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;
+                                }
+                            }
+                            currPlayer->money_sub(50);
+                            break;
+                        }
+                        if(i == 2){
+                            currPlayer->setRimCups(currPlayer->getRimCups() - 1); //Should update the card set (HOW)
+                            currPlayer->goToTims(false);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        else if(currPlayer->isTims() && !(dice->isDouble())){
+            currPlayer->addRollsTims();
+            break;
+        }
+        else if(currPlayer->isTims() && dice->isDouble()){
+            currPlayer->resetRollsTims();
+            currPlayer->goToTims(false);
+        }
+        ++roll_count;
+        if(roll_count == 3 && dice->isDouble()){
+            currPlayer->setPosition(10);
+            currPlayer->goToTims(true);
+            break;
+        }
+        int oldPosition = currPlayer->getPosition();
+        int sum = dice->getVal() + oldPosition;
+        currPlayer->setPosition(sum);
+        int newPosition = currPlayer->getPosition();
+        if (newPosition < oldPosition) { // Implementation for crossing OSAP
+            currPlayer->money_add(200);
+        }
+        gb[currPlayer->getPosition()]->doOperation(currPlayer);
+    }
 }

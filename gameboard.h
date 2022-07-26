@@ -52,5 +52,6 @@ public:
     void unmortgage(shared_ptr <Player> p);
     void mortgage(shared_ptr <Player> p);
     std::unordered_map<std::string, int> propDictionary;
+    void rolltest();
 };
 #endif

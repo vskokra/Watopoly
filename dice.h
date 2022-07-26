@@ -12,5 +12,6 @@ public:
     void setVal();
     int getVal();
     bool isDouble();
+    void setVal(int a, int b);
 };
 #endif

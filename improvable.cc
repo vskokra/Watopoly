@@ -35,29 +35,35 @@ int Improvable::calcTuition(){
 
 void Improvable::doOperation(shared_ptr<Player> curr)
 {
+
+    cout << " You are on " << propName << endl;
     // check 1 - if property has no owner
     if (this->owner == nullptr)
     {
         cout << "No property Owner" << endl;
-        if(curr->getMoney() < this->cost){
+        if (curr->getMoney() < this->cost)
+        {
             auction();
             return;
         }
         cout << "Options\n1: buy\n2: auction\n";
         int n;
-        cin >> n; 
-        if (n == 1){
-            buyProperty(game->currPlayer);
-        } else if (n == 2){
+        cin >> n;
+        if (n == 1)
+        {
+            buyProperty(curr);
+        }
+        else if (n == 2)
+        {
             auction();
         }
-        
-        
     }
     else if (this->owner == curr)
-    {};
-
-
+    {
+        return;
+    }
+    else
+    {
     // step1- get the amount
     int amt = (*this).calcTuition();
 
@@ -76,6 +82,8 @@ void Improvable::doOperation(shared_ptr<Player> curr)
         own->money_add(amt);
         // sub money from curr
         curr->money_sub(amt);
+    }
+    cout << "You paid " << amt << " as rent on" << propName;
     }
 }
 
