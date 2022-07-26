@@ -22,7 +22,7 @@ public:
     ~Controller();
     void init(vector<shared_ptr<Player>> players);
     void loadGame(string filename);
-    void saveGame();
+    void saveGame(string filename);
     void roll();
     void bigFive();
     void assets(shared_ptr <Player> player);

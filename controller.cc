@@ -141,7 +141,8 @@ void Controller::play(bool alreadyInit) {
             } else if (command == "all") {
                 all();
             } else {
-                saveGame();
+                string filename = "savedGame.txt";
+                saveGame(filename);
             }
         } /*else if (command == "trade" || command == "mortgage" ||  command == "unmortgage"
                     || command == "improve" ||  command == "bankruptcy") {
@@ -202,5 +203,47 @@ void Controller::loadGame(string filename) {
 }
 
 // TO BE COMPLETED
-void Controller::saveGame() {
+void Controller::saveGame(string filename) {
+        // OPEN File
+    ofstream gameState;
+    gameState.open(filename);
+    // Save Number of Players
+    gameState << game -> player.size() << endl;
+    // Save Players' Details
+    for (int x = 0; x < game -> player.size(); ++x) {
+        shared_ptr<Player> myPlayer = game -> player[x];
+        gameState << myPlayer -> getName() << " ";
+        gameState << myPlayer -> playerChar << " ";
+        gameState << myPlayer -> getRimCups() << " ";
+        gameState << myPlayer -> getMoney() << " ";
+        gameState << myPlayer -> getPosition();
+        if (myPlayer -> getPosition() == 10) {
+            if (myPlayer -> isTims()) {
+                gameState << " 1 " << myPlayer -> getRollsTims();
+            } else {
+                gameState << " 0";
+            }
+        }
+        gameState << endl;
+    }
+    //  SAVE BUILDING DETAILS
+    vector<int> building{1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 
+                        18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 
+                        34, 35, 37, 39};
+    for (int x = 0; x < 28; ++x) {
+        int index = building[x];
+        shared_ptr<Ownable> myBuilding = dynamic_pointer_cast<Ownable>(game -> gb[index]);
+        string buildingName = myBuilding -> propName;
+        string ownerName = "BANK";
+        int improvements = 0;
+        bool isMortgage = myBuilding -> isMortgage;
+        if (myBuilding -> owner != nullptr) ownerName = myBuilding -> owner -> getName();
+        if (isMortgage) improvements = -1;
+        else improvements = myBuilding -> getImprovs();
+        gameState << buildingName << " ";
+        gameState << ownerName << " ";
+        gameState << improvements << endl;
+    }
+    // Close File
+    gameState.close();
 }

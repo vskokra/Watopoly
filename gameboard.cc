@@ -445,13 +445,23 @@ void GameBoard::improveBuy(shared_ptr<Player> p)
     //  if (x == 1) {
     if (((deptName == "Math" || deptName == "Arts1") && ownedCount == 2) || ownedCount == 3)
     {
-        for (int i = 0; i < gb.size(); i++)
+        /*for (int i = 0; i < gb.size(); i++)
         {
             shared_ptr<Ownable> prop = dynamic_pointer_cast<Ownable>(gb[i]);
+            cout<< prop->dept << "HERE \n";
             if (prop->dept == improvable->dept)
             {
                 if (prop->isMortgage == true)
                 {
+                    cout << "There are mortgaged properties in the monopoly" << endl;
+                    return;
+                }
+            }
+        }*/
+
+         for(int x = 0; x < p->playerProps.size(); x ++){
+            if(p->playerProps[x]->dept == deptName){
+                if(p->playerProps[x]->isMortgage){
                     cout << "There are mortgaged properties in the monopoly" << endl;
                     return;
                 }
