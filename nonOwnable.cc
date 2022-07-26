@@ -68,34 +68,48 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
 	int shuffle = rand()%24 + 1;
 
 	if(shuffle >= 1 && shuffle <= 3){
+        cout << "Go back 3 spaces\n";
         int oldPosition = game->currPlayer->getPosition();
         int sum = oldPosition - 3;
         game->currPlayer->setPosition(sum);
-	} else if (shuffle >= 4 && shuffle <= 7){
+        game->gb[game->currPlayer->getPosition()]->doOperation(game->currPlayer);
+    } else if (shuffle >= 4 && shuffle <= 7){
+        cout << "Go back 2 spaces\n";
         int oldPosition = game->currPlayer->getPosition();
         int sum = oldPosition - 2;
         game->currPlayer->setPosition(sum);
-	} else if (shuffle >= 8 && shuffle <= 11){
+        game->gb[game->currPlayer->getPosition()]->doOperation(game->currPlayer);
+    } else if (shuffle >= 8 && shuffle <= 11){
+        cout << "Go back 1 space\n";
         int oldPosition = game->currPlayer->getPosition();
         int sum = oldPosition - 1;
         game->currPlayer->setPosition(sum);
-	} else if (shuffle >= 12 && shuffle <= 14){
+        game->gb[game->currPlayer->getPosition()]->doOperation(game->currPlayer);
+    } else if (shuffle >= 12 && shuffle <= 14){
+        cout << "Go ahead 1 spaces\n";
         int oldPosition = game->currPlayer->getPosition();
         int sum = oldPosition + 1;
         game->currPlayer->setPosition(sum);
-	} else if (shuffle >= 15 && shuffle <= 18){
+        game->gb[game->currPlayer->getPosition()]->doOperation(game->currPlayer);
+    } else if (shuffle >= 15 && shuffle <= 18){
+        cout << "Go ahead 2 spaces\n";
         int oldPosition = game->currPlayer->getPosition();
         int sum = oldPosition + 2;
         game->currPlayer->setPosition(sum);
-	} else if (shuffle >= 19 && shuffle <= 22){
+        game->gb[game->currPlayer->getPosition()]->doOperation(game->currPlayer);
+    } else if (shuffle >= 19 && shuffle <= 22){
+        cout << "Go ahead 2 spaces\n"; 
         int oldPosition = game->currPlayer->getPosition();
         int sum = oldPosition + 3;
         game->currPlayer->setPosition(sum);
-	} else if (shuffle == 23){
+        game->gb[game->currPlayer->getPosition()]->doOperation(game->currPlayer);
+    } else if (shuffle == 23){
+        cout << "Go TO DC TIMS LINE\n";
         int oldPosition = game->currPlayer->getPosition();
         int sum = 10;
         game->currPlayer->setPosition(sum);
-	} else {
+    } else {
+        cout << "Go To Osap\n";
         int oldPosition = game->currPlayer->getPosition();
         int sum = 0;
         game->currPlayer->setPosition(sum);
@@ -117,44 +131,54 @@ void NonOwnable::doOperation(shared_ptr<Player>curr){
 	int shuffle = rand()%18 + 1;
 
 	if(shuffle == 1){
-        while (game->currPlayer->getMoney() < 200){
+        cout << "Lose 200\n";
+        while (game->currPlayer->getMoney() < 200)
+        {
             if (game->bankrupt(curr, 200)){
                 game->declareBankrupt(curr);
                 }
             else{
                 cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
                 }
-            }
+        }
             game->currPlayer->money_sub(200); 
 	} else if (shuffle >= 2 && shuffle <= 3){
-        while (game->currPlayer->getMoney() < 100){
+        cout << "Lose 100\n";
+        while (game->currPlayer->getMoney() < 100)
+        {
             if (game->bankrupt(curr, 100)){
                 game->declareBankrupt(curr);
                 }
             else{
                 cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
                 }
-            }
+        }
             game->currPlayer->money_sub(100); 
 	} else if (shuffle >= 4 && shuffle <= 6){
-        while (game->currPlayer->getMoney() < 50){
+        cout << "Lose 50\n";
+        while (game->currPlayer->getMoney() < 50)
+        {
             if (game->bankrupt(curr, 50)){
                 game->declareBankrupt(curr);
                 }
             else{
                 cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
                 }
-            }
+        }
             game->currPlayer->money_sub(50); 
 	} else if (shuffle >= 7 && shuffle <= 12){
+        cout << "Get 25\n";
         game->currPlayer->money_add(25);
-	} else if (shuffle >= 13 && shuffle <= 15){
+    } else if (shuffle >= 13 && shuffle <= 15){
+        cout << "Get 50\n";
         game->currPlayer->money_add(50);
-	} else if (shuffle >= 16 && shuffle <= 17){
+    } else if (shuffle >= 16 && shuffle <= 17){
+        cout << "Get 100\n";
         game->currPlayer->money_add(100);
-	} else if (shuffle == 18){
+    } else if (shuffle == 18){
+        cout << "Get 200\n";
         game->currPlayer->money_add(200);
-	}
+    }
 }
     }
 

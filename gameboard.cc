@@ -8,22 +8,23 @@
 #include "res.h"
 #include "gameboard.h"
 #include "gyms.h"
-using namespace std; 
+using namespace std;
 
+GameBoard::GameBoard(vector<shared_ptr<Player>> plr)
+{
 
-GameBoard::GameBoard(vector<shared_ptr <Player>> plr){   
-
-    //in MIl ask for player array
+    // in MIl ask for player array
     dice = new Dice();
     rimCupCount = 0;
-    for(int i = 0; i < plr.size(); ++ i){
+    for (int i = 0; i < plr.size(); ++i)
+    {
         player.emplace_back(plr[i]);
     }
     currPlayer = player[0];
-    //board created
+    // board created
     gb.emplace_back(make_shared<NonOwnable>(0, this)); // OSAP
-    gb.emplace_back(make_shared<Improvable>("AL",40, nullptr, "Arts1", 50, this));
-    gb.emplace_back(make_shared<NonOwnable>(2, this)); //SLC
+    gb.emplace_back(make_shared<Improvable>("AL", 40, nullptr, "Arts1", 50, this));
+    gb.emplace_back(make_shared<NonOwnable>(2, this)); // SLC
     gb.emplace_back(make_shared<Improvable>("ML", 60, nullptr, "Arts1", 50, this));
     gb.emplace_back(make_shared<NonOwnable>(4, this)); // TUITION
     gb.emplace_back(make_shared<Res>("MKV", 200, nullptr, this));
@@ -63,8 +64,8 @@ GameBoard::GameBoard(vector<shared_ptr <Player>> plr){
     gb.emplace_back(make_shared<Improvable>("DC", 400, nullptr, "Math", 200, this));
 
     // Initialize the Monopoly dictionary
-    //unordered_map<string, vector<int>> tuitionChart;
-    //each index consists price of the buildings
+    // unordered_map<string, vector<int>> tuitionChart;
+    // each index consists price of the buildings
     tuitionChart["ML"] = vector<int>{4, 20, 60, 180, 320, 450};
     tuitionChart["AL"] = vector<int>{2, 10, 30, 90, 160, 250};
     tuitionChart["HH"] = vector<int>{8, 40, 100, 300, 450, 600};
@@ -79,8 +80,8 @@ GameBoard::GameBoard(vector<shared_ptr <Player>> plr){
     tuitionChart["EV1"] = vector<int>{18, 90, 250, 700, 875, 1050};
     tuitionChart["EV2"] = vector<int>{18, 90, 250, 700, 875, 1050};
     tuitionChart["EV3"] = vector<int>{20, 100, 300, 750, 925, 1100};
-    tuitionChart["PHYS"] =vector<int>{22, 110, 330, 800, 975, 1150};
-    tuitionChart["B1"] =vector<int>{22, 110, 330, 800, 975, 1150};
+    tuitionChart["PHYS"] = vector<int>{22, 110, 330, 800, 975, 1150};
+    tuitionChart["B1"] = vector<int>{22, 110, 330, 800, 975, 1150};
     tuitionChart["B2"] = vector<int>{24, 120, 360, 850, 1025, 1200};
     tuitionChart["EIT"] = vector<int>{26, 130, 390, 900, 1100, 1275};
     tuitionChart["ESC"] = vector<int>{26, 130, 390, 900, 1100, 1275};
@@ -88,7 +89,7 @@ GameBoard::GameBoard(vector<shared_ptr <Player>> plr){
     tuitionChart["MC"] = vector<int>{35, 175, 500, 1100, 1300, 1500};
     tuitionChart["DC"] = vector<int>{50, 200, 600, 1400, 1700, 2000};
 
-    //gives the pos 
+    // gives the pos
     propDictionary["ML"] = 3;
     propDictionary["AL"] = 1;
     propDictionary["HH"] = 9;
@@ -114,79 +115,155 @@ GameBoard::GameBoard(vector<shared_ptr <Player>> plr){
     propDictionary["PAC"] = 12;
     propDictionary["CIF"] = 28;
     propDictionary["MKV"] = 5;
-
 }
 
-void GameBoard::roll(){
+void GameBoard::roll()
+{
     int roll_count = 0;
-    while((roll_count < 3 && dice->isDouble()) || roll_count == 0){// checks if number of rolls exceed 3
-        dice->setVal();
-        if(currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2){// checks if in jail and is 3rd turn
-            if(currPlayer->getRimCups() == 0){ // checks if has rimCups
-                 while (currPlayer->getMoney() < 50){
-                    if (bankrupt(currPlayer, 50)){
-                         declareBankrupt(currPlayer);
+    while ((roll_count < 3 && dice->isDouble()) || roll_count == 0)
+    { // checks if number of rolls exceed 3
+        if(currPlayer->isTims()){
+            if(currPlayer->getRimCups() == 0){
+            cout << "Press 0 to roll, 1 to pay $50 to get out of jail" << endl;
+            int j;
+            cin >> j;
+            if(j == 1){
+                while (currPlayer->getMoney() < 50)
+                {
+                    if (bankrupt(currPlayer, 50))
+                    {
+                        declareBankrupt(currPlayer);
                     }
-                    else{
-                        cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
+                    else
+                    {
+                        cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
                     }
-                 }
-                    currPlayer->money_sub(50);
-                    currPlayer->goToTims(false);
-                     currPlayer->resetRollsTims();
+                }
+                currPlayer->money_sub(50);
+                currPlayer->goToTims(false);
+                currPlayer->resetRollsTims();
+            }
             }
             else{
-                cout<< "Press 1 to pay $50 or Press 2 to use Roll Up the RIm Cup to get out of Tims Line"<<endl;
+                cout << "Press 0 to roll, Press 1 to pay $50 or Press 2 to use Roll Up the RIm Cup to get out of Tims Line" << endl;
                 int i;
-                while (true) {
-                cin >> i;
-                    if (cin) {
-                        if(i == 1){
-                            while (currPlayer->getMoney() < 50){
-                                if (bankrupt(currPlayer, 50)){
+                while (true)
+                {
+                    cin >> i;
+                    if (cin)
+                    {
+                        if (i == 1)
+                        {
+                            while (currPlayer->getMoney() < 50)
+                            {
+                                if (bankrupt(currPlayer, 50))
+                                {
                                     declareBankrupt(currPlayer);
                                 }
-                                else{
-                                    cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;
+                                else
+                                {
+                                    cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
                                 }
                             }
                             currPlayer->money_sub(50);
-                             currPlayer->resetRollsTims();
+                            currPlayer->resetRollsTims();
                             break;
                         }
-                        if(i == 2){
-                            currPlayer->setRimCups(currPlayer->getRimCups() - 1); //Should update the card set (HOW)
+                        if (i == 2)
+                        {
+                            currPlayer->setRimCups(currPlayer->getRimCups() - 1); // Should update the card set (HOW)
                             currPlayer->goToTims(false);
-                             currPlayer->resetRollsTims();
+                            currPlayer->resetRollsTims();
                             break;
                         }
                     }
                 }
             }
         }
-        else if(currPlayer->isTims() && !(dice->isDouble())){
-            currPlayer->addRollsTims();
-            break;
-        }
-        else if(currPlayer->isTims() && dice->isDouble()){
-            currPlayer->resetRollsTims();
-            currPlayer->goToTims(false);
-        }
-        ++roll_count;
-        if(roll_count == 3 && dice->isDouble()){
-            currPlayer->setPosition(10);
-            currPlayer->goToTims(true);
-            break;
-        }
-        int oldPosition = currPlayer->getPosition();
-        int sum = (dice->getVal() + oldPosition) % 40;
-        currPlayer->setPosition(sum);
-        int newPosition = currPlayer->getPosition();
-        if (newPosition < oldPosition) { // Implementation for crossing OSAP
-            currPlayer->money_add(200);
-        }
-        gb[currPlayer->getPosition()]->doOperation(currPlayer);
-    }
+                    dice->setVal();
+                    if (currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2)
+                    { // checks if in jail and is 3rd turn
+                        if (currPlayer->getRimCups() == 0)
+                        { // checks if has rimCups
+                            while (currPlayer->getMoney() < 50)
+                            {
+                                if (bankrupt(currPlayer, 50))
+                                {
+                                    declareBankrupt(currPlayer);
+                                }
+                                else
+                                {
+                                    cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
+                                }
+                            }
+                            currPlayer->money_sub(50);
+                            currPlayer->goToTims(false);
+                            currPlayer->resetRollsTims();
+                        }
+                        else
+                        {
+                            cout << "Press 1 to pay $50 or Press 2 to use Roll Up the RIm Cup to get out of Tims Line" << endl;
+                            int i;
+                            while (true)
+                            {
+                                cin >> i;
+                                if (cin)
+                                {
+                                    if (i == 1)
+                                    {
+                                        while (currPlayer->getMoney() < 50)
+                                        {
+                                            if (bankrupt(currPlayer, 50))
+                                            {
+                                                declareBankrupt(currPlayer);
+                                            }
+                                            else
+                                            {
+                                                cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
+                                            }
+                                        }
+                                        currPlayer->money_sub(50);
+                                        currPlayer->resetRollsTims();
+                                        break;
+                                    }
+                                    if (i == 2)
+                                    {
+                                        currPlayer->setRimCups(currPlayer->getRimCups() - 1); // Should update the card set (HOW)
+                                        currPlayer->goToTims(false);
+                                        currPlayer->resetRollsTims();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (currPlayer->isTims() && !(dice->isDouble()))
+                    {
+                        currPlayer->addRollsTims();
+                        break;
+                    }
+                    else if (currPlayer->isTims() && dice->isDouble())
+                    {
+                        currPlayer->resetRollsTims();
+                        currPlayer->goToTims(false);
+                    }
+                    ++roll_count;
+                    if (roll_count == 3 && dice->isDouble())
+                    {
+                        currPlayer->setPosition(10);
+                        currPlayer->goToTims(true);
+                        break;
+                    }
+                    int oldPosition = currPlayer->getPosition();
+                    int sum = (dice->getVal() + oldPosition) % 40;
+                    currPlayer->setPosition(sum);
+                    int newPosition = currPlayer->getPosition();
+                    if (newPosition < oldPosition)
+                    { // Implementation for crossing OSAP
+                        currPlayer->money_add(200);
+                    }
+                    gb[currPlayer->getPosition()]->doOperation(currPlayer);
+                }
 }
 
 bool isNumber(const string &str)
@@ -201,226 +278,289 @@ bool isNumber(const string &str)
     return true;
 }
 
-void GameBoard::basicFive(shared_ptr <Player> p) {
+void GameBoard::basicFive(shared_ptr<Player> p)
+{
     // trade
     // mortgage
     // unmortgage
     // improve
     // next
     int n;
-    cout << "Enter the number based onOptions\n1: trade\n2: mortgage\n3: unmortgage\n4: buy improvement\n5: sell improvement\n6: next\n";
-    while (cin >> n) {
-        if (n == 1) {
+    cout << "Enter the number based on the Options\n1: trade\n2: mortgage\n3: unmortgage\n4: buy improvement\n5: sell improvement\n6: next\n";
+    while (cin >> n)
+    {
+        if (n == 1)
+        {
             this->trade();
-        } else if (n == 2) {
+        }
+        else if (n == 2)
+        {
             this->mortgage(p);
-        } else if (n == 3) {
+        }
+        else if (n == 3)
+        {
             this->unmortgage(p);
-        } else if (n == 4) {
+        }
+        else if (n == 4)
+        {
             this->improveBuy(p);
-        } else if (n == 5) {
+        }
+        else if (n == 5)
+        {
             this->improveSell(p);
-        } else if (n == 6) {
+        }
+        else if (n == 6)
+        {
             next();
             break;
-        } else {
+        }
+        else
+        {
             cout << "Invalid option entered\n";
         }
         cout << "Options\n1: trade\n2: mortgage\n3: unmortgage\n4: buy improvement\n5: sell improvement\n6: next\n";
     }
-
 }
 
-
-void GameBoard::next() {
+void GameBoard::next()
+{
     int flag = false;
-    for (int x = 0; x < player.size() - 1; ++x) {
-        if (player[x] == currPlayer) {
+    for (int x = 0; x < player.size() - 1; ++x)
+    {
+        if (player[x] == currPlayer)
+        {
             flag = true;
-            currPlayer = player[x+1];
+            currPlayer = player[x + 1];
             break;
-        } 
+        }
     }
-    if (!flag) currPlayer = player[0];
+    if (!flag)
+        currPlayer = player[0];
 }
 
-bool GameBoard::bankrupt(shared_ptr<Player>p, int amount){
-    if(p->getMoney() + p->getWorth()/2 < amount){
+bool GameBoard::bankrupt(shared_ptr<Player> p, int amount)
+{
+    if (p->getMoney() + p->getWorth() / 2 < amount)
+    {
         return true;
     }
     return false;
 }
 
-void GameBoard::declareBankrupt(shared_ptr<Player> p){
+void GameBoard::declareBankrupt(shared_ptr<Player> p)
+{
     p->money_sub(p->getMoney());
-    for (int i = 0; i < p->playerProps.size(); i++){
+    for (int i = 0; i < p->playerProps.size(); i++)
+    {
         p->playerProps[i]->owner = nullptr;
         p->playerProps[i]->resetImprovs();
-       p->playerProps[i]->setMortgage(false);
+        p->playerProps[i]->setMortgage(false);
     }
-    player.erase(remove(player.begin(), player.end(), p),player.end());
+    player.erase(remove(player.begin(), player.end(), p), player.end());
 }
 
-void GameBoard::declareBankrupt(shared_ptr<Player> pay, shared_ptr<Player> collect){
+void GameBoard::declareBankrupt(shared_ptr<Player> pay, shared_ptr<Player> collect)
+{
     pay->money_sub(pay->getMoney());
     collect->money_add(pay->getMoney());
-    for (int i = 0; i < pay->playerProps.size(); i++){
+    for (int i = 0; i < pay->playerProps.size(); i++)
+    {
         pay->playerProps[i]->owner = collect;
         pay->playerProps[i]->resetImprovs();
         collect->playerProps.emplace_back(pay->playerProps[i]);
-        if (pay->playerProps[i]->isMortgage){
+        if (pay->playerProps[i]->isMortgage)
+        {
             int tax = 0.1 * pay->playerProps[i]->cost;
-             while (collect->getMoney() < tax){
-        if (bankrupt(collect, tax)){
-            declareBankrupt(collect);
-            }
-        else{
-            cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
-            }
-    }
-    collect->money_sub(tax);
-    cout<< "Press 1 if you would like to unmortgage " << pay->playerProps[i]->propName << endl;
-    int i;
-    if(cin >> i){
-        if(i == 1){
-            tax = 0.5 * pay->playerProps[i]->cost;
-             while (collect->getMoney() < tax){
-                if (bankrupt(collect, tax)){
+            while (collect->getMoney() < tax)
+            {
+                if (bankrupt(collect, tax))
+                {
                     declareBankrupt(collect);
-                    }
-                    else{
-                        cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
+                }
+                else
+                {
+                    cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
+                }
             }
-    }
-    collect->money_sub(tax);
-       pay->playerProps[i]->setMortgage(false);
+            collect->money_sub(tax);
+            cout << "Press 1 if you would like to unmortgage " << pay->playerProps[i]->propName << endl;
+            int i;
+            if (cin >> i)
+            {
+                if (i == 1)
+                {
+                    tax = 0.5 * pay->playerProps[i]->cost;
+                    while (collect->getMoney() < tax)
+                    {
+                        if (bankrupt(collect, tax))
+                        {
+                            declareBankrupt(collect);
+                        }
+                        else
+                        {
+                            cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
+                        }
+                    }
+                    collect->money_sub(tax);
+                    pay->playerProps[i]->setMortgage(false);
+                }
+            }
         }
-    } 
-
     }
-    }
-    //player.erase(remove(player.begin(), player.end(), pay),player.end());
+    // player.erase(remove(player.begin(), player.end(), pay),player.end());
 }
 
-shared_ptr<Ownable> GameBoard::getOwnable(){
-    return dynamic_pointer_cast  <Ownable> (gb[currPlayer->getPosition()]);
+shared_ptr<Ownable> GameBoard::getOwnable()
+{
+    return dynamic_pointer_cast<Ownable>(gb[currPlayer->getPosition()]);
 }
 
-void GameBoard::improveBuy(shared_ptr <Player> p){
+void GameBoard::improveBuy(shared_ptr<Player> p)
+{
     string propName;
     cout << "Enter property that you want to improve\n";
     cin >> propName;
-    int index = propDictionary[propName];
-            // shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
-    shared_ptr <Improvable> improvable = dynamic_pointer_cast<Improvable>(gb[index]);
-    if (improvable -> owner != p) {
-        cout << "You cannot improve, since you are not the owner\n";
-        return;   
+    shared_ptr <Ownable> improvable = nullptr;
+    for(int x = 0; x < p->playerProps.size(); x ++){
+        if(p->playerProps[x]->propName == propName){
+            improvable = dynamic_pointer_cast<Ownable>(p->playerProps[x]);
+            cout << improvable->dept << " HERE\n";
+            break;
+        }
     }
-    //int x;
-            /*cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
-            cin >> x;*/
-    string deptName = improvable -> dept;
-    int ownedCount= p-> ownedProps[deptName];
-          //  if (x == 1) {
+    //int index = propDictionary[propName];
+    // shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+    //shared_ptr<Improvable> improvable = dynamic_pointer_cast<Improvable>(gb[index]);
+    if (improvable->owner != p)
+    {
+        cout << "You cannot improve, since you are not the owner\n";
+        return;
+    }
+    // int x;
+    /*cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
+    cin >> x;*/
+    string deptName = improvable->dept;
+    cout<<deptName<<endl;
+    int ownedCount = p->ownedProps[deptName];
+    //  if (x == 1) {
     if (((deptName == "Math" || deptName == "Arts1") && ownedCount == 2) || ownedCount == 3)
-        {       for(int i = 0; i<gb.size(); i++){
-                shared_ptr <Ownable> prop = dynamic_pointer_cast<Ownable>(gb[index]);
-                if(prop->dept == improvable->dept){
-                    if(prop->isMortgage == true){
-                        cout<<"There are mortgaged properties in the monopoly"<< endl;
-                        return;
-                    }
+    {
+        for (int i = 0; i < gb.size(); i++)
+        {
+            shared_ptr<Ownable> prop = dynamic_pointer_cast<Ownable>(gb[i]);
+            if (prop->dept == improvable->dept)
+            {
+                if (prop->isMortgage == true)
+                {
+                    cout << "There are mortgaged properties in the monopoly" << endl;
+                    return;
                 }
             }
-            if(improvable->getImprovs() < 5 && p->getMoney() > improvable->getImprovCost()){
-                improvable->setImprovs((improvable->getImprovs()) + 1);
-                p->money_sub(improvable->getImprovCost());
-                p->updateWorth(improvable->getImprovCost());
-            }
-            else{
-                cout<< "CANNOT BUY IMPROVEMENTS RIGHT NOW" << endl;
-            }
-            //improv_buy(currPlayer, improvable);
-                } else {
-                    cout << "You cannot buy improvements because it is not part of a monopoly\n";
-                    
-                }
+        }
+        if (improvable->getImprovs() < 5 && p->getMoney() > improvable->getImprovCost())
+        {
+            improvable->setImprovs((improvable->getImprovs()) + 1);
+            p->money_sub(improvable->getImprovCost());
+            p->updateWorth(improvable->getImprovCost());
+        }
+        else
+        {
+            cout << "CANNOT BUY IMPROVEMENTS RIGHT NOW" << endl;
+        }
+        // improv_buy(currPlayer, improvable);
+    }
+    else
+    {
+        cout << "You cannot buy improvements because it is not part of a monopoly\n";
+    }
 }
 
-void GameBoard::improveSell(shared_ptr <Player> p){
+void GameBoard::improveSell(shared_ptr<Player> p)
+{
     string propName;
     cout << "Enter property that you want to improve\n";
     cin >> propName;
     int index = propDictionary[propName];
-            // shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
-    shared_ptr <Improvable> improvable = dynamic_pointer_cast<Improvable>(gb[index]);
-    if (improvable -> owner != p) {
+    // shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+    shared_ptr<Improvable> improvable = dynamic_pointer_cast<Improvable>(gb[index]);
+    if (improvable->owner != p)
+    {
         cout << "You cannot improve, since you are not the owner\n";
-        return;   
+        return;
     }
-    //int x;
-            /*cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
-            cin >> x;*/
-    string deptName = improvable -> dept;
-    int ownedCount= p-> ownedProps[deptName];
+    // int x;
+    /*cout << "Enter 1: improve buy\nEnter 2: improve sell\n";
+    cin >> x;*/
+    string deptName = improvable->dept;
+    int ownedCount = p->ownedProps[deptName];
 
-    if (improvable -> getImprovs() == 0) {
-                    cout << "This building does not have any improvements to sell\n";
-                    return;
-                } else {
-                improvable->setImprovs(improvable->getImprovs() - 1);
-                p->money_add(improvable->getImprovCost()/2);
-                p->updateWorth(-(improvable->getImprovCost())); 
-                }
-
+    if (improvable->getImprovs() == 0)
+    {
+        cout << "This building does not have any improvements to sell\n";
+        return;
+    }
+    else
+    {
+        improvable->setImprovs(improvable->getImprovs() - 1);
+        p->money_add(improvable->getImprovCost() / 2);
+        p->updateWorth(-(improvable->getImprovCost()));
+    }
 }
 
-void GameBoard::mortgage(shared_ptr <Player> p){
+void GameBoard::mortgage(shared_ptr<Player> p)
+{
     string propName;
-            cout << "Enter property that you want to mortgage\n";
-            cin >> propName;
-            int index = propDictionary[propName];
-            shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
-            //Improvable *improvable = dynamic_cast<Improvable *>(gb[index]);
-            if (ownable -> getImprovs() != 0) {
-                cout << "You cannot mortgage due to existing improvements\n";
+    cout << "Enter property that you want to mortgage\n";
+    cin >> propName;
+    int index = propDictionary[propName];
+    shared_ptr<Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+    // Improvable *improvable = dynamic_cast<Improvable *>(gb[index]);
+    if (ownable->getImprovs() != 0)
+    {
+        cout << "You cannot mortgage due to existing improvements\n";
+        return;
+    }
+    // check neighbours still have improvs
+    for (int i = 0; i < gb.size(); i++)
+    {
+        shared_ptr<Ownable> prop = dynamic_pointer_cast<Ownable>(gb[index]);
+        if (prop->dept == ownable->dept)
+        {
+            if (prop->getImprovs() > 0)
+            {
+                cout << "There are improvements in the monopoly" << endl;
                 return;
             }
-            //check neighbours still have improvs
-            for(int i = 0; i<gb.size(); i++){
-                shared_ptr <Ownable> prop = dynamic_pointer_cast<Ownable>(gb[index]);
-                if(prop->dept == ownable->dept){
-                    if(prop->getImprovs() > 0){
-                        cout<<"There are improvements in the monopoly"<< endl;
-                        return;
-                    }
-                }
-            }
+        }
+    }
 
-            if (ownable -> owner != currPlayer) {
-                cout << "You cannot mortgage this property since you are not the owner\n";
-                return;
-            }
-            ownable->setMortgage(true);
+    if (ownable->owner != currPlayer)
+    {
+        cout << "You cannot mortgage this property since you are not the owner\n";
+        return;
+    }
+    ownable->setMortgage(true);
 }
 
-void GameBoard::unmortgage(shared_ptr <Player> p){
+void GameBoard::unmortgage(shared_ptr<Player> p)
+{
     string propName;
-            cout << "Enter property that you want to unmortgage\n";
-            cin >> propName;
-            int index = propDictionary[propName];
-            shared_ptr <Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
-            //Improvable *improvable = dynamic_cast<Improvable *>(gb[index]);
-            if (p->getMoney() < (ownable->cost)*0.6) {
-                cout << "You cannot unmortgage due to less money\n";
-                return;
-            }
-            if (ownable -> owner != currPlayer) {
-                cout << "You cannot unmortgage this property since you are not the owner\n";
-                return;
-            }
-            ownable->setMortgage(false);
+    cout << "Enter property that you want to unmortgage\n";
+    cin >> propName;
+    int index = propDictionary[propName];
+    shared_ptr<Ownable> ownable = dynamic_pointer_cast<Ownable>(gb[index]);
+    // Improvable *improvable = dynamic_cast<Improvable *>(gb[index]);
+    if (p->getMoney() < (ownable->cost) * 0.6)
+    {
+        cout << "You cannot unmortgage due to less money\n";
+        return;
+    }
+    if (ownable->owner != currPlayer)
+    {
+        cout << "You cannot unmortgage this property since you are not the owner\n";
+        return;
+    }
+    ownable->setMortgage(false);
 }
 
 void GameBoard::trade()
@@ -439,16 +579,19 @@ void GameBoard::trade()
     giveMoney = isNumber(give);
     receiveMoney = isNumber(receive);
 
-    //check if the prop names entered are valid 
+    // check if the prop names entered are valid
 
-    if (!giveMoney){
-        if (propDictionary.count(give) == 0){
+    if (!giveMoney)
+    {
+        if (propDictionary.count(give) == 0)
+        {
             cout << "Inavlid property name" << endl;
             return;
         }
     }
 
-    if(!receiveMoney){
+    if (!receiveMoney)
+    {
         if (propDictionary.count(receive) == 0)
         {
             cout << "Inavlid property name" << endl;
@@ -456,8 +599,8 @@ void GameBoard::trade()
         }
     }
 
-        // reject money for money trade
-        if (giveMoney && receiveMoney)
+    // reject money for money trade
+    if (giveMoney && receiveMoney)
     {
         cout << "Invalid trade. You can't exchange money for money." << endl;
         // not sure if this is right to do;
@@ -478,7 +621,7 @@ void GameBoard::trade()
     // cur wants to give prop for prop
     if (!giveMoney && !receiveMoney)
     {
-        
+
         trade(give, receive, nameOther);
     }
     else if ((giveMoney && !receiveMoney))
@@ -493,7 +636,7 @@ void GameBoard::trade()
 
 void GameBoard::trade(string give, string receive, string nameOther)
 {
-    
+
     int idx1 = 0; // index of prop cur player wants to give
     int idx2 = 0; // index of prop cur players wants to receive
 
@@ -504,13 +647,13 @@ void GameBoard::trade(string give, string receive, string nameOther)
     shared_ptr<Ownable> propReceive = dynamic_pointer_cast<Ownable>(gb[idx2]);
 
     auto vec = currPlayer->playerProps;
-    if (find(vec.begin(), vec.end(),propGive) == vec.end()) {
+    if (find(vec.begin(), vec.end(), propGive) == vec.end())
+    {
         cout << "You dont own " << give << endl;
-        return; 
-
+        return;
     }
 
-    shared_ptr <Player> p2;
+    shared_ptr<Player> p2;
     for (int i = 0; i < player.size(); i++)
     {
         if (nameOther == player[i]->getName())
@@ -520,14 +663,13 @@ void GameBoard::trade(string give, string receive, string nameOther)
         }
     }
 
-    vec = p2->playerProps; 
-    //check if Im giving right prop
-    if (find(vec.begin(), vec.end(),propGive) == vec.end()) {
+    vec = p2->playerProps;
+    // check if Im giving right prop
+    if (find(vec.begin(), vec.end(), propGive) == vec.end())
+    {
         cout << nameOther << "doesn't own " << receive << endl;
-        return; 
-
+        return;
     }
-
 
     // check if properties involved in the trade are improv free
     // reject if not
@@ -542,11 +684,12 @@ void GameBoard::trade(string give, string receive, string nameOther)
     }
 
     // valid trade - transaction occurs
-    shared_ptr <Player> p1 = currPlayer; // how to access cur players name ??
+    shared_ptr<Player> p1 = currPlayer; // how to access cur players name ??
 
     // step1: add the propGive to other player
-    p2->addProp(propGive);
 
+    p2->addProp(propGive);
+    cout << p2->playerProps[p2->playerProps.size() - 1];
     // step2: sub propGive from cur
     p1->subProp(propGive);
 
@@ -585,13 +728,14 @@ void GameBoard::trade(int amtGive, string receive, string nameOther)
     }
 
     // valid trade - transaction occurs
-    shared_ptr <Player> p1 = currPlayer; // how to access cur players name ??
-    shared_ptr <Player> p2;
+    shared_ptr<Player> p1 = currPlayer; // how to access cur players name ??
+    shared_ptr<Player> p2;
     for (int i = 0; i < player.size(); i++)
     {
         if (nameOther == player[i]->getName())
         {
-            p2 = player[i]; break;
+            p2 = player[i];
+            break;
         }
     }
     // step1: add the propReceive to cur player
@@ -624,8 +768,8 @@ void GameBoard::trade(string give, int amtReceive, string nameOther)
         cout << "Invalid trade. You can't give properties with improvements" << endl;
         return;
     }
-    shared_ptr <Player> p1 = currPlayer; // how to access cur players name ??
-    shared_ptr <Player> p2;
+    shared_ptr<Player> p1 = currPlayer; // how to access cur players name ??
+    shared_ptr<Player> p2;
     for (int i = 0; i < player.size(); i++)
     {
         if (nameOther == player[i]->getName())
@@ -657,9 +801,73 @@ void GameBoard::trade(string give, int amtReceive, string nameOther)
     p2->money_sub(amtReceive);
 }
 
-void GameBoard::rolltest(){
+void GameBoard::rolltest()
+{
     int roll_count = 0;
-    while((roll_count < 3 && dice->isDouble()) || roll_count == 0){
+    while ((roll_count < 3 && dice->isDouble()) || roll_count == 0)
+    {
+        if (currPlayer->isTims())
+        {
+            if (currPlayer->getRimCups() == 0)
+            {
+                cout << "Press 0 to roll, 1 to pay $50 to get out of jail" << endl;
+                int j;
+                cin >> j;
+                if (j == 1)
+                {
+                    while (currPlayer->getMoney() < 50)
+                    {
+                        if (bankrupt(currPlayer, 50))
+                        {
+                            declareBankrupt(currPlayer);
+                        }
+                        else
+                        {
+                            cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
+                        }
+                    }
+                    currPlayer->money_sub(50);
+                    currPlayer->goToTims(false);
+                    currPlayer->resetRollsTims();
+                }
+            }
+            else
+            {
+                cout << "Press 0 to roll, Press 1 to pay $50 or Press 2 to use Roll Up the RIm Cup to get out of Tims Line" << endl;
+                int i;
+                while (true)
+                {
+                    cin >> i;
+                    if (cin)
+                    {
+                        if (i == 1)
+                        {
+                            while (currPlayer->getMoney() < 50)
+                            {
+                                if (bankrupt(currPlayer, 50))
+                                {
+                                    declareBankrupt(currPlayer);
+                                }
+                                else
+                                {
+                                    cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
+                                }
+                            }
+                            currPlayer->money_sub(50);
+                            currPlayer->resetRollsTims();
+                            break;
+                        }
+                        if (i == 2)
+                        {
+                            currPlayer->setRimCups(currPlayer->getRimCups() - 1); // Should update the card set (HOW)
+                            currPlayer->goToTims(false);
+                            currPlayer->resetRollsTims();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         int d1;
         int d2;
         cout << "Enter dice 1 number: ";
@@ -667,39 +875,52 @@ void GameBoard::rolltest(){
         cout << "Enter dice 2 number: ";
         cin >> d2;
         dice->setVal(d1, d2);
-        if(currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2){
-            if(currPlayer->getRimCups() == 0){
-                 while (currPlayer->getMoney() < 50){
-                    if (bankrupt(currPlayer, 50)){
-                         declareBankrupt(currPlayer);
+        if (currPlayer->isTims() && !(dice->isDouble()) && currPlayer->getRollsTims() == 2)
+        {
+            if (currPlayer->getRimCups() == 0)
+            {
+                while (currPlayer->getMoney() < 50)
+                {
+                    if (bankrupt(currPlayer, 50))
+                    {
+                        declareBankrupt(currPlayer);
                     }
-                    else{
-                        cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;  
+                    else
+                    {
+                        cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
                     }
-                 }
-                    currPlayer->money_sub(50);
-                    currPlayer->goToTims(false);
+                }
+                currPlayer->money_sub(50);
+                currPlayer->goToTims(false);
             }
-            else{
-                cout<< "Press 1 to pay $50 or Press 2 to use Roll Up the RIm Cup to get out of Tims Line"<<endl;
+            else
+            {
+                cout << "Press 1 to pay $50 or Press 2 to use Roll Up the RIm Cup to get out of Tims Line" << endl;
                 int i;
-                while (true) {
-                cin >> i;
-                    if (cin) {
-                        if(i == 1){
-                            while (currPlayer->getMoney() < 50){
-                                if (bankrupt(currPlayer, 50)){
+                while (true)
+                {
+                    cin >> i;
+                    if (cin)
+                    {
+                        if (i == 1)
+                        {
+                            while (currPlayer->getMoney() < 50)
+                            {
+                                if (bankrupt(currPlayer, 50))
+                                {
                                     declareBankrupt(currPlayer);
                                 }
-                                else{
-                                    cout<< "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell"<<endl;
+                                else
+                                {
+                                    cout << "You don't have enough money! You have the following choices: bankrupt, trade, mortgage, improve sell" << endl;
                                 }
                             }
                             currPlayer->money_sub(50);
                             break;
                         }
-                        if(i == 2){
-                            currPlayer->setRimCups(currPlayer->getRimCups() - 1); //Should update the card set (HOW)
+                        if (i == 2)
+                        {
+                            currPlayer->setRimCups(currPlayer->getRimCups() - 1); // Should update the card set (HOW)
                             currPlayer->goToTims(false);
                             break;
                         }
@@ -707,25 +928,29 @@ void GameBoard::rolltest(){
                 }
             }
         }
-        else if(currPlayer->isTims() && !(dice->isDouble())){
+        else if (currPlayer->isTims() && !(dice->isDouble()))
+        {
             currPlayer->addRollsTims();
             break;
         }
-        else if(currPlayer->isTims() && dice->isDouble()){
+        else if (currPlayer->isTims() && dice->isDouble())
+        {
             currPlayer->resetRollsTims();
             currPlayer->goToTims(false);
         }
         ++roll_count;
-        if(roll_count == 3 && dice->isDouble()){
+        if (roll_count == 3 && dice->isDouble())
+        {
             currPlayer->setPosition(10);
             currPlayer->goToTims(true);
             break;
         }
         int oldPosition = currPlayer->getPosition();
-        int sum = dice->getVal() + oldPosition;
+        int sum = (dice->getVal() + oldPosition) % 40;
         currPlayer->setPosition(sum);
         int newPosition = currPlayer->getPosition();
-        if (newPosition < oldPosition) { // Implementation for crossing OSAP
+        if (newPosition < oldPosition)
+        { // Implementation for crossing OSAP
             currPlayer->money_add(200);
         }
         gb[currPlayer->getPosition()]->doOperation(currPlayer);

@@ -101,4 +101,5 @@ int Improvable::getImprovCost(){
 
 void Improvable::setImprovs(int amt){
     improvs = amt;
+    cout << "Improvs set to " << amt << " For Property" << this->propName << endl;
 }

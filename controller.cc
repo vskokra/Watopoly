@@ -121,10 +121,10 @@ void Controller::play(bool alreadyInit) {
         while (true) {
         cout << "You can enter the following commands: \n";  
         cout << "roll: to start the game\n";
-        /*cout << "assets: to display your assets\n";
+        cout << "assets: to display your assets\n";
         cout << "all: to display the assets of all the players\n";
         cout << "save: to save the current game\n";
-        cout << "trade: to start trading\n";
+        /*cout << "trade: to start trading\n";
         cout << "improve: to improve a property\n";
         cout << "mortgage: to mortgage a property\n";
         cout << "unmortgage: to unmortgage a property\n";

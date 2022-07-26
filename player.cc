@@ -20,6 +20,8 @@ void Player::addProp(std::shared_ptr <Ownable> newProp){
     std::string deptName = newProp->dept;
     ownedProps[deptName] += 1;
 
+    cout << "Property" << playerProps[playerProps.size() - 1]->propName << "was added" << endl;
+    cout << "Owned Count " << ownedProps[deptName];
 }
 
 void Player::subProp(shared_ptr<Ownable> remProp){
@@ -30,6 +32,7 @@ void Player::subProp(shared_ptr<Ownable> remProp){
     // update the propsOwned count for that dept by 1
     string deptName = remProp->dept;
     ownedProps[deptName] -= 1;
+
 }
 
 int Player::getPosition(){

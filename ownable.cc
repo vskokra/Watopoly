@@ -25,11 +25,14 @@ void Ownable::setMortgage(bool x){
     if(x){
     owner->updateWorth(-cost);
     owner->money_add(cost/2);
+    cout<< "Mortgaged " << this->propName << endl;
     }
     else{
         owner->updateWorth(cost);
         owner->money_sub(cost*0.6);
+        cout << "UnMortgaged " << this->propName << endl;
     }
+    
 }
 
 void Ownable::auction(){
